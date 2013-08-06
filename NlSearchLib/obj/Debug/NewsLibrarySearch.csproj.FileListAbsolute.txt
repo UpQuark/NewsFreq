@@ -1,0 +1,10 @@
+c:\users\sennis\documents\visual studio 2010\Projects\WebApplication1\ClassLibrary1\obj\Debug\ResolveAssemblyReference.cache
+c:\users\sennis\documents\visual studio 2010\Projects\WebApplication1\ClassLibrary1\bin\Debug\NewsLibrarySearch.dll
+c:\users\sennis\documents\visual studio 2010\Projects\WebApplication1\ClassLibrary1\bin\Debug\NewsLibrarySearch.pdb
+c:\users\sennis\documents\visual studio 2010\Projects\WebApplication1\ClassLibrary1\obj\Debug\NewsLibrarySearch.dll
+c:\users\sennis\documents\visual studio 2010\Projects\WebApplication1\ClassLibrary1\obj\Debug\NewsLibrarySearch.pdb
+C:\Users\sennis\Documents\Visual Studio 2010\Projects\NewsLibrary\ClassLibrary1\bin\Debug\NewsLibrarySearch.dll
+C:\Users\sennis\Documents\Visual Studio 2010\Projects\NewsLibrary\ClassLibrary1\bin\Debug\NewsLibrarySearch.pdb
+C:\Users\sennis\Documents\Visual Studio 2010\Projects\NewsLibrary\ClassLibrary1\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\sennis\Documents\Visual Studio 2010\Projects\NewsLibrary\ClassLibrary1\obj\Debug\NewsLibrarySearch.dll
+C:\Users\sennis\Documents\Visual Studio 2010\Projects\NewsLibrary\ClassLibrary1\obj\Debug\NewsLibrarySearch.pdb

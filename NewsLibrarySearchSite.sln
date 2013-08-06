@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewsLibrarySearch", "ClassLibrary1\NewsLibrarySearch.csproj", "{1B295501-ACBB-44EE-B99B-7D03F44643E4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewsLibrarySearch", "NlSearchLib\NewsLibrarySearch.csproj", "{1B295501-ACBB-44EE-B99B-7D03F44643E4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewsLibrarySearchUI", "WebApplication2\NewsLibrarySearchUI.csproj", "{532E9CD2-4070-42C9-BE6E-44B95D2AF0E4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewsLibrarySearchUI", "NewsLibrarySearchWebUI\NewsLibrarySearchUI.csproj", "{532E9CD2-4070-42C9-BE6E-44B95D2AF0E4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

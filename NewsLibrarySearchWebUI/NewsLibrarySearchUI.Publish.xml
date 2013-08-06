@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<publishData>
+  <publishProfile publishUrl="ftp://184.173.161.69/httpdocs/nllib" deleteExistingFiles="True" ftpAnonymousLogin="False" ftpPassiveMode="True" msdeploySite="" msdeploySiteID="" msdeployRemoteSitePhysicalPath="" msdeployAllowUntrustedCertificate="False" msdeploySkipExtraFilesOnServer="True" msdeployMarkAsApp="False" profileName="NlProf1" publishMethod="FTP" replaceMatchingFiles="False" userName="Salrillian" savePWD="True" userPWD="AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAvuZgJQDW+km+sZMLk9455wAAAAACAAAAAAADZgAAwAAAABAAAAASQ4icR2Kw6PV573IYDxBnAAAAAASAAACgAAAAEAAAAOSC0zjMBy4FAUZlRLKm1HAYAAAAMsJvEC2UXmJPL/fP48OfgoSOT1viTJYmFAAAANLTvcQf5atrUvvRpC8o6IegMsLv" SelectedForPublish="True">
+    <file relUrl="bin/NewsLibrarySearch.dll" publishTime="07/30/2013 15:41:20" />
+    <file relUrl="bin/NewsLibrarySearch.pdb" publishTime="07/30/2013 15:41:20" />
+    <file relUrl="Scripts/jquery-1.4.1.min.js" publishTime="07/24/2013 13:46:12" />
+    <file relUrl="Scripts/jquery-1.4.1-vsdoc.js" publishTime="07/24/2013 13:46:12" />
+    <file relUrl="Web.config" publishTime="08/01/2013 15:55:50" />
+    <file relUrl="Styles/Site.css" publishTime="08/01/2013 09:47:05" />
+    <file relUrl="bin/NewsLibrarySearchUI.dll" publishTime="08/01/2013 16:05:28" />
+    <file relUrl="Default.aspx" publishTime="08/01/2013 16:04:22" />
+    <file relUrl="Site.Master" publishTime="07/30/2013 09:22:31" />
+    <file relUrl="bin/NewsLibrarySearchUI.pdb" publishTime="08/01/2013 16:05:28" />
+    <file relUrl="Global.asax" publishTime="07/24/2013 13:46:12" />
+    <file relUrl="Scripts/jquery-1.4.1.js" publishTime="07/24/2013 13:46:12" />
+  </publishProfile>
+</publishData>

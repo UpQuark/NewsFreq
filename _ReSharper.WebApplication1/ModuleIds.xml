@@ -1,0 +1,6 @@
+<Modules>
+  <Module PersistentId="7EF98DA8-0B3C-46DF-BDA5-8F823FB23D05" ModuleId="WebApplication1" />
+  <Module PersistentId="B9EB812B-3766-4674-9A6C-5EF7DD933FDC" ModuleId="ConsoleApplication1" />
+  <Module PersistentId="1B295501-ACBB-44EE-B99B-7D03F44643E4" ModuleId="ClassLibrary1" />
+  <Module PersistentId="532E9CD2-4070-42C9-BE6E-44B95D2AF0E4" ModuleId="WebApplication2" />
+</Modules>

@@ -1,0 +1,751 @@
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>NewsLibrary.com - newspaper archive, clipping service - newspapers and other news sources</title>
+<link TYPE="text/css" HREF="http://infoweb.newsbank.com/css/nbfulltext-style.css" REL="STYLESHEET">
+<link type="text/css" href="http://infoweb.newsbank.com/css/consumer_footer_partner.css" rel="stylesheet">
+<meta content="Complete newspaper archive of hundreds of newspapers plus other news sources.  News research made easy.  Used for background research, due dilligence, and as a news clipping service." name="DESCRIPTION">
+<meta content="newspaper archive, news archive, news archives, newspaper archives, newspaper search, news search, newspapers, archives, old archives, news, online archives, archive access, information, information archive, news service, news wires, newswires, research" name="keywords">
+<script type="text/JavaScript" language="javascript" src="http://infoweb.newsbank.com/scripts/aggScripts.js"></script><script type="text/JavaScript" language="javascript" src="http://infoweb.newsbank.com/scripts/InfoWeb.js"></script><script type="text/Javascript" language="javascript" src="http://infoweb.newsbank.com/scripts/current-customized.js"></script><script type="text/JavaScript" language="javascript" src="http://infoweb.newsbank.com/scripts/current-doc.js"></script><script language="javascript">
+
+
+		
+
+	function emailCheck (str,alertMsg) {			
+		var toArr = str.split(',');		
+		var multiCheck = true;		
+		for(var i=0;i<toArr.length;i++){
+			//alert(i);
+			if(!checkSub(toArr[i])){
+				am = alertMsg ? alertMsg : "The email address entered ("+toArr[i]+") is invalid. Please correct the address and try again.";
+				alert(am);
+				multiCheck = false;
+				break;
+			}
+		}		
+		function checkSub (str) {
+			var valid = false;
+			var emCheck  = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;						
+			if (emCheck.test(str.trim())){valid = true;}		
+			return valid;			
+		}		
+		return multiCheck;		
+	}
+
+	function emailNL (obj) {
+		var re = /^[a-z0-9_+.-]+\@([a-z0-9-]+\.)+[a-z0-9]{2,4}$/i;
+		var emailTo = obj['f_address'];
+		var emailFrom = obj['f_from'];
+
+		if (emailTo.value != '') {
+			var retValue = emailCheck (emailTo.value);
+			if (retValue == false){
+				emailTo.focus();
+				return false
+			}
+		} else {
+			alert('Enter an email address to send the article.');
+			emailTo.focus();
+			return false;
+		}
+		if (emailFrom.value != '') {					
+			if (!re.test(emailFrom.value.trim())) {
+				alert("The email address entered ("+ emailFrom.value +") is invalid. Please correct the address and try again.");			
+				emailFrom.focus();
+				return false;
+			}
+		} else {
+			alert('Enter your email address to send the article.');
+			emailFrom.focus();
+			return false;
+		}
+		
+	}
+
+	String.prototype.trim = function(){ 
+		return this.replace(/^\s*|\s*$/g,"");
+	}
+
+		function submitCustomList (action, listToSave, listID) {		
+			var multiValue = '';
+			for(var i = 0; document.forms[0].length > i; i++){	
+				if(document.forms[0].elements[i].checked && document.forms[0].elements[i].value != '' && document.forms[0].elements[i].type == 'checkbox'){				
+					multiValue = multiValue + document.forms[0].elements[i].value + '|';
+				}
+			}			
+			if(action == 'clSaveNew' && listToSave == ''){
+				alert("Please name your source list in the input field above the 'save to new list' link.");
+			}else if(action == 'clSaveNew'){
+			 document.location.href = '/nl-search/we/Archives?p_action=susave&f_userkey=&f_group=&f_systemid=&f_forcedaction=keyword&f_datatypeid=0FE0C0B24CB570CB&f_searchString='+multiValue+'&f_clName='+listToSave+'&f_susraction='+action+'&f_gotonew=yes';	
+		
+			}else if(action == 'clSaveCurrent'){
+			document.location.href = '/nl-search/we/Archives?p_action=susave&f_userkey=&f_group=&f_systemid=&f_forcedaction=keyword&f_datatypeid=0FE0C0B24CB570CB&f_searchString='+multiValue+'&f_clName='+listToSave+'&f_susraction='+action+'&f_dataid='+listID+'&s_listID='+listID;	
+		
+			}
+		}	
+		function repopulate () {		
+			var popSourceString = "";
+			
+			if(typeof(document.forms[0].sourceCheckBox) == 'object'){
+				var numBoxes = (document.forms[0].sourceCheckBox.length) ? document.forms[0].sourceCheckBox.length : 1;
+				for(var i = 0; numBoxes > i; i++){	
+					if(numBoxes == 1){
+						if(popSourceString.search(document.forms[0].sourceCheckBox.value) != -1){
+							document.forms[0].sourceCheckBox.checked = true;
+						}
+					}else{
+						if(popSourceString.search(document.forms[0].sourceCheckBox[i].value) != -1){
+							document.forms[0].sourceCheckBox[i].checked = true;
+						}
+					}								
+				}
+			}
+		}		
+		
+	</script><script type="text/javascript" src="http://www.google-analytics.com/urchin.js"></script><script type="text/javascript">
+_uacct = "UA-126152-3";
+urchinTracker();
+</script>
+</HEAD>
+<BODY onLoad="repopulate()" BGCOLOR="#FFFFFF" LEFTMARGIN="0" TOPMARGIN="0" MARGINWIDTH="0" MARGINHEIGHT="0">
+<script language="javascript">holdupSearch=false;
+				
+		
+		isNS4 = false;
+		if(window.navigator.userAgent.indexOf('Mozilla/4') != -1 && window.navigator.appName.indexOf('Netscape') != -1){
+			isNS4 = true;
+		}else{
+			document.write("<div id='contentLayer' style='width:100%; height:100%; z-index:1; overflow: visible; visibility: visible; left: 0px; top: 0px;'>");
+		}
+		
+	</script>
+<CENTER>
+<TABLE CELLSPACING="0" CELLPADDING="0" BORDER="0" WIDTH="780">
+<TR>
+<TD>
+<TABLE HEIGHT="100" CELLSPACING="0" CELLPADDING="0" BORDER="0" WIDTH="100%">
+<TR>
+<TD valign="top" bgcolor="#FFFFFF" height="5"></TD>
+</TR>
+<TR>
+<TD width="200" bgcolor="#FFFFFF" align="center" valign="middle"><img alt="NewsLibrary.com - newspaper archive, clipping service - newspapers and other news sources" border="0" height="47" width="200" src="http://images.newsbank.com/infoweb/newslibrary2/nl-logo.jpg"></TD><TD width="50"></TD><TD>
+<table bgcolor="CCCCCC" width="470" border="0" cellspacing="0" cellpadding="1">
+<tr>
+<td><span class="ad">
+<center>advertisement</center>
+</span>
+<form target="_blank" method="get" action="http://www.genealogybank.com/gbnk/" style="margin:0px;" name="adform">
+<table bgcolor="#ffffff" style="border:5px solid #87ad27;" cellpadding="0" cellspacing="0" border="0" width="568">
+<tr>
+<td>
+<table align="right" cellpadding="0" cellspacing="0" border="0" width="553">
+<tr>
+<td>
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td height="22" align="left" style="color: #4a6a02; font-family: Verdana, Geneva, sans-serif; font-size: 12px; font-weight: bold;" colspan="2">
+									                        Discover<span style="font-size: 6px;">&nbsp;</span>Your<span style="font-size: 6px;">&nbsp;</span>Ancestors<span style="font-size: 6px;">&nbsp;</span>in<span style="font-size: 6px;">&nbsp;</span>Newspapers<span style="font-size: 6px;">&nbsp;</span>1690-Today!
+									                    </td>
+</tr>
+<tr>
+<td width="210" height="58" align="left" style="color:#221e20; font-family:Verdana, Geneva, sans-serif; font-size:12px;">
+<div>Last Name <input value="" type="text" name="lname" style="color:#333333; background:#fdde73 url(http://www.genealogybank.com/static/images/search-ad-images/txtboxbg.png) no-repeat; border: 1px solid #d6d1ca; height:20px; width:120px; padding:3px 2px 0px 3px; font-family:Verdana, Geneva, sans-serif; font-size:12px;">
+</div>
+</td><td width="141" align="center" height="58"><input alt="Search Now" style="border:0px; width:130px; height:50px;" src="http://www.genealogybank.com/static/images/search-ad-images/search-now-animated-sm.gif" type="image"></td>
+</tr>
+</table>
+</td><td align="center" height="70" width="202"><img alt="GenealogyBank.com" height="54" width="199" src="http://www.genealogybank.com/static/images/search-ad-images/gb-logo-new-199x54.png"></td>
+</tr>
+</table>
+<input type="hidden" value="1" name="pq"><input type="hidden" value="nl_homepage" name="s_referrer"><input type="hidden" value="nl_homepage" name="utm_source"><input type="hidden" value="nl_homepage_ad" name="s_trackval"><input type="hidden" value="nl_homepage_ad" name="utm_campaign"><input type="hidden" value="lastname_568x90_srchbnnr" name="s_siteloc"><input type="hidden" value="lastname_568x90_srchbnnr" name="utm_medium"><input type="hidden" value="69919" name="kbid"></td>
+</tr>
+</table>
+</form>
+</td>
+</tr>
+</table>
+</TD>
+</TR>
+</TABLE>
+</TD>
+</TR>
+<TR>
+<TD>
+<TABLE WIDTH="100%" HEIGHT="30" CELLPADDING="0" CELLSPACING="0">
+<TR>
+<TD class="searchFieldTitlesBig" valign="center" align="left"></TD><TD align="right"><A HREF="https://verify1.newsbank.com/cgi-bin/serviceuser/NewsLibrary?url=http://nl.newsbank.com/serviceuser/Archives/newslibrary2/userlogin/NewsLibrary/0F96E0EFA4084051/NewsLibrary/0FE0C0B24CB570CB%26s_log%253Dyes%26nbid%253D%26d_sources%253Dlocation%26d_place%253DUnited%20States&" class="med-link"><b>Log In</b></A> | <A HREF="http://nl.newsbank.com/cgi-bin/ngate/NewsLibrary?nextpage=https://verify1.newsbank.com/cgi-bin/ncom/NewsLibrary/ec_register" class="med-link"><b>Register</b></A></TD>
+</TR>
+</TABLE>
+</TD>
+</TR>
+<TR>
+<TD>
+<CENTER>
+<TABLE cellspacing="0" cellpadding="0">
+<tr>
+<TD background="http://images.newsbank.com/infoweb/newslibrary2/off-table-background.jpg" width="25px" valign="top" align="right"><IMG src="http://images.newsbank.com/infoweb/newslibrary2/left-off-corner2.jpg"></TD><TD background="http://images.newsbank.com/infoweb/newslibrary2/off-table-background.jpg" align="center" valign="center"><A href="/nl-search/we/Archives/?p_action=home&p_product=NewsLibrary&p_theme=newslibrary2&p_queryname=4000&d_sources=home&d_place=&p_nbid=&p_multi=&s_search_type=keyword&s_home=&p_field_psudo-sort-0=psudo-sort&p_field_date-0=YMD_date&p_params_date-0=date:B,E&p_field_base-0=&p_text_base-0=hello&p_sort=_rank_:D" onClick="" class="off-tab-text">Home</A></TD><TD bgcolor="A01510" width="25px" valign="top" align="left"><IMG src="http://images.newsbank.com/infoweb/newslibrary2/right-off-corner2.jpg"></TD><TD background="http://images.newsbank.com/infoweb/newslibrary2/on-table-background.jpg" width="25px" valign="top" align="right"><IMG src="http://images.newsbank.com/infoweb/newslibrary2/left-on-corner2.jpg"></TD><TD background="http://images.newsbank.com/infoweb/newslibrary2/on-table-background2.jpg" align="center" valign="center"><A href="/nl-search/we/Archives/?p_action=keyword&p_product=NewsLibrary&p_theme=newslibrary2&p_queryname=4000&d_sources=location&d_place=&p_nbid=&p_multi=&s_search_type=keyword&&p_field_psudo-sort-0=psudo-sort&p_field_date-0=YMD_date&p_params_date-0=date:B,E&p_field_base-0=&p_text_base-0=hello&p_sort=_rank_:D" onClick="" class="on-tab-text">Search</A></TD><TD bgcolor="EFE2BC" width="25px" valign="top" align="left"><IMG src="http://images.newsbank.com/infoweb/newslibrary2/right-on-corner2.jpg"></TD><TD background="http://images.newsbank.com/infoweb/newslibrary2/off-table-background.jpg" width="25px" valign="top" align="right"><IMG src="http://images.newsbank.com/infoweb/newslibrary2/left-off-corner2.jpg"></TD><TD background="http://images.newsbank.com/infoweb/newslibrary2/off-table-background.jpg" align="center" valign="center"><A href="/nl-search/we/Archives/?p_action=savedsearches&p_product=NewsLibrary&p_theme=newslibrary2&p_queryname=4000&d_sources=savedsearches&d_place=&p_nbid=&p_multi=&s_search_type=keyword&&p_field_psudo-sort-0=psudo-sort&p_field_date-0=YMD_date&p_params_date-0=date:B,E&p_field_base-0=&p_text_base-0=hello&p_sort=_rank_:D" onClick="" class="off-tab-text">Tracked Searches</A></TD><TD bgcolor="A01510" width="25px" valign="top" align="left"><IMG src="http://images.newsbank.com/infoweb/newslibrary2/right-off-corner2.jpg"></TD><TD background="http://images.newsbank.com/infoweb/newslibrary2/off-table-background.jpg" width="25px" valign="top" align="right"><IMG src="http://images.newsbank.com/infoweb/newslibrary2/left-off-corner2.jpg"></TD><TD background="http://images.newsbank.com/infoweb/newslibrary2/off-table-background.jpg" align="center" valign="center"><A href="/nl-search/we/Archives/?p_action=savedarticles&p_product=NewsLibrary&p_theme=newslibrary2&p_queryname=4000&d_sources=savedarticles&d_place=&p_nbid=&p_multi=&s_search_type=keyword&&p_field_psudo-sort-0=psudo-sort&p_field_date-0=YMD_date&p_params_date-0=date:B,E&p_field_base-0=&p_text_base-0=hello&p_sort=_rank_:D" onClick="" class="off-tab-text">Saved Articles</A></TD><TD bgcolor="A01510" width="25px" valign="top" align="left"><IMG src="http://images.newsbank.com/infoweb/newslibrary2/right-off-corner2.jpg"></TD><TD background="http://images.newsbank.com/infoweb/newslibrary2/off-table-background.jpg" width="25px" valign="top" align="right"><IMG src="http://images.newsbank.com/infoweb/newslibrary2/left-off-corner2.jpg"></TD><TD background="http://images.newsbank.com/infoweb/newslibrary2/off-table-background.jpg" align="center" valign="center"><A href="/nl-search/we/Archives/?p_action=searchhistory&p_product=NewsLibrary&p_theme=newslibrary2&p_queryname=4000&d_sources=history&d_place=&p_nbid=&p_multi=&s_search_type=keyword&&p_field_psudo-sort-0=psudo-sort&p_field_date-0=YMD_date&p_params_date-0=date:B,E&p_field_base-0=&p_text_base-0=hello&p_sort=_rank_:D" onClick="" class="off-tab-text">Search History</A></TD><TD bgcolor="A01510" width="25px" valign="top" align="left"><IMG src="http://images.newsbank.com/infoweb/newslibrary2/right-off-corner2.jpg"></TD>
+</tr>
+</TABLE>
+</CENTER>
+</TD>
+</TR>
+<TR>
+<TD background="http://images.newsbank.com/infoweb/newslibrary2/on-table-background2.jpg" height="5px"></TD>
+</TR>
+<TR BGCOLOR="#000000">
+<TD height="1" width="780"></TD>
+</TR>
+<TR>
+<TD WIDTH="780">
+<TABLE VALIGN="top" CELLSPACING="0" CELLPADDING="0" BORDER="0" WIDTH="780">
+<TR>
+<TD BGCOLOR="CCCCCC" HEIGHT="100%" ALIGN="left" VALIGN="top" WIDTH="150">
+<TABLE valign="top" align="left" CELLSPACING="0" CELLPADDING="0" BGCOLOR="CCCCCC" BORDER="0" WIDTH="150">
+<TR>
+<TD valign="top" align="left">
+<table align="left" BGCOLOR="CCCCCC" CELLSPACING="0" CELLPADDING="0" BORDER="0" WIDTH="150">
+<TR>
+<TD class="navBarBucketSubCellHeader" HEIGHT="20" WIDTH="150">SEARCH INSTEAD:</TD>
+</TR>
+<TR>
+<TD class="navBarBucketSubCell" HEIGHT="20" WIDTH="150"><A href="/nl-search/we/Archives/?p_action=keyword&p_product=NewsLibrary&p_theme=newslibrary2&p_queryname=4000&d_sources=location&d_place=United%20States&p_nbid=&p_multi=&s_search_type=keyword&&p_field_psudo-sort-0=psudo-sort&p_field_date-0=YMD_date&p_params_date-0=date:B,E&p_field_base-0=&p_text_base-0=hello&p_sort=_rank_:D" onClick="" class="client-type">United States</A></TD>
+</TR>
+<TR>
+<TD class="navBarBucketSubCell" HEIGHT="20" WIDTH="150"><A href="/nl-search/we/Archives/?p_action=keyword&p_product=NewsLibrary&p_theme=newslibrary2&p_queryname=4000&d_sources=all&d_place=United%20States&p_nbid=&p_multi=&s_search_type=keyword&&p_field_psudo-sort-0=psudo-sort&p_field_date-0=YMD_date&p_params_date-0=date:B,E&p_field_base-0=&p_text_base-0=hello&p_sort=_rank_:D" onClick="" class="client-type">All Papers</A></TD>
+</TR>
+<TR>
+<TD class="navBarBucketSubCell" HEIGHT="20" WIDTH="150"><A href="/nl-search/we/Archives/?p_action=keyword&p_product=NewsLibrary&p_theme=newslibrary2&p_queryname=4000&d_sources=location&d_place=Newswires%20and%20Transcripts&p_nbid=&p_multi=&s_search_type=keyword&&p_field_psudo-sort-0=psudo-sort&p_field_date-0=YMD_date&p_params_date-0=date:B,E&p_field_base-0=&p_text_base-0=hello&p_sort=_rank_:D" onClick="" class="client-type">Newswires/Transcripts</A></TD>
+</TR>
+<TR>
+<TD class="navBarBucketSubCell" HEIGHT="20" WIDTH="150"><A href="/nl-search/we/Archives/?p_action=keyword&p_product=NewsLibrary&p_theme=newslibrary2&p_queryname=4000&d_sources=custom&d_place=United%20States&p_nbid=&p_multi=&s_search_type=keyword&&p_field_psudo-sort-0=psudo-sort&p_field_date-0=YMD_date&p_params_date-0=date:B,E&p_field_base-0=&p_text_base-0=hello&p_sort=_rank_:D" onClick="" class="client-type">Custom List</A></TD>
+</TR>
+</table>
+</TD>
+</TR>
+<TR>
+<TD valign="top" align="left">
+<table align="left" valign="middle" BGCOLOR="CCCCCC" CELLSPACING="0" CELLPADDING="0" BORDER="0" WIDTH="150">
+<TR>
+<TD class="navBarBucketSubCellHeader" align="left" VALIGN="middle" HEIGHT="20" WIDTH="150">NARROW TO:</TD>
+</TR>
+<TR>
+<TD class="navBarBucketSubCell" VALIGN="middle" HEIGHT="20" WIDTH="150">
+<form method="POST" action="/nl-search/we/Archives" name="newSearchnarrow1">
+<input value="NewsLibrary" name="p_product" type="hidden"><input value="search" name="p_action" type="hidden"><input value="newslibrary2" name="p_theme" type="hidden"><input value="4000" name="p_queryname" type="hidden"><input value="Pacific" name="d_place" type="hidden"><input value="location" name="d_sources" type="hidden"><input value="keyword" name="s_search_type" type="hidden"><input value="psudo-sort" name="p_field_psudo-sort-0" type="hidden"><input value="YMD_date" name="p_field_date-0" type="hidden"><input value="date:B,E" name="p_params_date-0" type="hidden"><input value="" name="p_field_base-0" type="hidden"><input value="hello" name="p_text_base-0" type="hidden"><input value="ZIQO|ATWA|ARWA|BIR1|BIWA|BRB5|WBBJ|BEHB|WBHBB|BLCH|NCB1|CKR1|CWPR|WCVR|C2KS|ZIQR|C7KWS|CKRS|CKOB|CWCB|CBHC|VC|CRBE|EWHB|DNWA|EBRB|ADWB|DPTW|WECH|FWMZ|FFFF|F1K8|ZIQM|ZIQN|ISEZ|IWLZ|IRWA|JSJF|KRKK|KCJB|WKCN|KCWA|WKNN|BMSB|WKSBB|LCMC|LEWA|MVRZ|MGWA|MIRZ|WN5K|ZIQP|TNTB|NTBT1|NCNO|NKHZ|NNWA|NNW9|OVGT|OLPB|OBOO|PPCP|PDNP|ZMDG|PGBG|POIZ|ZMFE|QCHQ|RRWA|RRR7|SRS3|SESS|IG|SE|STBS|SGWA|SGHB|SVRZ|SPBP|SWRC|SEWA|SR|SECB|TEWA|TCHB|TCHBK|TRWA|VBJB|VMIB|VLNN|ZMHI|WBJ9|WWDB|WCWA|WNTC|ZMGS|VMWB|YEWA|YHRB|ADHA|AOOB|ADTA|BAKH|BEOR|MTEB|BULB|CTSB|CCS6|LCAA|CGTC|CGTBC|CURT|PJCB|ASDB|OSDB|DLCB|EPOP|EORB|EEOR|KFNB|HNSS|HRNH|KKOB|LEOR|LRMM|ZMEK|MEM4|KGW8|OBLG|OR|OBPP|OWEAP|PIF1|PEOR|RSOR|ERGB|OSBJ|SNOR|SMS5|WCCB|WOJM|CBWB|ZIAQ|ZIAK|ACOB|AVE|ADPB|ATSB|ZMGI|ALRB|ACEN|AEA8|AVPB|AANM|APDB|AWCB|LCAB|CFAB|AJCA|ACPB|BCAB|BAKBL|BCWEB|BECA|GBUB|BCC9|BCHB|BAVB|BERB|BVHB|BHWB|BBGB|BWDB|BLB2|BWCB|BUGB|BLDN|BSCB|GCCB|CANW|CPB8|CWC8|CCA2|CACA|CBTB|CRS9|CPBB|CYNB|ZIAP|ZIAM|CEBB|CSCB|CERB|CHIE|CNOB|CHLB|CVEC|CLKB|ZMCM|CRCB|CRCA|CCA6|CONB|ZMGY|CNCA|CMBB|CC|ZMGZ|ZISE|CCOB|CUPB|C55L|SDAS|BRZB|ZUAQ|DCB9|WDDB|DFN9U|DIRB|PADB|LA|DPC8|SFDB|ZMGB|HDRB|DTIUF|DTCC|ZUAT|DVTB|DVEB|DLNB|ZMCS|DVSB|DTTT|ZMDH|EBDB|EBE1|EGPB|EVAL|ERDB|ECHB|EDHT|EMSS|ELTB|EVGG|ZMFU|EOTB|EECA|FTF9|FBAB|ZIAJ|F2KWO|F5KS|FK4S|FBLB|FB|FBB1|FEFF|GCEG|GIWB|NPG2|GHGB|GZ|UGS1|HMBR|HNSB|ZMDS|HDSB|HBBB|HBFV|ITCI|IMPB|IVP|ZIAN|ZIRK|IENN|VDBB|IRBB|LEWB|KVSB|KCRB|LAOB|LWTB|LALB|LLCB|LCWB|LCVS|LGFB|LOPC|RCPB|LVL9|DACL|LBCP|LCRB|LNCB|LACB|LNML|LODB|LPRB|LBEL|LB|LNCA|LDTB|LAEL|LOLB|SLAB|LBEB|LGDB|LGWB|MTCB|MUBB|MTMM|MTBB|MIJB|MNGM|MBNB|MSSB|MSSBM|DMDT|MPPB|MS|MBBM|MEM8|MWCB|MC|MCWS|MEM3|PCMB|MPAB|MREB|MNLB|MSHM|MLAB|CPMD|NVR1|ZIAO|ZIAL|ZIAR|CNDS|NNSB|NCYT|NSPP|ODLB|OECA|OKTB|OPY1|OVNB|OC|OCRBB|ORCHI|ZMHL|OMRB|OWLB|PPSB|LPCB|PFTB|CPSE|PVPB|PPOB|PLNB|PICB|PJN1|PSWB|PSS2|PHRB|PNTB|PPP6|PVRB|SA|RS|PTRR|PUCMM|PYCM|ZMFO|RBDB|RSLB|RRSBR|RDFB|RCDB|RWTB|CVRB|RRCB|RBNB|RCRB|RECA|ROSB|SB|SBBS1|SES7|SDES|SDUN|SDUT|SDUTS|SFVB|SFCB|CSFE|SFFS|SGVN|SGVB|SJES|SJ|SMCB|SDJB|SMAB|SAES|SBES|ZMCD|SCS2V|SCS9|SMTB|SMDB|SMSB|SRNB|SCEB|SMWB|OSSB|SIGB|SIVB|YCSB|SITB|SSSSR|SSDS|SLGB|SQOB|SHS6|STDUV|ZMGM|SES4|SBCB|SVSB|ZMAI|TOAB|TPRB|VTHB|ETSB|TVHB|TVTP|SO|TBSB|TLJB|TCTB|UDJB|UDS1|UGLB|VASB|VJSS|VCSB|VCSBB|VEEVF|CVEEV|CVEEV1|WCC7|CHWB|WTDB|WDNB|WNCB|WGRB|ZMDV|AS|ADNBA|AEAK|APAA|ASAK|AWJA|BBTA|CTAK|ADSS|DDAK|FDNB|JUEB|KDMB|KTVB|MSVF|KTUU|NNAK|NLAA|APCB|SPLS|SSFF|TDBA|ZIDE|BIWB|ZIDF|ZIDC|GILI|HHTH|HBHI|HRHI|HNAB|HEHI|HMHI|HSAXH|HSHI|HSBB|HWHH|KLOH|KKOH|KHH1|BKKA|KKH1|MMKK|MDKB|ZIDG|NHNW|WNHB|HBH9|WHTK" name="p_multi" type="hidden">
+</form>
+<a href="javascript:document.forms['newSearchnarrow1'].submit()" class="client-type" onClick="javascript:searchMessage();">Pacific</a></TD>
+</TR>
+<TR>
+<TD class="navBarBucketSubCell" VALIGN="middle" HEIGHT="20" WIDTH="150">
+<form method="POST" action="/nl-search/we/Archives" name="newSearchnarrow2">
+<input value="NewsLibrary" name="p_product" type="hidden"><input value="search" name="p_action" type="hidden"><input value="newslibrary2" name="p_theme" type="hidden"><input value="4000" name="p_queryname" type="hidden"><input value="South Atlantic" name="d_place" type="hidden"><input value="location" name="d_sources" type="hidden"><input value="keyword" name="s_search_type" type="hidden"><input value="psudo-sort" name="p_field_psudo-sort-0" type="hidden"><input value="YMD_date" name="p_field_date-0" type="hidden"><input value="date:B,E" name="p_params_date-0" type="hidden"><input value="" name="p_field_base-0" type="hidden"><input value="hello" name="p_text_base-0" type="hidden"><input value="BDTBB|BEWV|CDMB|CEWV|CIZB|CECK|CVLB|DAMM|ZMEQ|FTOO|GBTB|HHDB|IHRB|JHRB|VLBB|MDNT|MHWV|WVMB|PEWV|WVRB|PTWV|RHBB|JSNR|TWVB|TWLS|WEWV|WDYB|WVEC|AGZB|ANEP|ACHB|ACVB|AEVA|ASGM|LCVB|ATL9|BBVA|BCMB2|BHCR|BHCB|BUMWF|BLVBB|BCVB|CARB|CCC2|CDC5|WTKR|WTVR|WDBJ|CVVB|VCBJ|CHVI|CEVA|CRVR|CTVCR|CGMUF|CULP|CSEB|VNRB|DPRO|DPBC|DVRB|DIVI|VBOB|FCVB|FSCB|FPVA2|FFSB|GGGB|CVGG|GFCB|GFMO|GCRB|HSTHH|HCVB|HCUV|VJPB|LHCB|LTVA|LBVA|MCVA|MCEM|MCVB|MVLB|MLAA|MVGB|N10W|NCTA|NAVA|NMES|NMBB|NVIR|NGLL|NEVA|NFJB|NAGB|NVDB|NVPR|VOCR|PNCB|PHWH|PTGG|PIXB|RCVB|RNPB2|REVA|RTDB|RTDBB|RER7|RO|RTWB|RLUF|VSJB|SVBB|SVHB|SCNM2|SCVB|VSCS1|TRVR|VVBB|VOCB|VBEV|VBMB|VGWW|VALB|NK|RWSB|VWCN2|VWSB|WEVA|A9WWC|ANRB|APXB|BHN1|BLA1|BDJB|BOLB|BRNC|BBAA|BBSBB|CENCD|CATB|CRYN|C9WG|CECH|CJNB|CO|COBC|CHRB|CHE1|CDND|CLPB|RCTB|CTA9|CLCC|ECDB|FCDB|DDHB|DHRR|ZMEA|GVRB|DSTT|ZMGO|DLNL|DTDT|DTPHK|DENC|EAWN|ZMCZ|EJMM|FEF1|FENC|FV|FOBB|FW81|FTLL|ZMED|FVIB|NGNB|GENC|GGNG|ZMDL|DHSB|HICK|HPEB|HHN1|HSSB|ITBN|JFPB|KCKK|LEXB|NCOB|EWN1|MDWN|MTCC|MTNC|MOTM|MTBBB|ZMES|MANB|NGNN|N17W|36WC|GB|NRBG|RLOB|NEOBS|NOWER|NHNC|WNRB|NTOP|NCLB|ONEB|PDCB|PPNB|PWH1|PLTB|SPNB|PBNC|PNLB|QCQUC|RENC|RGAB|RSCR|REIR|RBAB|RCJB|ROBB|NCTB|SPNC|SSIB|SHRB|ZMAY|SMFH|SHEB|SPR9|SLNC|SNAP|ZMFQ|WSNB|SRLK|SKNB|ZMGK|SHCB|TLTB|TRNR|TTT9|TDWB|TLG |ZMCH|TSVB|TRBB|TDBB|WLEC|WSFB|WDNC|WWNB|WTNC|WILB|NWSE|WJ|WSJBB|YRPB|BCNH|CBLB|DEWB|DPDE|ETHN|GHLB|HCNH|JHDB|LSRB|MLPP|MTDE|MBDE|MCDE|NLPB|NPDE|R4FB|SCST|SCGG|SPDE|WEDE|AEAS|AHAMH|AWAF|ABMB|MDAB|ANEE|BEMD|BTGB|BSEB|BMMB|DBCC|SBTB|BMBB|FSBL|CGM9|AN|CCTW|CVTB|CWIG|CBLE|CYPB|CFMB|CTMD|CTH8|CTDE|CNTC|BDRB|CDSB|EEMB|EWCC|FSMS|ZMDD|DMHH|HCTB|JEFB|BJTB|JHNL|KCNB|LLMB|MAMC|NCMB|NEBB|NBRP|NRMB|OMTB|PAMB|PGSB|QUIN1|RHM6|CROB|SFM|ESDB|BS|SSEB|DTRB|BMHB|TOWB|WEMB|ASFB|WDBB|BABG|CSDB|CXBB|DCHU|EAU1|EPGB|GUV1|HLNB|HLWB|HGU1|ITWB|ZMGC|ZMHP|ZMGP|ZCBM|WDEW|FMWB|WJWB|WT|AIKB|AIMB|AIMBB|BGZ1|SBGB1|BTB9|BHPB|CMNB|CPMB|CB7W|CW1W|SCSE|SCCB|CNRC|CAOB|CESC|MBIB|DJMB|WSDB|DCEB|EPEB|EADB|ENQH|FMIT|GFLB|GTSC|GESC|GCSC|HTRS|HRIB|RHHB|SHJB|CHIB|IJG1|ILP1|BEBB|WJRB|LAWY|LNSCB|MSME1|MESB|MORNN|MNBF|NW2C|NBOB|NPLL1|PPJB|PKSB|CPCB|PPPB|BJSB|SCLB|CS|SBSC|MB|SNBM|CTC5|TTOC|OTDB|UDTB|WOHB2|A2WWA|A6WF|AEA5|AHAG|ANGA|ATRB|ABHB|GAWB|AEGA|AJTB|AT|AGCB|ACBA|AEA6|BCNW|BNGA|BRGRA|BSKK|BSMAM|ZMGL|BCN2|BISS|AGBB|C3WC|ZICZ|HTCC|GCLN|CTGA|CNFF|CNDB|CLSB|CAAB|SGPB|CSRB|CGCSM|CGPCD|CGEC|CDCC|DCGA|DTNC|NDKN|DCSD|DNGA|DWCB|ECJS|ENGG|EWAA|FCGA|GFCN|FNFZ|FCNB|FHGB|GADS|GDNG|GDPB|HDHB|HNFZ|AASI|JPAB|JCHB|JCNJ|KMGSM|KAGA|LGNB|GLOL|CL|CLEBB|LTGA|MEGA|MT|MTBM|MDJB|MTGA|MNGA|MOMB|N3WS|NNAA|THGA|GNCM|NCZB|NSSN|PCSD|PNDZ|PCP5|ARHB|RCZB|RNGA|GSSN|SEGA|SMNB|SAVB|SKGK|SAGA|SMPGR|SFNF|TAGA|TTGA|TTET|TGTT|GMTB|TGC1|TIPCF|URMB|VDLB|MWTB|WJHB|WPGP|GWCN|WPTN|8TFB|ZIBT|ZICL|A9WWO|ZIBZ|ZICR|ZICO|AFLA|ANFL|BONB|BLMT|BTMB|BBTK|BBVB|BBNA|BOCB|BTNB|BH|FBHBB|BOSB|BNBB|CBLL|ZICD|ZICK|ZICM|ZIBQ|ZICQ|CKBB|CFFO|CMDB|CNCB|CFZB|FCCCB|CNC9|CNFN|CCN8|CGNC|CPFP|CLT9|FTCNA|CNUSS|CNSUF|FCBN|ZIRP|LDCB|NJ|DSFB|ZMCT|DLAB|DTFL|FEOB|EN|ENHBB|ECMT|ESFB|FKKB|FNFF|FTUB|FTUBJ|FTUWJ|FLEF|FMLF|FWFM|FFTB|ZICH|ZICN|ZICS|ZICJ|ZIBS|FNFL|FMEF|GCQT|GEGG|GSGB|GCDB|GBRB|HHCCY|HERN|HEFL|HILD|HNFL|IBII|ZICE|IFAG|ISPNA|JCFL|JEJ1|JNFL|KGK1|KWCB|KSK9|LPMB|FLPJ|LPLB|FLWN|LLFB|LBFL|LBOB|MIEB|MFPB|FMBN|MEFL|FMGN|MH|MHBB|MHFL|MUTT|NDNB|NDNBB|FWNEN|NSTN|NJUJ|ZIBR|ZICI|ZICT|ZICG|ZICP|ZMFG|SFNB|NMOB|NPFB|ZMDF|OSBB|ONOO|FOLR|OTFT|OEFL|OMNO|OWKB|FOBO|PA|PBPB|PCOP|FPBN|FPCE|PPP4|PPFL|PTFL|PCO8|PCDB|PCTB|PGPC|TREB|RNDB|HT|FSOB|SNFN|SFTF|FSLB|SMCO|SMNS|SHOB|ARSB|FSPE|FS|SCTBB|SBFB|SIBSS|SDFL|TEFL|TMFL|TBET|TBMNT|SPTB|SPTBS|SPTWS|TT|FTTB|ZICF|TCBB|TCPBS|ZICA|ZICB|POFO|VGSB|VB|VSNB|VUWFP|WNCC|ZMFS|WPBEW|FWPN|DDBD|DDBBB|WVBSD|DDBW|WPSN" name="p_multi" type="hidden">
+</form>
+<a href="javascript:document.forms['newSearchnarrow2'].submit()" class="client-type" onClick="javascript:searchMessage();">South Atlantic</a></TD>
+</TR>
+<TR>
+<TD class="navBarBucketSubCell" VALIGN="middle" HEIGHT="20" WIDTH="150">
+<form method="POST" action="/nl-search/we/Archives" name="newSearchnarrow3">
+<input value="NewsLibrary" name="p_product" type="hidden"><input value="search" name="p_action" type="hidden"><input value="newslibrary2" name="p_theme" type="hidden"><input value="4000" name="p_queryname" type="hidden"><input value="U.S. Outlying Areas" name="d_place" type="hidden"><input value="location" name="d_sources" type="hidden"><input value="keyword" name="s_search_type" type="hidden"><input value="psudo-sort" name="p_field_psudo-sort-0" type="hidden"><input value="YMD_date" name="p_field_date-0" type="hidden"><input value="date:B,E" name="p_params_date-0" type="hidden"><input value="" name="p_field_base-0" type="hidden"><input value="hello" name="p_text_base-0" type="hidden"><input value="END1|SJSB|VIDN" name="p_multi" type="hidden">
+</form>
+<a href="javascript:document.forms['newSearchnarrow3'].submit()" class="client-type" onClick="javascript:searchMessage();">U.S. Outlying Areas</a></TD>
+</TR>
+<TR>
+<TD class="navBarBucketSubCell" VALIGN="middle" HEIGHT="20" WIDTH="150">
+<form method="POST" action="/nl-search/we/Archives" name="newSearchnarrow4">
+<input value="NewsLibrary" name="p_product" type="hidden"><input value="search" name="p_action" type="hidden"><input value="newslibrary2" name="p_theme" type="hidden"><input value="4000" name="p_queryname" type="hidden"><input value="Mountain" name="d_place" type="hidden"><input value="location" name="d_sources" type="hidden"><input value="keyword" name="s_search_type" type="hidden"><input value="psudo-sort" name="p_field_psudo-sort-0" type="hidden"><input value="YMD_date" name="p_field_date-0" type="hidden"><input value="date:B,E" name="p_params_date-0" type="hidden"><input value="" name="p_field_base-0" type="hidden"><input value="hello" name="p_text_base-0" type="hidden"><input value="BEMT|BEB7|BZMB|BDCBB|CFVP|DILC|AEBB|GFEG|HHNH|MKUM|LCLAP|MIMT|MEMT|ZMCI|NWMB|RMSB1|SHMT|WSNL|WNLL|WPW7|BEID|BCDBE|BFHB|CMID|CRAB|IDRB|IIFE|IPTB|IPTBB|ISJB|ISJBB|IDSB|IISB|IEPP|BPIP|LT|LMTBL|MEID|MNBB|MPDN|N7KB|PRII|SNPK|PRTP|MV|TFET|BILL|CEC3|CEC5|LDBB|NWYB|NWYB|RRAB|WTEB|ZIIY|VNNL|NBMB|BCIV|NBCV|ZIJE|CVLL|CCN3|ZIJB|ZISD|ZISC|DSTS|DVLB|EEII|ETL9|EDFP|ETEE|ZIJD|HENV|GVHV|HSW5|LVBPL|LVCL|LVE1|LVRB|LVS1|LVSBL|LVW1|LNTL|LRML|MLNM|ZIJC|NAVN|PVTB|ZIIW|RLNL|RENV|SRNR|SVLB|RYLL|SVLL|SVVB|SSVB|SVL9|SVNV|ZIJF|ZIJA|WVLB|DHPP|DUP1|DUCB|DSNB|ZMAP|EEOL|ECPBB|FK1K|LHJB|HTLL|ICS1|PCRB|PEUT|RRRB|SLCE|SLCWS|USLCW|SLTB|OSXB|SAPB|UBSR|VEVB|ZIAZ|ZIBD|ZIAT|ACO9|AJLB|ANRA|APG1|AECO|BCDB|BECO|BSB4|BRMB|BNTB|BRCO|CCEE|CVFMC|ZIAY|ZIBC|ZIAS|CCCZ|CCCI|CDCO|CHTB|CSJB|CSEC|CLUB|CCSEC|CZJB|CCO3|CIBB|CDCBB|DC|DLRB|LLRB|GJSB|LCDB|DECO|DP|DPBD|DCNPC|DRGB|ECN8|EHLL|EPTG|FCEF|CFLP|FMTB|FTCO|ZIAU|ZISG|F3KD|ZIAX|CSGB|GBCB|GWEAC|GTCO|CGJE|ZMDJ|HTTB|HRHL|SJAB|JAJJ|LJTD|LNCO|LMRB|LICO|LTVL|LLCO|MUNCG|MMNB|MDPM|ZIRL|ZIAV|ZIBA|ZIBB|NTSN|PCCO|PPCVP|PBJB|ZMFB|RBTB|RMCF1|RM|RRSBB|SUCC|TCEC|TGCG|ZIAW|WWCO|WRNG|AJGC|ACTP|ACIA|ADSB|ADFB|ADWT|AINA|ARNW|ARIG|APN9|BESY|BIPP|BNAN|CGDB|CHEX|CIAZ|SCN9|CMAM|CEAZ|CBNNA|DTTB|DDAZ|EACB|EMIM|ZMER|EEAZ|TAEB|FRABB|FK19|GEAZ|GIAZ|GAEG|GSAZ|GVNS|INCK|ITBBB|LETB|MMAZ|MEAZ|MLN9|MVDN|NIAZ|NSIS|PIP9|PTN9|PEAZ|PMAZ|NCA9|QCIB|RRPP|SSAZ|SMMNA|SPVN|SCVSG|SEAZ|STN9|SVHS|SNN8|SVL1|SPNA|SPMT|SCWI|SCYI|YUMA|SBYB|SSNA|SIAZ|TPVI|TVDC|TEAZ|TWT9|VSVB|VGA9|WSNA|YBDB|YEAZ|ZIIV|AODB|AEA1|AJ|AJBB|AQTB|CCAB|ZIIR|CCBG|ZMCL|ZMBC|FDTB|DHLB|BJFB|ZIIS|GIPB|LCSB|LVOB|LAMB|ZIIT|ZMFF|ZMFH|RDRB|RULL|RONB|SF|SCDP|SCPB|TAOS" name="p_multi" type="hidden">
+</form>
+<a href="javascript:document.forms['newSearchnarrow4'].submit()" class="client-type" onClick="javascript:searchMessage();">Mountain</a></TD>
+</TR>
+<TR>
+<TD class="navBarBucketSubCell" VALIGN="middle" HEIGHT="20" WIDTH="150">
+<form method="POST" action="/nl-search/we/Archives" name="newSearchnarrow5">
+<input value="NewsLibrary" name="p_product" type="hidden"><input value="search" name="p_action" type="hidden"><input value="newslibrary2" name="p_theme" type="hidden"><input value="4000" name="p_queryname" type="hidden"><input value="West North Central" name="d_place" type="hidden"><input value="location" name="d_sources" type="hidden"><input value="keyword" name="s_search_type" type="hidden"><input value="psudo-sort" name="p_field_psudo-sort-0" type="hidden"><input value="YMD_date" name="p_field_date-0" type="hidden"><input value="date:B,E" name="p_params_date-0" type="hidden"><input value="" name="p_field_base-0" type="hidden"><input value="hello" name="p_text_base-0" type="hidden"><input value="BBND|BEND|BK|CRND|DNWB|DLJB|DPD8|FEND|GF|HSND|JSJJ|LNND|MGND|MCIG|NMCJ|NMCR|NNTN|NMHB|NSND|UNUU|VCTR|VAVV|WDHW|AB|AABG|BCPB|CJPP|CSD9|ZMHC|HSS9|KSD9|MDLM|MCTT|RCER|RCJR|SFES|TSN9|AGNE|NBDS|BLNE|CRNE|COLTE|CCCBB|DNNE|DCBPD|FTFF|GATEV|GCG7|GIIB|GBNE|HLHH|KHKK|LCHL|LENE|LJSB|LJSW|NCNP|NPTN|OENE|OSNE|OWHB|OWHBO|PTNE|RRNE|SCHY|SHNE|SNP9|SJD1|WNNE|WNW3|YNTB|ARCA|ADGB|CLOO|CIKW|C1KW|CNTB|CDAX|DRDB|DCDG|EDTB|EM|CJAB|FLLL|GCTB|GCPG|HSVB|HDNB|HCNB|KKCK|KSCM|KCSP|LGKB|LTW9|JW|LTL9|MM|MSKS|MGSB|NKSB|ODNB|OHDB|PNSB|PTPB|SLJB|SWTB|SJNS|TCJB|TEKS|TTMNO|RTKT|KWDN|WE|WEBB|WEKS|ZIFV|GFAB|ALTA|AVRS|MADH|AMEA|BSLP|MBSC|BCSP|BPSP|BUNB|BSC9|CCNW|ZIFU|CDSP|CVMB|CHMB|CCNMM|CHFS|MCDT|CRSP|DGWW|DEMN|DED9|NT|DNTBB|ESCE|EDNB|EPSC|MESC|ESCSE|FFDJ|MFCB|ZIFW|FPMM|HRGX|GUSTV|DTHH|HSSH|HCLB|ZISI|JIPB|IDJB|LCCB|LMMB|LSC1|LMN9|MLRB|MMNN|MEM7|MBMN|MDNV|MEMN|MDMN|MMLB|WMDS|MAMB|MTMN|MVNB2|ZIFQ|NHGV|MCRN|NYAT|OMGPO|ZIFS|PIWX|CPJB|ZMHJ|PMN8|PSS9|ZMFI|PLAB|RFGB|MRSC|SNMN|SVPB|SVNB|SEH1|SCRNC|SJPS|MSJN|SLPS|SPES|SLLB|SP|MN|SMES|SGMN|SNS7|USDD|WPMN|WOLL|ZMHA|MWDN|WPW6|A8WA|AEDI|AUDM|ANTB|BNIA|BNRBA|BNTF|ICRE|ICCP|LCCD|CVWB|CHJC|CHCC|CANB|DDFB|DGCB|DNCC|IDCN|DEIA|DJDD1|IDBR|DMED|FCSF|CR|GGMM|HRHH|BHEB|HRIA|ISTD|IDID|KNIA|KJEB|LHOL|LTRB|MCPNO|MJIA|WT1W|NJIA|NHTN|NWTB|NDCRA|ORDD|OTGB|OSTB|OHOB|OCOO|OEIA|PCIA|QCBJ|QCTD|ROER|SBGG|SIA9|ISCE|ISCJ|SCJBS|DQ|ITCT|TAIA|TRUMW|VNTD|WCFC|KSPR|AAMO|BRCP|BSJB|BCJB|BDNBB|CDMO|CPMO|KMOV|CJMO|CJSB|MCME|CFPS|CTMO|DGWB|DJPM|KDRB|DSJB|DMHB|DNFM|EIMB|FPMO|KTVI|FSFF|GNMWS|HCRB|MHBJ|FMID|JCAB|JCNB|JCJB|JEMO|JGMB|JWEU|KCE1|KC|KCSBB|KDEB|WKJB|LSLC|LTL8|LEBD|LEEB|LCLBB|LCMCL|MCHM|MMO9|MBMO|MDFB|MCPNN|MJFB|MLMM|MCJT|MLMS|MMID|MTMO|KYTV|MNDN|NDJB|NCJF|NCJB|NSJB|MNCJ|NENB|NMMO|OJOB|OMJB|OSJA|PTBB|PJSS|PCMS|RAYB|RDNB|MSJT|ZMFT|SCJ8|SCJ7|SSJS|SCJ9|SCJS|SME9|SBRB|MSCJ|SJLJ|SJPB|MOAB|SDRB|SLES|SL|SPJS|MSHB|SLSCC|ZMBU|TRCJ|UNSS|VGM1|WJW8|WCCS|WJMO|WCJB|MWSS" name="p_multi" type="hidden">
+</form>
+<a href="javascript:document.forms['newSearchnarrow5'].submit()" class="client-type" onClick="javascript:searchMessage();">West North Central</a></TD>
+</TR>
+<TR>
+<TD class="navBarBucketSubCell" VALIGN="middle" HEIGHT="20" WIDTH="150">
+<form method="POST" action="/nl-search/we/Archives" name="newSearchnarrow6">
+<input value="NewsLibrary" name="p_product" type="hidden"><input value="search" name="p_action" type="hidden"><input value="newslibrary2" name="p_theme" type="hidden"><input value="4000" name="p_queryname" type="hidden"><input value="East North Central" name="d_place" type="hidden"><input value="location" name="d_sources" type="hidden"><input value="keyword" name="s_search_type" type="hidden"><input value="psudo-sort" name="p_field_psudo-sort-0" type="hidden"><input value="YMD_date" name="p_field_date-0" type="hidden"><input value="date:B,E" name="p_params_date-0" type="hidden"><input value="" name="p_field_base-0" type="hidden"><input value="hello" name="p_text_base-0" type="hidden"><input value="ZIQT|ZIRV|ZIRB|ZIQY|ATOO|BHMM|BRNN|WBDN|BEGN|BEGNB|ZIQZ|ZIQU|ZIRT|ZIRU|ZIRE|CHWI|CHBC|CMATM|CJWI|BCJW|DCWI|DJCU|WBDB|DPAA|DRPP|MDPB|DCNM|FOURV|WITI1|ZIRF|ZIQS|ZIRA|ZIRS|FJMB|FTAB|GMFN|GBEG|GWAN|ZMDX|JCST|KOWB|KMIB|LCEL|LCTR|LCTBL|LCRH|LCMS|ZMGQ|LCRBH|MEWI|MEM6|MWSB|MJSBM|MJSWM|MCM6|MNBN|ZIRD|ZIQV|ZIRW|ZIRX|ZIQX|CGNB|NSNBB|OCFG|OOOB|OFHB|PKPB|PFHX|BWIX|RTPR|RCPR|SPEA|SCRH|SSNB|SEWE|SASX|SWI4|SUDB|SSWI|HTPB|WNW5|WEWI|WNTW|WFMB|WDEE|MLJB|MD|APIL|ASIU|AQCB|ALGB|ARVB|ASIL|AHJT|AHPB|AEIL|AWNI|BCRB|BWEB|BPB8|BRIL|BILR|BC|BNWEA|BLVB|ND|BNDBB|BPIL|BENBB|BSLBB|BLIL|BPGG|BCIC|BAIB|BUKB|BHPP|BJIL|BZCB|IBSL|BSL9|BGCB|BGJT|IBCB|BRSL|BJCB|BJBC|CHKB|CCC7|CHEC|CTIL|CSE1|CSPB|CGCB|CCC3|ICIB|HPCC|CCIL|CEC1|CJUI|CMC7|CPOO|CRIL|CSTB|CSTWE|CSTBL|CWIL|CIL8|CFBL|CBIL|CLIL|CHSL|CJC9|CHJB|DCCA|OAL1|ZMAH|CNDD|CSLO|CURB|CN|CNWEE|DAWB|DCIL|DCBD|IDEN|ADHB|DIUU|DLPP|DLCC|DRRM|DSOB|DRAB|DUSS|ZMAU|DSL9|DERB|DCI1|DPJT|DPLB|DWBB|DCHB|DEHB|HDGB|DLGB|DOBB|DWSB|DGRB|DQEC|ESAA|EPTCB|ESLJ|ETRB|ETVB|EDIB|EJEB|IEDN|ECIL|EDC8|EHEE|EGJK|EGTB|ELVB|EPE9|RRSE|ENIL|EVRB|EIL9|FHIH|RFLB|FPRO|FVLB|FHJB|FRAB|FPAW|GNIL|BYNC|GRGB|GRGG|GENB|GLNB|GHPB|GANB|GJIL|GCPR|GYRB|GLBG|GURB|HCJP|HPEH|HPPB|HICCE|DRHH|IHML|HHWW|DH|HN|HIIL|HPNB|IHSL|HSL9|HSLH|HERB|IHPH|IILI|APLL|ITSB|ITBSB|IWGN|INIUC|IHPS|IPII|ZMDY|JGTC|JSIS|MJGB|JSFB|KCCB|KCCBB|KSKCG|LGPS|LRCC|LCJI|LCJBB|NS|LCNSW|LFRB|LHRB|LKRB|LZCB|LRMB|LBVB|LIRB|LWRB|LRIL|LSLL|ILSL|MJIL|MDRM|MWHB|MSLB|IMCS|MCSB|MPHB|MDIB|JCLF|ZMEO|MDHB|MGCB|MTNM|MPJD|MPTB|MRVB|MAIL|NRIL|NP|NSWEN|CNGB|NGBC|NGWEC|ENSB|NTLL|NPMN|NHSB|NJIL|HNNB|NRSL|NBSB|NSDD|NHJB|NWRB|NHBC|OFJI|OPFB|OBSL|OAKB|OTPO|IOCN|ODMB|OGOB|PCSB|PJTI|BL|PGI1|PHAB|PRJR|PDTP|PEIL|JS|PJSBP|PTOP|PHJR|PRHB|QEQQ|ULCLL|RCHT|RAIB|GBMB|RMBG|RNMB|RBIB|RGMB|RBLI|RSLR|RINB|REIL|RRSB|IRRSB|RMJT|RMRB|RRIL|RPRB|RJRJ|RIRR|SAUB|SVNDB|SGRB|SKRB|SKYB|SOIO|SEE1|SI|SSTR|SWEAT|ZMFN|SHI1|SES8|SCKB|SCES|SCR1|SCCJ|STRB|JR|SJRBS|SLSS|SEIL|SPIL|ZMCC|TPIL|HITB|JPBB|CTCB|TLMM|TRAB|TIL1|TWIH|VFPB|VLUB|VHRB|VPAV|VJALC|VMIM|WPWB|WTRW|WWCB|WEIL|WRWW|WJOP|WCPC|WHDB|WCHB|WSLW|WCIL|WSSLW|WPIL|WLW1|WCSB|WJTW|WSSL|IWSL|WMLB|WPSS|WNTB|WDPW|WTMM|WRIL|WIIL|ANIN|ZMAG|IBHT|NBBI|BSIN|BNMP|BEIN|IW99|CIN9|MCTB|CRVB|CTNB|CCIN|ICIC|CIFF|CINN|CIWW|RIN9|DDDD|DGIG|EWRR|TEIB|TBEB|EBJJ|EC|ECPB|EEIN|TNIB|FWEF|F5WI|FFIK|FTII|GCG8|GNIN|IDGN|HCFB|HBAI|HJJB|ZMCF|VHDB|IEI1|IAII|INLB|IMBM|ISTT|IBJB|IRIN|JG|JPLL|JRIN|KOKO|LPHA|LIEL|LKIB|IMCB|MVDB|NDPB|CNEC|FW|NIIB|NBI9|ONI1|OBN9|OCNL|PCIB|PCNT|PTIN|PTLB|PNIN|PMCC|GPTB|PDCP|RLIB|RRIN|SNIN|SUSIE|SIWUM|ISBE|SBTS|STII|SVI1|SCJD|THET|TFIB|ZMEP|TNIN|BEDF|TVIV|ZMFX|TSTB|ZMBT|VSCB|WPDB|WTHW|W1F9|W1F8|ZTSB|AVTB|MAAE|AARB|AMI9|AAND|APO1|ANMD|BAYB|BCTWB|BEDB|BNZB|MBG1|MBBB|BJBB1|ZBRB|CWEB|EGRC|CCMI|CHED|CDRC|CGRCG|SCCE|DTAB|DBDB|DEMI|DHMB|DJNB|DTNB|DNBD|DDMD|DDND|EEY9|EAMI|ENSS|FPMI|FEMI|FL|FJWEF|FXWJ2|FW1G|FTCB|GHTM|GHTG|GRBJ|GREG|GRPB|GRPWG|GTHT|GVEA|GSTB|HRBB|HBMI|HPSB|HRMI|MHDB|HSHH|HIMI|HGKK|HRDB|HDTB|JCPB|JCPWJ|JIJ1|ZOOB|KGWEK|LKSB|LNHH|MLCP|LEL5|GVLA|LLMI|DNLL|MCBB|MNPB|MNAB|MVNH|MLMB|MEM5|MOTB|MDAA|MFPD|MILB|MR9M|MLDB|MBM7|MEVB|MPMB|MCJB|MKCB|MCWEM|ZSHC|NCPL|NMRR|NDSN|NWMM|RCSA|SKCA|OPRR|OHJB|OTTJ|PGJG|PNRP|RCOB|BGRB|PGMI|GCR9|RPTB|REEB|RORB|SGNB|SNWES|SSII|SBUB|WSUS|SAJJ|SSMB|WAJ1|SHSB|CSSB|SJSS|SNHH|KUTK|TCET|TREM|TCT7|TTSB|TC2C|VPTB|WWKB|WBBB|WMUK|WLBW|WWTB|ZILG|AK|AKJB|AMAB|BNOH|ZMAF|BWNB|TB|BNB2B|BCOC|BSTC|ZMAB|C7WWD|ZILD|CHSC|CECC|CHN9|CK|CCN6|CEC4|COAB|OCAB|CBC8|CCOH|CLDB|CDBC|CEC2|CMOH|CPC5|CPMBC|CCPP|CPMM|FOCB|DLNY|DRCC|PDSB|DDNB|DEOH|DND8|DND9|ELOH|FFEB|FSOS|FNDD|WJWF|ZILE|FOH7|GNOH|GDTB|GVGG|OGCN|CHOH|HNNH|IMOB|ICOUT|ITOH|JTJJ|JYOY|HONB|KCGG|LCOC|LEOH|LM|LNBL|LDNL|MSOH|MSOO|MOJB|N4WM|ZILF|ONAN|NRCC|NSC1|NBN4|NNOB|NCNC|NRNN|OROCO|OVNO|OPCB|OOOCT|OFPB|PSPC|OPCT|PTSP|PCNW|CPDB|PDBC|PDWEC|PDTB|PAOB1|PJLB|RCOC|RBCC|RTFB|RNOH|SRSO|STBO|SOUA|SNSB|SBAB|SGOG|SMOH|LSP1|SPC1|SSA9|SSC1|KTSB|TWNB|TCNBC|TOH9|TRNN|TEOH|TVNO|UANA|ZMGF|VCCB|OWDN|WSSN|WNOB|WNPO|WNOO|WA12|WNW7|WNOH|XNCC|YEYY" name="p_multi" type="hidden">
+</form>
+<a href="javascript:document.forms['newSearchnarrow6'].submit()" class="client-type" onClick="javascript:searchMessage();">East North Central</a></TD>
+</TR>
+<TR>
+<TD class="navBarBucketSubCell" VALIGN="middle" HEIGHT="20" WIDTH="150">
+<form method="POST" action="/nl-search/we/Archives" name="newSearchnarrow7">
+<input value="NewsLibrary" name="p_product" type="hidden"><input value="search" name="p_action" type="hidden"><input value="newslibrary2" name="p_theme" type="hidden"><input value="4000" name="p_queryname" type="hidden"><input value="New England" name="d_place" type="hidden"><input value="location" name="d_sources" type="hidden"><input value="keyword" name="s_search_type" type="hidden"><input value="psudo-sort" name="p_field_psudo-sort-0" type="hidden"><input value="YMD_date" name="p_field_date-0" type="hidden"><input value="date:B,E" name="p_params_date-0" type="hidden"><input value="" name="p_field_base-0" type="hidden"><input value="hello" name="p_text_base-0" type="hidden"><input value="BD|BEME|KBJB|WMSB|PEME|ME|SNME|SJVT|BBNH|BCTB|CTNK|CMOB|ZMAO|NDNW|ZMCY|FDD2|GNNH|HBH8|KSKK|LTNH|MCOO|MENH|MLNH|UL|NHUNH|NPNH|RTNH|SOS9|NTGB|TBNH|TTTC|VNL1|WNH9|ACIM|AEVT|BBJR|BBRB|BRFB|BEVT|CRS1|CBJR|CSVB|VERB|GMOM|MJVB|MCVT|MIVB|NMPM|NDEB|NNT1|RBJR|RHDB|RNBR|VSAB|BMAB|TABBB|VVBJ|VVM1|VBMZ|VCVT|ZIFG|ZBAA|MASA|ZBAB|ABMA|ATMA|ZBAC|ZBAD|ZBAE|DAAA|AMMA|BFPW|BTMA|BWBBC|ZBAF|ZBAG|ZBAH|ZBAI|PBEB|ZBAJ|ZBAK|ZBAL|BEMA|BNHB|BHBL|BOBH|BCMA|ZBAM|BIMI|ZBAN|ZBAO|ZBAP|ZBAR|CABC|CAPB|CT|ZBAS|CRMA|ZIFF|ZBAT|ZBAU|CMJB|ZBAV|ZBAW|DFPBV|DHGB|DHGBN|LMDB|DNNB|ZBAX|NHTB|DRDD|ZBAY|DCMA|DRMA|ETLL|EBSB|ZBAZ|ELEF|EMAB|FBFB|ZIFD|ZBBA|ZBBB|MGDT|GLMB|HPRH|ZBBC|ZBBD|HNSM|HTCM|HHSB|ZBBE|ZBBF|HGHB|ZMAE|CHWC|HNSH|ZBBG|ZBBH|DHH9|ZBBI|ZBBJ|ZBBK|NNBBC|JPGB|ZIFE|ZBBL|ZBBM|LCMA|LMKB|DLL8|LCMB|ZBBN|ZBBO|ZBBP|ZBBQ|ZBBR|ZBBS|ZBBT|ZBBU|MDCUM|MLWB|MNM5|ZBBV|ZBBW|ZBBX|MRBB|MWNB|RME2|DMMA|MFDB|MHGB|NITB|ZBBY|ZIFI|ZBBZ|ZBCA|ZBCB|NATB|ZBCC|NAMA|ZBCD|DNMA|DNN9|ZBCE|ZBCF|NWBM|OJF1|OCMB|PAKB|PLQB|ZIFC|PEMA|ZBCG|PFPB|ZBCH|PGP8|PTED|PBPP|APSB|RHSS|RSJB|ZBCI|GMRB|ZBCJ|REM1|UN|RBSS|RWEAS|ZBCK|ZBCL|SNBBB|SBMA|ZBCM|ZBCN|FSEB|MSNT|ZBCO|SOCB|ZBCP|DSMA|SVMA|ZBCQ|SNMA|SENB|REME|CTVB|SEMA|ZBCR|ZBCS|ZBCT|SJB1|SVSUB|LO|SNCB|ZBCU|TCLM|TDGB|ZBCV|ZBCW|TTMB|ZBCX|TDM1|ZBCY|VADB|DPNB|VPNN|ZBCZ|ZBDA|WTWB|WMTB|ZBDB|ZBDC|ZBDD|ZIFH|WBMB|WMA8|WNMA|ZBDE|WBTBB|ZBDF|DWMA|ZBDG|WEN1|ZBDH|ZBDI|ZBDJ|ZBDK|WHEX|WTRB|WLAV|WLBM|WLEBE|WLH9|WLP8|WLWBR|WLWR|ZBDL|ZBDM|ZBDN|WO|BDHP|CWRB|CTRI|RPCB|CCRI|EGPE|GFCCK|KCDT|NTRI|RN1W|NPBN|PERI|ZMFC|RILB|STRI|TPRP|VBOS|VBCB|VBPE|WPPB|WESB|RWRB|NWAB|AOCB|BCZB|BNCB|BPCT|ZIBF|CBUNW|CCC2C|CSHB|WMCB|CRHH|CTPB|ZMAL|DADD|DEEE|EDCD|DFFF|DGGG|DNCN|DNCT|QCHH|DSS9|DWW9|DWWW|DWCT|DRNB|DTMB|DCT8|DNCB|CECB|FFCB|FCWB|FSSB|F61W|FMCB|GCZB|GWPB|GRTB|HJCB|HAVB|HC|HECT|HFNB|HHPN|HBCT|ZMET|HHCB|IWCW|MJIB|MMCB|MCCB|MRPB|NCAB|NNRB|NHAB|NHRB|MFSB|DNEB|NTBB|NHCB|NCNB|NRBB|OGCB|PVCB|PREB|MRJB|RDPB|RCTT|WRAB|RFPB|RNBB|SECT|SCYB|SCZB|SFAB|TMCB|TWTB|OVTB|TTCB|VGCB|WCVB|WAMM|WHVC|WCTB|CWFB|WTNB|WLBB|WMZB|YHN1" name="p_multi" type="hidden">
+</form>
+<a href="javascript:document.forms['newSearchnarrow7'].submit()" class="client-type" onClick="javascript:searchMessage();">New England</a></TD>
+</TR>
+<TR>
+<TD class="navBarBucketSubCell" VALIGN="middle" HEIGHT="20" WIDTH="150">
+<form method="POST" action="/nl-search/we/Archives" name="newSearchnarrow8">
+<input value="NewsLibrary" name="p_product" type="hidden"><input value="search" name="p_action" type="hidden"><input value="newslibrary2" name="p_theme" type="hidden"><input value="4000" name="p_queryname" type="hidden"><input value="Middle Atlantic" name="d_place" type="hidden"><input value="location" name="d_sources" type="hidden"><input value="keyword" name="s_search_type" type="hidden"><input value="psudo-sort" name="p_field_psudo-sort-0" type="hidden"><input value="YMD_date" name="p_field_date-0" type="hidden"><input value="date:B,E" name="p_params_date-0" type="hidden"><input value="" name="p_field_base-0" type="hidden"><input value="hello" name="p_text_base-0" type="hidden"><input value="ZMGR|ZIKH|AJNY|ANOB|AENN|BGN2|NARB|DANY|NBBB|BHNY|MBNB2|BTVB|DBBB|BHBB1|BSB2|BEB2|DBB9|BPPB|BRKB|DBNY|BDTB|BNY4|BENY|BN|BPNP|CTURR|BCCB|RTNB|CRN8|ZIKA|DCC7|CHR2|CBC6|CSNB|CEPB|GNCB|CHNH|CIRC1|CANA|CZBG|CSN2|CTHB|CLN9|CBC5|CNY2|CSDD |CYUN|CONC1|CCCC|CDSI1|DCC8|SCAB|DCC9|C1WN|DOMB|DNB9|SDGB|DMCB|DMBC|DMSB|JDMB|DNBB|DRRB|DSNY|DENE|DESB|DDFD|DEXB|ENY4|EBSS|ENOS|MONY|SNC9|EABE|EMHB|ERRB|DENY|ERYB|DLPB|EEE7|EVSB|ETHB|ETNY|ETSH|PERP|FONY|FPRB|FPDC|FHTB|FORB|ZIKD|FSEH|GCLC|GSPB|GAYB|GCE1|GCRP|QGRB|GNRG|GEPB|GCNR|DGNY|NGSB|GBNB|GSD1|HTNB|DHNY|HRRB|HIHB|DHHH|HENB|HHAWG|HCN7|HINC|INNN|ZMDU|ZIJZ|ZIKE|IENE|IWCB|INY7|IRVB|IRPB|GIDG|IBUB|JSLB|LNJB|JC|OBJB|JRMM|KTBK|KNQCQ|LSAGG|LBNY|DLL7|LNYBB|NLOB|LTLL|DLL9|LBLB|LPSL|LNYB|LBHB|LIAB|LINB|LAHB|LIE1|LIPS|LERH|MNYB|MWHH|DMNY|MPNY|MOMM|MPNB|MHNY|MRNB|MYW1|MAMM|MNP8|DMPM|MVIB|MENY|DMKM|NHL9|ZIKB|DNRN|NRRB|NYDB|NYE1|NYN1|NYOB|NY|NYSB|NENY|ITNB|NWD1|NBLB|NNWCE|NGNY|NWTN|NCNN|NCN3|NCTWY|NCEE|DNSN|OYUN|UODB|OIPH|OPBO|DOOO|OTPB|OURB|ODTB|OBEP|OBG1|PPPUP|DPP8|DPP7|PSNY|NPPB|PRFB|PNNB|BPDN|POBH|DPNY|PVW9|PLYT|DPCP|PWNC|SY|PSBS|PSWES|ZMDI|DPRP|PPRB|QEXB|QGZB|QNLB|QTRB|RNY9|RNHR|RBSUB|TRDB|RSHB|RVPB|RDVH|RENY|RCHBB|RNNY|DRRR|RCRR|RSRB|SCS2|STNY|SARB|NSPS|DSS7|SCS22|SLIUB|SSS2S|SPS8|DSHS|DSS8|SOTB|SNNN|SEQB|NSHC|SDND|STSAO|SIAB|SIAWS|SNY6|CPNY|SV9S|NSNB|SLBB|SJTS|SENY|DTT8|TVTC|ZMCW|TTT2T|AL|QTLB|TNNN|TWRB|NTTB|USJB|ZIKI|UEUU|VNE1|VSHB|VPNY|VNWCV|VILB|WWAB|WSN7|WA|WENY|WPLL|ZIJY|WBPB|WDRB|WSBW|WSSB|WTWW|WCN9|NDWP|WJNY|HNTB|DYYY|2BRR|2HRR|ANEB|AJJN|ASCN|AWMW|AKNB|NACE|ALNL|2RNR|BYJ2|BTNJ|BLNJ|BBB8|BTBN|WBCB|NCRB|CSNS|CYJB|CPC2|CJNJ|CNNJ|NJCB|CCNJ|CCWEC|DPPP|DTNN1|DVNF|EBSE|EVNJ|EMSE|ENEB|HUDB|ENPB|ENUB|EMNM|FLS1|FLOS|GFNF|GRUCC|GRVB|NGRB|GCTW|GCTWW|HCNJ|NHHB|NHNB|HNN9|HRNR|HUDD|HRALH|HCDB|HCDWF|HOFB|IMNM|IPNB|IPWES|IMAS|JCEJ|NJJ2|JJWEJ|KRJ2|LLNJ|LFLL|NMSM|NJMB|NSPR|MGWES|MPSN|MTM2|NNMM|EYPB|NENJ|BNB7|NCCWB|SNRB|NTMB|MTNB|NBNJ|NWNW|NBWW|NSBS|NVSE|NSNJ|ZMBG|PLNJ|PVCL|PVTL|PENJ|ZIMZ|NPGB|PDWB|AC|RSNR|BE|RBZB|RCNC|RPPB|RNNJ|SCJB|SBS6|SJTN|NSIB|STL2|SLWEN|SONO|SNAPR|STNJ|TSNJ|TTTB|TTN8|TSSB|TSWES|TJRB|TNRR|NTJB|TRJB|TTNJ|NTBN|VCGT|WRHB|WFJ2|WTNJ|WMMB|WRPW|WRUG|WSNJ|WSN9|3SMP|ZINC|A1WW|ZINM|ATCC|AEPA|ANPA|AUSS|PAGB|BWUW|PBCT|JRCBM|BLNB|PBCN|BDWB|BATB|BNPA|BPLB|LBCB|BELB|BFMM|CPIS|CNPA|ZINN|CVMM|DT|CDTBB|CHDB|CCPO|CSC21|CHLP|CZSB|CZVB|CVSVW|PCLB|CMLB|CMCB|CSPA|CTYB|JRCCP|TCSD|CJM1|DAPA|DCCB|DISB|JDLB|LDNB|DNMB|DPP9|DPUBP|DPSS|DRVB|DNDD|DCDT|PDLB|DWLB|DYPB|ENNB|ETNB|EPGG|ECCB|EZCB|ECLE|EEPA|ET|HESB|ETEB|ETWEE|FRFB|ZINA|F4WY|QFPB|GKGUE|GVPB|GTCB|LNGB|GLNN|OAAP|HBIB|HEPA|LNBB|HVPB|HPA1|HSPS|HSUP|HSBU|HSHB|HWPB|LNOB|LNHB|ZIND|IOSI|DPIB|JSPA|JDBB|JKTB|JEPA|KRKB|KNPB|KSTK|KNGB|KVNM|KZPB|LVCLA|LVZB|PLHB|LC|LTP9|KLTB|LDRB|LVNN|LEPA|LLCW|MLLB|MLSLB|MLKB|PMLB|MJPA|MTPA|MEPB|MRCB|PPMB|AMCB|MVMM|MPJM|MAEB|MSM1|ZIMY|N1WWP|ZINO|ZIRQ|NCPB|NHGB|NEHB|GLEB|NDCB|BGHB|UDCB|HNDB|NMDB|NWIB|NAVB|NHJM|NEZB|NPBB|NOTB|NSMM|WORB|ONPB|OXTB|PKLB|PRKB|HRNB|PNBH|PNWEH|ZIRR|ZMAW|PHPM|PTSM|PCTN|PPXB|PPA9|PCP7|DN|PEP9|PI|PMPA|PTPA|PCCB|PCJH|PEPA|PG|PTRB|ALPA|PMJB|PRS4|PRPB|PREHP|PAJM|PFCB|CPOB|PSPP|QUADV|ZMFK|PRCB|RHWW|LREB|REVB|RRPA|LNRB|SUCB|SEPA|SPCP|SRMUM|SHPA|SSSP|SIPA|SMPM|SSLB|SHRS|SBKB|SGFB|SHNP|SUBB|SUVB|SCIB|HZSB|TNPP|TEMM|THNN|WB|TSWW|SRTB|TTBS|JRCTT|TWAB|TWCB|TTKB|TTEB|TTNB|TKSB|TTWB|TRCY|TDEM|TRGB|AVAB|VIMB|KVNB|VVH1|LNMB|WIHB|WWNWN|WCLB|WSWB|WCQB|WGVB|WMPM|NAEB|PYNB|YK|YWRB|YKDB" name="p_multi" type="hidden">
+</form>
+<a href="javascript:document.forms['newSearchnarrow8'].submit()" class="client-type" onClick="javascript:searchMessage();">Middle Atlantic</a></TD>
+</TR>
+<TR>
+<TD class="navBarBucketSubCell" VALIGN="middle" HEIGHT="20" WIDTH="150">
+<form method="POST" action="/nl-search/we/Archives" name="newSearchnarrow9">
+<input value="NewsLibrary" name="p_product" type="hidden"><input value="search" name="p_action" type="hidden"><input value="newslibrary2" name="p_theme" type="hidden"><input value="4000" name="p_queryname" type="hidden"><input value="East South Central" name="d_place" type="hidden"><input value="location" name="d_sources" type="hidden"><input value="keyword" name="s_search_type" type="hidden"><input value="psudo-sort" name="p_field_psudo-sort-0" type="hidden"><input value="YMD_date" name="p_field_date-0" type="hidden"><input value="date:B,E" name="p_params_date-0" type="hidden"><input value="" name="p_field_base-0" type="hidden"><input value="hello" name="p_text_base-0" type="hidden"><input value="WHAS|ZIED|APKY|AMDD|ANLL|BGEB|BLLL|CNDC|CCNL|ZIEC|CKNJ|CCML|CJKY|CDC7|DIAB|BGDB|FCTB|ZIEE|KGNG|GDTG|HKGB|GCNW|GCGB|HDEB|HZHB|HCLN|IJSJ|JJNJ|JTGO|KYPB|KSBBB|LCHN|LELB|LIKI|LEL7|LH|LHLBB|LCKY|LEOB|LEL6|LMLV|MCRW|MMKM|KDNB|MNKY|MABB|ZIEB|NJCC|KNDB|NEEB|NOLSL|NHK1|OELB|OMIB|ONHB|PEKY|ZMFA|PNKY|RLKB|RRRR|SELB|SNKY|SLKL|SMTT|SSKY|TTCC|TBBB1|WCOB|WSKY|ZIOI|ZIOA|ZINX|ZIOD|ANTN|MCAD|BTMM|BLTN|CCJJ|C3WM|ZIOE|ZIOK|ZIOB|C1WJ|ZINU|CCC2B|CETN|CHAT|CPTN|CBPB|CDBB|CA|CABM|CAWEM|CNTN|CCC2A|CDHB|TDPA|MDTB|ETMNK|ETJJ|ZIOC|ZIOH|ZINZ|ZINW|FLTN|GSCC|GKBJ|GLSB|HNTN|HCCB|HNDBB|JTEJ|KEKK|KETN|KX|KNSBB|LPTN|LDTN|MTTB|METN|TMMN|TMCN|MPSS|MVNN|NETN|TTMN|NPM9|NPN9|NSN9|ZINV|ZIOJ|ZIOG|ZINY|PTTN|NHLL|NTN7|TORB|PPIT|RCNB|RRTN|MSM6|MCEE|TTTN|VHNN|WTMNN|BEB3|BAWF|BCCC|C1WNA|C2WH|CPDA|CDLB|CPMS|CPC2M|CDPB|DCMS|DMOO|DTLB|DDTB|DCTO|EJMB|GWCB|GMEG|HEMS|IETI|JANA|JEJJ|LTPP|MLLC|MCSC|MSMM|MBJB|MLNA|MMN6|PMPB|MPWEG|ZMHB|NAGN|NRN9|ZMGJ|NSJJ|OEO1|PNHH|PIMS|RSMS1|SCTF|SHKB|MSDN|SPZU|BX|SHBB|TEMS|WPTB|WTMS|WCJL|ABA6|ANSB|BEAL|ABMN|BI|BNWEB|BTAL|CW5K|CW1H|UEH1|CBNB|CTAL|DLHB|DMEJ|DSAB|DDAB|DOTH|DEBD|DEAL|ENTL|EFAL|FAAL|HEAL|HUTB|HTWEH|JVNB|MLAL|LNLN|MEAL|MEM9|N1WNA|NCAA|NJNG|OPAN|OANB|PJPB|MBRB|PRWEM|AMRB|STCB|SCNA|SASCT|FPJB|VTNB|UVM1|RWPB" name="p_multi" type="hidden">
+</form>
+<a href="javascript:document.forms['newSearchnarrow9'].submit()" class="client-type" onClick="javascript:searchMessage();">East South Central</a></TD>
+</TR>
+<TR>
+<TD class="navBarBucketSubCell" VALIGN="middle" HEIGHT="20" WIDTH="150">
+<form method="POST" action="/nl-search/we/Archives" name="newSearchnarrow10">
+<input value="NewsLibrary" name="p_product" type="hidden"><input value="search" name="p_action" type="hidden"><input value="newslibrary2" name="p_theme" type="hidden"><input value="4000" name="p_queryname" type="hidden"><input value="West South Central" name="d_place" type="hidden"><input value="location" name="d_sources" type="hidden"><input value="keyword" name="s_search_type" type="hidden"><input value="psudo-sort" name="p_field_psudo-sort-0" type="hidden"><input value="YMD_date" name="p_field_date-0" type="hidden"><input value="date:B,E" name="p_params_date-0" type="hidden"><input value="" name="p_field_base-0" type="hidden"><input value="hello" name="p_text_base-0" type="hidden"><input value="ZIMF|ZIML|AENB|AEA7|ATOB|ARCV|AAFF|AMOB|AAAB|EEBBB|BTB2B|CNJCU|ZIMK|ZIMG|OCDP|DAOB|DOCOK|DTPB|DBDD|DDDB|ESEE|ENEE|ESCC|ZIMJ|ZIMD|OFLB|FGTB|GLVV|OGDN|GDHB|ZISH|OJRB|OBNB|LCOB|MNCD|MNRB|OMCS|MTDB|ZISF|ZIMI|N4KO|ZIME|NTOK|NSOK|OOCE|ODNN|OK|PVDD|PJCP|ZIMH|PDJ1|PDNS|OSNS|NPSS|OTDP|TEOK|TLWB|TTOK|VDJV|WNDB|WDNW|WNWW|1TTDH|ZIPL|ZIOM|ZIOQ|WFAA|ZIPO|ZIPF|ZIOT|A2KA|ZIPU|ZIPJ|AEA4|ARNB|ARNBB|AFNDD|ALHED|ALEDD|AOCE|APHE|AGSB|ADAB|AENJ|AATX|TAPB|AEA3|AGNB|AGTB|AMTA|AATB|AMGB|AOTB|ADRB|TACJ|AASB|AETX|AVTX|CZBB|BCYB|BTSB|BT|BEB5|BTX7|BELEX|BTPB|BEXB|BSHJB|BSHBT|BCN6|BWPB|BJB9|BNHBT|BCCTN|BZSB|BZFB|BCAH|BATX|BEB4|BHTX|BWBB|BNTX|BBTX|CTTX|CLTX|CCS2|C5KS|ZIPR|ZIPM|ZIOR|ZIOL|ZIPT|ZIPE|C1KH|ZIPI|ZIOV|CCPG|CRTX|CSH9|CTRCB|CAVB|CRC7|CCTX|CCSS|CLTT|CJTX|CEXB|CGTX|CFSB|CCCB|CCCT|TCCE|TCDS|CTXB|CRTT|C33D|C3KH|CFSH|CCMCH|TCC9|CCMCC|TCCMC|CYPY|CCMKH|CSC2|DCHH|NDSB|DSKFF|DTTX|DTL9|DETX|DM|DMNBB|DYNB|DPBB|DELB|DRCB|DRCBB|FPTX|EGLB|MCOB|EXAB|EDRE|EEE6|EMAA|EHBB|TEPE|EPTB|ESOB|TECB|ENJB|FRTX|FMLB|FBSB|BPFB|FWE1|ST|FWST|ZIOS|ZIOO|ZIPG|ZIPP|ZIPK|FAHH|FSRPF|FJTB|FETX|GDRG|GDNB|GCDNG|GETX|GMTX|TGRR|GRMB|GSSG|GCSB|GHWH|GHBB|HHTX|THCN|HDH9|HDSS|HTX7|HMTM|HCCT|HCBF|HETX|HTX8|HGTX|HOVB|HITX|IRTX|JCHT|JDPB|JNTX|KSTB|KCTB|KDTB|KNHB|KWOB|KSHH|LAEB|LASB|LVDHH|LCPT|LCLM|LFOLS|LHPB|LHSB|LWPB|LEL4|LRTB|LLLB|LLTX|TLNT|LEJB|LCJL|TLSL|LTJB|LAJB|LETX|LTNB|MPTX|MNMB|TXMB|MCGB|MEXB|MTTX|MNTX|FMMB|MDNM|MOEM|MRTB|TMMB|MVTC|MMM3|MWIB|MTXM|MPDB|ZIPD|ZIPQ|ZIOP|ZION|ZIPS|ZIPN|ZIPH|ZIOU|NAFMD|NGBS|NCFBD|NGMD|NICD|NLFMD|NGDAL|NPMWD|NRLHD|NRRD|NWRED|NBZB|NCNS|NTCB|NHTX|NWTX|NCRS|OCPB|OACS|OAMB|OEOO|OLOO|OCAA|OPTX|PHPP|PAEE|PWTX|PTNB|PCPB|PCZB|PLJB|PGTX|PDHB|PETX|PITX|PSCP|PANP|PTX8|PHPB|PPTX|RPTX|RFTF|RTXR|RCDD|WTXW|ROEB|RCN4|RCHBG|RLTB|RCHB|RDHB|SAE9|SAGB|SACB|TSAE|SAEC|SMDR|SGEB|SES5|SATA|STTAK|SJTX|STTX1|SRTX|SOBB|SETX|SCOH|TSLS|SRSS|TGTZ|TGBT|TCSB|TDLO|PMTB|TRPB|ZMFY|USTXU|UMRR|HVMS|VTCX|VALV|VA|WTVB|WETX|WTHB|WTHBW|WCZB|WDLB|WAXB|WDWB|WTTX|WPOB|WUEB|WFEW|WFTB|WFTR|WCDQ|XHTH|YNV1|YHNH|ZIAI|ZIAE|ZIAC|AJAA|ADGL|NADGF|ADGWL|ATAR|ATBL1|ATFF|ALAL|BNMM|BCDR|BHUS|BDBB|BSAUM|CSHC|CNCC|CICC|C5KF|ZIAD|ZIAF|CEAR|CRAR|DCSY|DSHA|DWHB|EDNT|ELAR|FFWB|FSEF|ZIRY|ZIAG|GDAR|GTAA|HJAJ|HSTA|HSWB|JPJJ|JEAR|JSJ1|ALRE|LDAR|AMDR|MMAR|MNAA|MNNA|M3KF|ZIAH|ZIRZ|NINN|ANCP|NATF|NBFF|ANWEA|PDPB|PEPB|PBCP|PACV|RMNR|BCBB|SRH9|SVAR|HLSS|STRF|ASMN|SDLB|STH1|SAR8|TNAN|TNBCP|UFLL|VBCD|AWCEL|WVBV|WEOD|WHJB|WHPW|WHSF|AMLA|WGNO|APTC|AD|ABLA|ANOEN|AELA|AMPB|ATDA|AJMM|LBDE|BREB|BDND|BPTB|WWL4|NSRB|LCPS|MCDB|DINB|DNBA|DSH1|DCLA|ENLA|FPGF|FBTB|ACAA|GJGG|HML1|KHLA|LLA9|LELA|LASTL|LLCE|LDLB|LMNL|MCMN|MPHM|MELA|NOBB|NOE1|NDLA|ZMBB|PPSH|PGLA|RATB|LRBN|SELA|SDSUB|SDNS|SBVA|STNC|STLA|TNLA|TP|TPBN|TPWEA|UMNN|VPGB|VLLL|VTLA|ZPZZ" name="p_multi" type="hidden">
+</form>
+<a href="javascript:document.forms['newSearchnarrow10'].submit()" class="client-type" onClick="javascript:searchMessage();">West South Central</a></TD>
+</TR>
+<TR>
+<TD class="navBarBucketSubCell" VALIGN="middle" HEIGHT="20" WIDTH="150">
+<form method="POST" action="/nl-search/we/Archives" name="newSearchnarrow11">
+<input value="NewsLibrary" name="p_product" type="hidden"><input value="search" name="p_action" type="hidden"><input value="newslibrary2" name="p_theme" type="hidden"><input value="4000" name="p_queryname" type="hidden"><input value="National" name="d_place" type="hidden"><input value="location" name="d_sources" type="hidden"><input value="keyword" name="s_search_type" type="hidden"><input value="psudo-sort" name="p_field_psudo-sort-0" type="hidden"><input value="YMD_date" name="p_field_date-0" type="hidden"><input value="date:B,E" name="p_params_date-0" type="hidden"><input value="" name="p_field_base-0" type="hidden"><input value="hello" name="p_text_base-0" type="hidden"><input value="AINT|ZCFF|AMN2A|AMB8|EBFN|DST9|DSTB|FCN4|FCB9|MPT9|MPTB2|PNA2P|PMN6|PMBN|ZCAB|ATNB|ATYB|ZCAI|ZCDH|ZCAF|AMBB|AMNB|ASRB|TDNB|ZCEO|ZCCY|BICB|BLRB|TNBB|BBYB|BBN2|BSN5|ZCDG|BMZB|BIRU|BIZWIRE|ZCDO|ZCEK|ZCEP|CTGB|CTMB|CMGB|ZCCF|ZCAJ|CQDB|CDJB|CDRB|ZMCN|CUJB|ZCDM|ZCFE|ZCEQ|ZCER|ZCDR|ZCFH|ZCDW|ZCEF|NDMN|DJO1|DJS9|ZCFI|ZCAO|ZCAP|ZCAQ|ZCBV|EBAB|EBNB|EBCB|ZCFD|ZCFJ|EQUB|FDW1|FWD9|ZCAR|FPGB|ZCAT|ZCFL|ZCBE|ZCCH|HDAB|ZCCJ|HPN8|HPN7|HYRB|HEWU|RDMB|ZCAV|ZCCN|INWB|IBDB|IDGB|IMWB|ZCAW|ISOB|ZCAX|KMN8|KMBK|ZCAZ|LWKB|MNN7|ZCBA|MARB|DMJB|MLTC|MNA6|MTEN|ZCDD|ZCDA|MNA7|MMEB|MNEY|MBKB|MVNB|TMTB|NMNB|ZCBD|ZCBB|ZCBC|NBRB|TMWB|OTNB|PU98|ZCDK|NUSB|PWUP|TPAB|PPLB|PNA2|QWNQ|QWBQ|ZCES|RGRB|RCE9|RCEB|ZCDQ|ZCDT|ZCDU|SMN2S|SDNB|SWN8|SWBN|SNA2|SFUB|ZCFC|ZCDZ|ZCEA|ZCEB|ZCEC|ZCEE|FEN8|TFOW|FSNS|TITE|TMZB|TBUS|ZMFM|TMBB|UNA2|VLJB|ZCEH|ZCBL|ZCFN|ZCEL|WWD9|ZCFO|ZCFP|MINN|AULL|ADUD|BAUT|BNA2|CNTU|EDEA|GU98|GU9Q|LUCK|SULF|SBN5|TVN9|VUGU|BTKB|PARB|PSYY|WMN3|WMN2|ASPJ|AFLR|AFTB|ANUB|AHUB|AFJB|ANUN|ACN8|ALNN|ALN7|ARMB|ISRB|CACR|CEUB|DECB|DFNB|FJFF|FEDB|FFAJ|FSNTY|FNUN|GOVB|INUB|JFQB|MTMB|MNUB|MIPBB|MAGB|MTE9|NAN9|NWCR|NVTB|NJCO|PJAW|REPB|SNUN|SPSB|SWNN|SASN|SWMN|TSJB|APAB|BBAB|CUM9|ZCAL|COPB|ZCAS|KR|MCSS|SN|ZCBI|TNS1|UVWB|ZCBK|ZUAA|UCHB|UERB|UETB|UIIB|UNTB|USIB|WSOB|AASN|POSB|SIN7|SNW1|WURD|CNEB|WEEU|USLB|GDUG|GWUW|SNNI|BTN9|CBSB|CRSB|CNBB|CNNB|CNIB|CNFB|FDCB|DRRU|FOXB|ZCAU|SNBB|NR|NPR9|NPRW|NBCB|JLNB|ARN7|ANA2|AOFN|ADLB|AMB9|CFIR|CNA2C|CCA2C|CWN6|CNY7|CSMB|CAN4|DBNN|DRSU|EDWB|EU9E|EAEN|AFTA|EFPN|IFCI|FSUM|FFMF|FAFB|GNW|GNA2W|HENN|ICCA|INN9|JSD1|KNSN|ERN7|MNA2M|MMMNA|MNN5|NMPRM|NIHN|NJDW|NJHW|NJHWW|NJW1|NDC9|NRU9|NORX|NMWN|NRUR|NNAW|NYUY|NMX2|NWEC|NGN4|NBN8|ENN8|NNA2NW|ONA6|PFWB|PNN9|RNA2|RRR2|RNSB|RUNR|SEPN|S2P2N|SVAB|SMNN|SATH|IRN5|ESN7|FENB|UONL|USTB|VFUF|WIWW|IPI7|WNA2|ZMGT" name="p_multi" type="hidden">
+</form>
+<a href="javascript:document.forms['newSearchnarrow11'].submit()" class="client-type" onClick="javascript:searchMessage();">National</a></TD>
+</TR>
+<TR>
+<TD class="navBarBucketSubCell" VALIGN="middle" HEIGHT="20" WIDTH="150">
+<form method="POST" action="/nl-search/we/Archives" name="newSearchnarrow12">
+<input value="NewsLibrary" name="p_product" type="hidden"><input value="search" name="p_action" type="hidden"><input value="newslibrary2" name="p_theme" type="hidden"><input value="4000" name="p_queryname" type="hidden"><input value="Newswires and Transcripts" name="d_place" type="hidden"><input value="location" name="d_sources" type="hidden"><input value="keyword" name="s_search_type" type="hidden"><input value="psudo-sort" name="p_field_psudo-sort-0" type="hidden"><input value="YMD_date" name="p_field_date-0" type="hidden"><input value="date:B,E" name="p_params_date-0" type="hidden"><input value="" name="p_field_base-0" type="hidden"><input value="hello" name="p_text_base-0" type="hidden"><input value="HLWB|ZCBM|HSVB|BIZWIRE|EQUB|NBRB|ZCDK|NUSB|APAB|BBAB|ZCAL|COPB|ZCAS|KR|SN|ZCBI|UVWB|ZCBK|ZUAA|UCHB|UIIB|UNTB|WSOB|CNEB|BTN9|CBSB|CRSB|CNBB|CNNB|CNIB|CNFB|FDCB|DRRU|FOXB|ZCAU|SNBB|NR|NBCB|JLNB" name="p_multi" type="hidden">
+</form>
+<a href="javascript:document.forms['newSearchnarrow12'].submit()" class="client-type" onClick="javascript:searchMessage();">Newswires and Transcripts</a></TD>
+</TR>
+</table>
+</TD>
+</TR>
+<TR>
+<TD valign="top" align="left">
+<TABLE BGCOLOR="CCCCCC" CELLSPACING="0" CELLPADDING="0" BORDER="0" WIDTH="150">
+<TR>
+<TD class="navBarBucketSubCellHeader">INFORMATION:</TD>
+</TR>
+<TR>
+<TD width="150" height="20" class="navBarBucketSubCell"><A HREF="javascript:popWindow('/nl-search/we/Archives?p_action=prices&d_place=United%20States',625,525);" class="client-type">Prices</A></TD>
+</TR>
+<TR>
+<TD width="150" height="20" class="navBarBucketSubCell"><A HREF="javascript:popWindow('/nl-search/we/Archives/?p_action=faq',625,525);" class="client-type">FAQ</A></TD>
+</TR>
+<TR>
+<TD width="150" height="20" class="navBarBucketSubCell"><A HREF="javascript:popWindow('/nl-search/we/Archives/?nbid=&p_action=help&d_sources=location&d_place=United%20States',625,525);" class="client-type">Search Help</A></TD>
+</TR>
+<TR>
+<TD width="150" height="20" class="navBarBucketSubCell"><A HREF="javascript:popWindow('/nl-search/we/Archives/?p_action=sourcelist&f_sources=all&f_place=All%20Sources',625,525);" class="client-type">Complete source list</A></TD>
+</TR>
+<TR>
+<TD width="150" height="20" class="navBarBucketSubCell"><A HREF="javascript:popWindow('/nl-search/we/Archives?p_action=advertising&d_place=United%20States',625,525);" class="client-type">Advertising info</A></TD>
+</TR>
+<TR>
+<TD width="150" height="20" class="navBarBucketSubCell"><A HREF="javascript:popWindow('/nl-search/we/Archives?p_action=privacy&d_place=United%20States',625,525);" class="client-type">Privacy policy</A></TD>
+</TR>
+<TR>
+<TD width="150" height="20" class="navBarBucketSubCell"><A HREF="javascript:popWindow('/nl-search/we/Archives?p_action=terms&d_place=United%20States',625,525);" class="client-type">Terms of Use</A></TD>
+</TR>
+<TR>
+<TD width="150" height="20" class="navBarBucketSubCell"><A HREF="javascript:popWindow('/nl-search/we/Archives?p_action=freelance&d_place=United%20States',625,525);" class="client-type">Freelance writers</A></TD>
+</TR>
+<TR>
+<TD width="150" height="20" class="navBarBucketSubCellHeader"><span style="font-size: 8pt; font-weight: bold; color: white;">
+<center>Stay in Touch with NewsLibrary</center>
+</span></TD>
+</TR>
+<TR>
+<TD width="150" height="20" class="navBarBucketSubCell">
+<table>
+<tr>
+<td><A target="_blank" HREF="http://www.facebook.com/pages/NewsLibrarycom/151492814864846"><img alt="Facebook" border="0" height="29" width="30" src="http://images.newsbank.com/infoweb/newslibrary2/facebook.gif"></A></td><td><A target="_blank" HREF="http://www.facebook.com/pages/NewsLibrarycom/151492814864846" style="font-size: 8pt; font-weight: bold; color: white;">Follow Us on Facebook</A></td>
+</tr>
+</table>
+</TD>
+</TR>
+</TABLE>
+</TD>
+</TR>
+</TABLE>
+</TD><TD VALIGN="top" WIDTH="510">
+<TABLE align="left" CELLSPACING="0" CELLPADDING="0" BORDER="0" WIDTH="510">
+<TR>
+<TD>
+<TABLE valign="bottom" BGCOLOR="#FFFFFF" CELLSPACING="0" CELLPADDING="0" BORDER="0" WIDTH="510">
+<TR>
+<TD><FORM method="POST" style="margin-bottom:0;" onSubmit="return multiCheck(this, this.elements)" action="/nl-search/we/Archives" name="searchForm"> 
+<TABLE valign="top" BORDERCOLOR="#FFFFFF" BGCOLOR="#FFFFFF" CELLSPACING="3" CELLPADDING="2" BORDER="0" WIDTH="100%">
+<tr>
+<td align="center" colspan="5"><b>More than 274 Million Newspaper Articles from Thousands of Credible U.S. Publications&mdash;All In One Location</b></td>
+</tr>
+<tr>
+<td colspan="5"><INPUT VALUE="NL2" NAME="s_siteloc" TYPE="HIDDEN"><INPUT VALUE="4000" NAME="p_queryname" TYPE="HIDDEN"><INPUT VALUE="search" NAME="p_action" TYPE="HIDDEN"><INPUT VALUE="NewsLibrary" NAME="p_product" TYPE="HIDDEN"><INPUT VALUE="newslibrary2" NAME="p_theme" TYPE="HIDDEN"><INPUT VALUE="keyword" NAME="s_search_type" TYPE="HIDDEN"><INPUT VALUE="location" NAME="d_sources" TYPE="HIDDEN"><INPUT VALUE="United States" NAME="d_place" TYPE="HIDDEN"><INPUT VALUE="" NAME="p_nbid" TYPE="HIDDEN"><INPUT VALUE="psudo-sort" NAME="p_field_psudo-sort-0" TYPE="HIDDEN"><INPUT VALUE="" NAME="f_multi" TYPE="HIDDEN"><INPUT VALUE="ZTFQ|ZIQO|ATWA|ARWA|BIR1|BIWA|BRB5|WBBJ|BEHB|WBHBB|BLCH|NCB1|CKR1|CWPR|WCVR|C2KS|ZIQR|C7KWS|CKRS|CKOB|CWCB|CBHC|VC|CRBE|EWHB|DNWA|EBRB|ADWB|DPTW|WECH|FWMZ|FFFF|F1K8|ZIQM|ZIQN|ISEZ|IWLZ|IRWA|JSJF|KRKK|KCJB|WKCN|KCWA|WKNN|BMSB|WKSBB|LCMC|LEWA|MVRZ|MGWA|MIRZ|WN5K|ZIQP|TNTB|NTBT1|NCNO|NKHZ|NNWA|NNW9|OVGT|OLPB|OBOO|PPCP|PDNP|ZMDG|PGBG|POIZ|ZMFE|QCHQ|RRWA|RRR7|SRS3|SESS|IG|SE|STBS|SGWA|SGHB|SVRZ|SPBP|SWRC|SEWA|SR|SECB|TEWA|TCHB|TCHBK|TRWA|VBJB|VMIB|VLNN|ZMHI|WBJ9|WWDB|WCWA|WNTC|ZMGS|VMWB|YEWA|YHRB|ADHA|AOOB|ADTA|BAKH|BEOR|MTEB|BULB|CTSB|CCS6|LCAA|CGTC|CGTBC|CURT|PJCB|ASDB|OSDB|DLCB|EPOP|EORB|EEOR|KFNB|HNSS|HRNH|KKOB|LEOR|LRMM|ZMEK|MEM4|KGW8|OBLG|OR|OBPP|OWEAP|PIF1|PEOR|RSOR|ERGB|OSBJ|SNOR|SMS5|WCCB|WOJM|CBWB|ZIAQ|ZIAK|ACOB|AVE|ADPB|ATSB|ZMGI|ALRB|ACEN|AEA8|AVPB|AANM|APDB|AWCB|LCAB|CFAB|AJCA|ACPB|BCAB|BAKBL|BCWEB|BECA|GBUB|BCC9|BCHB|BAVB|BERB|BVHB|BHWB|BBGB|BWDB|BLB2|BWCB|BUGB|BLDN|BSCB|GCCB|CANW|CPB8|CWC8|CCA2|CACA|CBTB|CRS9|CPBB|CYNB|ZIAP|ZIAM|CEBB|CSCB|CERB|CHIE|CNOB|CHLB|CVEC|CLKB|ZMCM|CRCB|CRCA|CCA6|CONB|ZMGY|CNCA|CMBB|CC|ZMGZ|ZISE|CCOB|CUPB|C55L|SDAS|BRZB|ZUAQ|DCB9|WDDB|DFN9U|DIRB|PADB|LA|DPC8|SFDB|ZMGB|HDRB|DTIUF|DTCC|ZUAT|DVTB|DVEB|DLNB|ZMCS|DVSB|DTTT|ZMDH|EBDB|EBE1|EGPB|EVAL|ERDB|ECHB|EDHT|EMSS|ELTB|EVGG|ZMFU|EOTB|EECA|FTF9|FBAB|ZIAJ|F2KWO|F5KS|FK4S|FBLB|FB|FBB1|FEFF|GCEG|GIWB|NPG2|GHGB|GZ|UGS1|HMBR|HNSB|ZMDS|HDSB|HBBB|HBFV|ITCI|IMPB|IVP|ZIAN|ZIRK|IENN|VDBB|IRBB|LEWB|KVSB|KCRB|LAOB|LWTB|LALB|LLCB|LCWB|LCVS|LGFB|LOPC|RCPB|LVL9|DACL|LBCP|LCRB|LNCB|LACB|LNML|LODB|LPRB|LBEL|LB|LNCA|LDTB|LAEL|LOLB|SLAB|LBEB|LGDB|LGWB|MTCB|MUBB|MTMM|MTBB|MIJB|MNGM|MBNB|MSSB|MSSBM|DMDT|MPPB|MS|MBBM|MEM8|MWCB|MC|MCWS|MEM3|PCMB|MPAB|MREB|MNLB|MSHM|MLAB|CPMD|NVR1|ZIAO|ZIAL|ZIAR|CNDS|NNSB|NCYT|NSPP|ODLB|OECA|OKTB|OPY1|OVNB|OC|OCRBB|ORCHI|ZMHL|OMRB|OWLB|PPSB|LPCB|PFTB|CPSE|PVPB|PPOB|PLNB|PICB|PJN1|PSWB|PSS2|PHRB|PNTB|PPP6|PVRB|SA|RS|PTRR|PUCMM|PYCM|ZMFO|RBDB|RSLB|RRSBR|RDFB|RCDB|RWTB|CVRB|RRCB|RBNB|RCRB|RECA|ROSB|SB|SBBS1|SES7|SDES|SDUN|SDUT|SDUTS|SFVB|SFCB|CSFE|SFFS|SGVN|SGVB|SJES|SJ|SMCB|SDJB|SMAB|SAES|SBES|ZMCD|SCS2V|SCS9|SMTB|SMDB|SMSB|SRNB|SCEB|SMWB|OSSB|SIGB|SIVB|YCSB|SITB|SSSSR|SSDS|SLGB|SQOB|SHS6|STDUV|ZMGM|SES4|SBCB|SVSB|ZMAI|TOAB|TPRB|VTHB|ETSB|TVHB|TVTP|SO|TBSB|TLJB|TCTB|UDJB|UDS1|UGLB|VASB|VJSS|VCSB|VCSBB|VEEVF|CVEEV|CVEEV1|WCC7|CHWB|WTDB|WDNB|WNCB|WGRB|ZMDV|AS|ADNBA|AEAK|APAA|ASAK|AWJA|BBTA|CTAK|ADSS|DDAK|FDNB|JUEB|KDMB|KTVB|MSVF|KTUU|NNAK|NLAA|APCB|SPLS|SSFF|TDBA|ZIDE|BIWB|ZIDF|ZIDC|GILI|HHTH|HBHI|HRHI|HNAB|HEHI|HMHI|HSAXH|HSHI|HSBB|HWHH|KLOH|KKOH|KHH1|BKKA|KKH1|MMKK|MDKB|ZIDG|NHNW|WNHB|HBH9|WHTK|BDTBB|BEWV|CDMB|CEWV|CIZB|CECK|CVLB|DAMM|ZMEQ|FTOO|GBTB|HHDB|IHRB|JHRB|VLBB|MDNT|MHWV|WVMB|PEWV|WVRB|PTWV|RHBB|JSNR|TWVB|TWLS|WEWV|WDYB|WVEC|AGZB|ANEP|ACHB|ACVB|AEVA|ASGM|LCVB|ATL9|BBVA|BCMB2|BHCR|BHCB|BUMWF|BLVBB|BCVB|CARB|CCC2|CDC5|WTKR|WTVR|WDBJ|CVVB|VCBJ|CHVI|CEVA|CRVR|CTVCR|CGMUF|CULP|CSEB|VNRB|DPRO|DPBC|DVRB|DIVI|VBOB|FCVB|FSCB|FPVA2|FFSB|GGGB|CVGG|GFCB|GFMO|GCRB|HSTHH|HCVB|HCUV|VJPB|LHCB|LTVA|LBVA|MCVA|MCEM|MCVB|MVLB|MLAA|MVGB|N10W|NCTA|NAVA|NMES|NMBB|NVIR|NGLL|NEVA|NFJB|NAGB|NVDB|NVPR|VOCR|PNCB|PHWH|PTGG|PIXB|RCVB|RNPB2|REVA|RTDB|RTDBB|RER7|RO|RTWB|RLUF|VSJB|SVBB|SVHB|SCNM2|SCVB|VSCS1|TRVR|VVBB|VOCB|VBEV|VBMB|VGWW|VALB|NK|RWSB|VWCN2|VWSB|WEVA|A9WWC|ANRB|APXB|BHN1|BLA1|BDJB|BOLB|BRNC|BBAA|BBSBB|CENCD|CATB|CRYN|C9WG|CECH|CJNB|CO|COBC|CHRB|CHE1|CDND|CLPB|RCTB|CTA9|CLCC|ECDB|FCDB|DDHB|DHRR|ZMEA|GVRB|DSTT|ZMGO|DLNL|DTDT|DTPHK|DENC|EAWN|ZMCZ|EJMM|FEF1|FENC|FV|FOBB|FW81|FTLL|ZMED|FVIB|NGNB|GENC|GGNG|ZMDL|DHSB|HICK|HPEB|HHN1|HSSB|ITBN|JFPB|KCKK|LEXB|NCOB|EWN1|MDWN|MTCC|MTNC|MOTM|MTBBB|ZMES|MANB|NGNN|N17W|36WC|GB|NRBG|RLOB|NEOBS|NOWER|NHNC|WNRB|NTOP|NCLB|ONEB|PDCB|PPNB|PWH1|PLTB|SPNB|PBNC|PNLB|QCQUC|RENC|RGAB|RSCR|REIR|RBAB|RCJB|ROBB|NCTB|SPNC|SSIB|SHRB|ZMAY|SMFH|SHEB|SPR9|SLNC|SNAP|ZMFQ|WSNB|SRLK|SKNB|ZMGK|SHCB|TLTB|TRNR|TTT9|TDWB|TLG |ZMCH|TSVB|TRBB|TDBB|WLEC|WSFB|WDNC|WWNB|WTNC|WILB|NWSE|WJ|WSJBB|YRPB|BCNH|CBLB|DEWB|DPDE|ETHN|GHLB|HCNH|JHDB|LSRB|MLPP|MTDE|MBDE|MCDE|NLPB|NPDE|R4FB|SCST|SCGG|SPDE|WEDE|AEAS|AHAMH|AWAF|ABMB|MDAB|ANEE|BEMD|BTGB|BSEB|BMMB|DBCC|SBTB|BMBB|FSBL|CGM9|AN|CCTW|CVTB|CWIG|CBLE|CYPB|CFMB|CTMD|CTH8|CTDE|CNTC|BDRB|CDSB|EEMB|EWCC|FSMS|ZMDD|DMHH|HCTB|JEFB|BJTB|JHNL|KCNB|LLMB|MAMC|NCMB|NEBB|NBRP|NRMB|OMTB|PAMB|PGSB|QUIN1|RHM6|CROB|SFM|ESDB|BS|SSEB|DTRB|BMHB|TOWB|WEMB|ASFB|WDBB|BABG|CSDB|CXBB|DCHU|EAU1|EPGB|GUV1|HLNB|HLWB|HGU1|ITWB|ZMGC|ZMHP|ZMGP|ZCBM|WDEW|FMWB|WJWB|WT|AIKB|AIMB|AIMBB|BGZ1|SBGB1|BTB9|BHPB|CMNB|CPMB|CB7W|CW1W|SCSE|SCCB|CNRC|CAOB|CESC|MBIB|DJMB|WSDB|DCEB|EPEB|EADB|ENQH|FMIT|GFLB|GTSC|GESC|GCSC|HTRS|HRIB|RHHB|SHJB|CHIB|IJG1|ILP1|BEBB|WJRB|LAWY|LNSCB|MSME1|MESB|MORNN|MNBF|NW2C|NBOB|NPLL1|PPJB|PKSB|CPCB|PPPB|BJSB|SCLB|CS|SBSC|MB|SNBM|CTC5|TTOC|OTDB|UDTB|WOHB2|A2WWA|A6WF|AEA5|AHAG|ANGA|ATRB|ABHB|GAWB|AEGA|AJTB|AT|AGCB|ACBA|AEA6|BCNW|BNGA|BRGRA|BSKK|BSMAM|ZMGL|BCN2|BISS|AGBB|C3WC|ZICZ|HTCC|GCLN|CTGA|CNFF|CNDB|CLSB|CAAB|SGPB|CSRB|CGCSM|CGPCD|CGEC|CDCC|DCGA|DTNC|NDKN|DCSD|DNGA|DWCB|ECJS|ENGG|EWAA|FCGA|GFCN|FNFZ|FCNB|FHGB|GADS|GDNG|GDPB|HDHB|HNFZ|AASI|JPAB|JCHB|JCNJ|KMGSM|KAGA|LGNB|GLOL|CL|CLEBB|LTGA|MEGA|MT|MTBM|MDJB|MTGA|MNGA|MOMB|N3WS|NNAA|THGA|GNCM|NCZB|NSSN|PCSD|PNDZ|PCP5|ARHB|RCZB|RNGA|GSSN|SEGA|SMNB|SAVB|SKGK|SAGA|SMPGR|SFNF|TAGA|TTGA|TTET|TGTT|GMTB|TGC1|TIPCF|URMB|VDLB|MWTB|WJHB|WPGP|GWCN|WPTN|8TFB|ZIBT|ZICL|A9WWO|ZIBZ|ZICR|ZICO|AFLA|ANFL|BONB|BLMT|BTMB|BBTK|BBVB|BBNA|BOCB|BTNB|BH|FBHBB|BOSB|BNBB|CBLL|ZICD|ZICK|ZICM|ZIBQ|ZICQ|CKBB|CFFO|CMDB|CNCB|CFZB|FCCCB|CNC9|CNFN|CCN8|CGNC|CPFP|CLT9|FTCNA|CNUSS|CNSUF|FCBN|ZIRP|LDCB|NJ|DSFB|ZMCT|DLAB|DTFL|FEOB|EN|ENHBB|ECMT|ESFB|FKKB|FNFF|FTUB|FTUBJ|FTUWJ|FLEF|FMLF|FWFM|FFTB|ZICH|ZICN|ZICS|ZICJ|ZIBS|FNFL|FMEF|GCQT|GEGG|GSGB|GCDB|GBRB|HHCCY|HERN|HEFL|HILD|HNFL|IBII|ZICE|IFAG|ISPNA|JCFL|JEJ1|JNFL|KGK1|KWCB|KSK9|LPMB|FLPJ|LPLB|FLWN|LLFB|LBFL|LBOB|MIEB|MFPB|FMBN|MEFL|FMGN|MH|MHBB|MHFL|MUTT|NDNB|NDNBB|FWNEN|NSTN|NJUJ|ZIBR|ZICI|ZICT|ZICG|ZICP|ZMFG|SFNB|NMOB|NPFB|ZMDF|OSBB|ONOO|FOLR|OTFT|OEFL|OMNO|OWKB|FOBO|PA|PBPB|PCOP|FPBN|FPCE|PPP4|PPFL|PTFL|PCO8|PCDB|PCTB|PGPC|TREB|RNDB|HT|FSOB|SNFN|SFTF|FSLB|SMCO|SMNS|SHOB|ARSB|FSPE|FS|SCTBB|SBFB|SIBSS|SDFL|TEFL|TMFL|TBET|TBMNT|SPTB|SPTBS|SPTWS|TT|FTTB|ZICF|TCBB|TCPBS|ZICA|ZICB|POFO|VGSB|VB|VSNB|VUWFP|WNCC|ZMFS|WPBEW|FWPN|DDBD|DDBBB|WVBSD|DDBW|WPSN|END1|SJSB|VIDN|BEMT|BEB7|BZMB|BDCBB|CFVP|DILC|AEBB|GFEG|HHNH|MKUM|LCLAP|MIMT|MEMT|ZMCI|NWMB|RMSB1|SHMT|WSNL|WNLL|WPW7|BEID|BCDBE|BFHB|CMID|CRAB|IDRB|IIFE|IPTB|IPTBB|ISJB|ISJBB|IDSB|IISB|IEPP|BPIP|LT|LMTBL|MEID|MNBB|MPDN|N7KB|PRII|SNPK|PRTP|MV|TFET|BILL|CEC3|CEC5|LDBB|NWYB|NWYB|RRAB|WTEB|ZIIY|VNNL|NBMB|BCIV|NBCV|ZIJE|CVLL|CCN3|ZIJB|ZISD|ZISC|DSTS|DVLB|EEII|ETL9|EDFP|ETEE|ZIJD|HENV|GVHV|HSW5|LVBPL|LVCL|LVE1|LVRB|LVS1|LVSBL|LVW1|LNTL|LRML|MLNM|ZIJC|NAVN|PVTB|ZIIW|RLNL|RENV|SRNR|SVLB|RYLL|SVLL|SVVB|SSVB|SVL9|SVNV|ZIJF|ZIJA|WVLB|DHPP|DUP1|DUCB|DSNB|ZMAP|EEOL|ECPBB|FK1K|LHJB|HTLL|ICS1|PCRB|PEUT|RRRB|SLCE|SLCWS|USLCW|SLTB|OSXB|SAPB|UBSR|VEVB|ZIAZ|ZIBD|ZIAT|ACO9|AJLB|ANRA|APG1|AECO|BCDB|BECO|BSB4|BRMB|BNTB|BRCO|CCEE|CVFMC|ZIAY|ZIBC|ZIAS|CCCZ|CCCI|CDCO|CHTB|CSJB|CSEC|CLUB|CCSEC|CZJB|CCO3|CIBB|CDCBB|DC|DLRB|LLRB|GJSB|LCDB|DECO|DP|DPBD|DCNPC|DRGB|ECN8|EHLL|EPTG|FCEF|CFLP|FMTB|FTCO|ZIAU|ZISG|F3KD|ZIAX|CSGB|GBCB|GWEAC|GTCO|CGJE|ZMDJ|HTTB|HRHL|SJAB|JAJJ|LJTD|LNCO|LMRB|LICO|LTVL|LLCO|MUNCG|MMNB|MDPM|ZIRL|ZIAV|ZIBA|ZIBB|NTSN|PCCO|PPCVP|PBJB|ZMFB|RBTB|RMCF1|RM|RRSBB|SUCC|TCEC|TGCG|ZIAW|WWCO|WRNG|AJGC|ACTP|ACIA|ADSB|ADFB|ADWT|AINA|ARNW|ARIG|APN9|BESY|BIPP|BNAN|CGDB|CHEX|CIAZ|SCN9|CMAM|CEAZ|CBNNA|DTTB|DDAZ|EACB|EMIM|ZMER|EEAZ|TAEB|FRABB|FK19|GEAZ|GIAZ|GAEG|GSAZ|GVNS|INCK|ITBBB|LETB|MMAZ|MEAZ|MLN9|MVDN|NIAZ|NSIS|PIP9|PTN9|PEAZ|PMAZ|NCA9|QCIB|RRPP|SSAZ|SMMNA|SPVN|SCVSG|SEAZ|STN9|SVHS|SNN8|SVL1|SPNA|SPMT|SCWI|SCYI|YUMA|SBYB|SSNA|SIAZ|TPVI|TVDC|TEAZ|TWT9|VSVB|VGA9|WSNA|YBDB|YEAZ|ZIIV|AODB|AEA1|AJ|AJBB|AQTB|CCAB|ZIIR|CCBG|ZMCL|ZMBC|FDTB|DHLB|BJFB|ZIIS|GIPB|LCSB|LVOB|LAMB|ZIIT|ZMFF|ZMFH|RDRB|RULL|RONB|SF|SCDP|SCPB|TAOS|BBND|BEND|BK|CRND|DNWB|DLJB|DPD8|FEND|GF|HSND|JSJJ|LNND|MGND|MCIG|NMCJ|NMCR|NNTN|NMHB|NSND|UNUU|VCTR|VAVV|WDHW|AB|AABG|BCPB|CJPP|CSD9|ZMHC|HSS9|KSD9|MDLM|MCTT|RCER|RCJR|SFES|TSN9|AGNE|NBDS|BLNE|CRNE|COLTE|CCCBB|DNNE|DCBPD|FTFF|GATEV|GCG7|GIIB|GBNE|HLHH|KHKK|LCHL|LENE|LJSB|LJSW|NCNP|NPTN|OENE|OSNE|OWHB|OWHBO|PTNE|RRNE|SCHY|SHNE|SNP9|SJD1|WNNE|WNW3|YNTB|ARCA|ADGB|CLOO|CIKW|C1KW|CNTB|CDAX|DRDB|DCDG|EDTB|EM|CJAB|FLLL|GCTB|GCPG|HSVB|HDNB|HCNB|KKCK|KSCM|KCSP|LGKB|LTW9|JW|LTL9|MM|MSKS|MGSB|NKSB|ODNB|OHDB|PNSB|PTPB|SLJB|SWTB|SJNS|TCJB|TEKS|TTMNO|RTKT|KWDN|WE|WEBB|WEKS|ZIFV|GFAB|ALTA|AVRS|MADH|AMEA|BSLP|MBSC|BCSP|BPSP|BUNB|BSC9|CCNW|ZIFU|CDSP|CVMB|CHMB|CCNMM|CHFS|MCDT|CRSP|DGWW|DEMN|DED9|NT|DNTBB|ESCE|EDNB|EPSC|MESC|ESCSE|FFDJ|MFCB|ZIFW|FPMM|HRGX|GUSTV|DTHH|HSSH|HCLB|ZISI|JIPB|IDJB|LCCB|LMMB|LSC1|LMN9|MLRB|MMNN|MEM7|MBMN|MDNV|MEMN|MDMN|MMLB|WMDS|MAMB|MTMN|MVNB2|ZIFQ|NHGV|MCRN|NYAT|OMGPO|ZIFS|PIWX|CPJB|ZMHJ|PMN8|PSS9|ZMFI|PLAB|RFGB|MRSC|SNMN|SVPB|SVNB|SEH1|SCRNC|SJPS|MSJN|SLPS|SPES|SLLB|SP|MN|SMES|SGMN|SNS7|USDD|WPMN|WOLL|ZMHA|MWDN|WPW6|A8WA|AEDI|AUDM|ANTB|BNIA|BNRBA|BNTF|ICRE|ICCP|LCCD|CVWB|CHJC|CHCC|CANB|DDFB|DGCB|DNCC|IDCN|DEIA|DJDD1|IDBR|DMED|FCSF|CR|GGMM|HRHH|BHEB|HRIA|ISTD|IDID|KNIA|KJEB|LHOL|LTRB|MCPNO|MJIA|WT1W|NJIA|NHTN|NWTB|NDCRA|ORDD|OTGB|OSTB|OHOB|OCOO|OEIA|PCIA|QCBJ|QCTD|ROER|SBGG|SIA9|ISCE|ISCJ|SCJBS|DQ|ITCT|TAIA|TRUMW|VNTD|WCFC|KSPR|AAMO|BRCP|BSJB|BCJB|BDNBB|CDMO|CPMO|KMOV|CJMO|CJSB|MCME|CFPS|CTMO|DGWB|DJPM|KDRB|DSJB|DMHB|DNFM|EIMB|FPMO|KTVI|FSFF|GNMWS|HCRB|MHBJ|FMID|JCAB|JCNB|JCJB|JEMO|JGMB|JWEU|KCE1|KC|KCSBB|KDEB|WKJB|LSLC|LTL8|LEBD|LEEB|LCLBB|LCMCL|MCHM|MMO9|MBMO|MDFB|MCPNN|MJFB|MLMM|MCJT|MLMS|MMID|MTMO|KYTV|MNDN|NDJB|NCJF|NCJB|NSJB|MNCJ|NENB|NMMO|OJOB|OMJB|OSJA|PTBB|PJSS|PCMS|RAYB|RDNB|MSJT|ZMFT|SCJ8|SCJ7|SSJS|SCJ9|SCJS|SME9|SBRB|MSCJ|SJLJ|SJPB|MOAB|SDRB|SLES|SL|SPJS|MSHB|SLSCC|ZMBU|TRCJ|UNSS|VGM1|WJW8|WCCS|WJMO|WCJB|MWSS|ZIQT|ZIRV|ZIRB|ZIQY|ATOO|BHMM|BRNN|WBDN|BEGN|BEGNB|ZIQZ|ZIQU|ZIRT|ZIRU|ZIRE|CHWI|CHBC|CMATM|CJWI|BCJW|DCWI|DJCU|WBDB|DPAA|DRPP|MDPB|DCNM|FOURV|WITI1|ZIRF|ZIQS|ZIRA|ZIRS|FJMB|FTAB|GMFN|GBEG|GWAN|ZMDX|JCST|KOWB|KMIB|LCEL|LCTR|LCTBL|LCRH|LCMS|ZMGQ|LCRBH|MEWI|MEM6|MWSB|MJSBM|MJSWM|MCM6|MNBN|ZIRD|ZIQV|ZIRW|ZIRX|ZIQX|CGNB|NSNBB|OCFG|OOOB|OFHB|PKPB|PFHX|BWIX|RTPR|RCPR|SPEA|SCRH|SSNB|SEWE|SASX|SWI4|SUDB|SSWI|HTPB|WNW5|WEWI|WNTW|WFMB|WDEE|MLJB|MD|APIL|ASIU|AQCB|ALGB|ARVB|ASIL|AHJT|AHPB|AEIL|AWNI|BCRB|BWEB|BPB8|BRIL|BILR|BC|BNWEA|BLVB|ND|BNDBB|BPIL|BENBB|BSLBB|BLIL|BPGG|BCIC|BAIB|BUKB|BHPP|BJIL|BZCB|IBSL|BSL9|BGCB|BGJT|IBCB|BRSL|BJCB|BJBC|CHKB|CCC7|CHEC|CTIL|CSE1|CSPB|CGCB|CCC3|ICIB|HPCC|CCIL|CEC1|CJUI|CMC7|CPOO|CRIL|CSTB|CSTWE|CSTBL|CWIL|CIL8|CFBL|CBIL|CLIL|CHSL|CJC9|CHJB|DCCA|OAL1|ZMAH|CNDD|CSLO|CURB|CN|CNWEE|DAWB|DCIL|DCBD|IDEN|ADHB|DIUU|DLPP|DLCC|DRRM|DSOB|DRAB|DUSS|ZMAU|DSL9|DERB|DCI1|DPJT|DPLB|DWBB|DCHB|DEHB|HDGB|DLGB|DOBB|DWSB|DGRB|DQEC|ESAA|EPTCB|ESLJ|ETRB|ETVB|EDIB|EJEB|IEDN|ECIL|EDC8|EHEE|EGJK|EGTB|ELVB|EPE9|RRSE|ENIL|EVRB|EIL9|FHIH|RFLB|FPRO|FVLB|FHJB|FRAB|FPAW|GNIL|BYNC|GRGB|GRGG|GENB|GLNB|GHPB|GANB|GJIL|GCPR|GYRB|GLBG|GURB|HCJP|HPEH|HPPB|HICCE|DRHH|IHML|HHWW|DH|HN|HIIL|HPNB|IHSL|HSL9|HSLH|HERB|IHPH|IILI|APLL|ITSB|ITBSB|IWGN|INIUC|IHPS|IPII|ZMDY|JGTC|JSIS|MJGB|JSFB|KCCB|KCCBB|KSKCG|LGPS|LRCC|LCJI|LCJBB|NS|LCNSW|LFRB|LHRB|LKRB|LZCB|LRMB|LBVB|LIRB|LWRB|LRIL|LSLL|ILSL|MJIL|MDRM|MWHB|MSLB|IMCS|MCSB|MPHB|MDIB|JCLF|ZMEO|MDHB|MGCB|MTNM|MPJD|MPTB|MRVB|MAIL|NRIL|NP|NSWEN|CNGB|NGBC|NGWEC|ENSB|NTLL|NPMN|NHSB|NJIL|HNNB|NRSL|NBSB|NSDD|NHJB|NWRB|NHBC|OFJI|OPFB|OBSL|OAKB|OTPO|IOCN|ODMB|OGOB|PCSB|PJTI|BL|PGI1|PHAB|PRJR|PDTP|PEIL|JS|PJSBP|PTOP|PHJR|PRHB|QEQQ|ULCLL|RCHT|RAIB|GBMB|RMBG|RNMB|RBIB|RGMB|RBLI|RSLR|RINB|REIL|RRSB|IRRSB|RMJT|RMRB|RRIL|RPRB|RJRJ|RIRR|SAUB|SVNDB|SGRB|SKRB|SKYB|SOIO|SEE1|SI|SSTR|SWEAT|ZMFN|SHI1|SES8|SCKB|SCES|SCR1|SCCJ|STRB|JR|SJRBS|SLSS|SEIL|SPIL|ZMCC|TPIL|HITB|JPBB|CTCB|TLMM|TRAB|TIL1|TWIH|VFPB|VLUB|VHRB|VPAV|VJALC|VMIM|WPWB|WTRW|WWCB|WEIL|WRWW|WJOP|WCPC|WHDB|WCHB|WSLW|WCIL|WSSLW|WPIL|WLW1|WCSB|WJTW|WSSL|IWSL|WMLB|WPSS|WNTB|WDPW|WTMM|WRIL|WIIL|ANIN|ZMAG|IBHT|NBBI|BSIN|BNMP|BEIN|IW99|CIN9|MCTB|CRVB|CTNB|CCIN|ICIC|CIFF|CINN|CIWW|RIN9|DDDD|DGIG|EWRR|TEIB|TBEB|EBJJ|EC|ECPB|EEIN|TNIB|FWEF|F5WI|FFIK|FTII|GCG8|GNIN|IDGN|HCFB|HBAI|HJJB|ZMCF|VHDB|IEI1|IAII|INLB|IMBM|ISTT|IBJB|IRIN|JG|JPLL|JRIN|KOKO|LPHA|LIEL|LKIB|IMCB|MVDB|NDPB|CNEC|FW|NIIB|NBI9|ONI1|OBN9|OCNL|PCIB|PCNT|PTIN|PTLB|PNIN|PMCC|GPTB|PDCP|RLIB|RRIN|SNIN|SUSIE|SIWUM|ISBE|SBTS|STII|SVI1|SCJD|THET|TFIB|ZMEP|TNIN|BEDF|TVIV|ZMFX|TSTB|ZMBT|VSCB|WPDB|WTHW|W1F9|W1F8|ZTSB|AVTB|MAAE|AARB|AMI9|AAND|APO1|ANMD|BAYB|BCTWB|BEDB|BNZB|MBG1|MBBB|BJBB1|ZBRB|CWEB|EGRC|CCMI|CHED|CDRC|CGRCG|SCCE|DTAB|DBDB|DEMI|DHMB|DJNB|DTNB|DNBD|DDMD|DDND|EEY9|EAMI|ENSS|FPMI|FEMI|FL|FJWEF|FXWJ2|FW1G|FTCB|GHTM|GHTG|GRBJ|GREG|GRPB|GRPWG|GTHT|GVEA|GSTB|HRBB|HBMI|HPSB|HRMI|MHDB|HSHH|HIMI|HGKK|HRDB|HDTB|JCPB|JCPWJ|JIJ1|ZOOB|KGWEK|LKSB|LNHH|MLCP|LEL5|GVLA|LLMI|DNLL|MCBB|MNPB|MNAB|MVNH|MLMB|MEM5|MOTB|MDAA|MFPD|MILB|MR9M|MLDB|MBM7|MEVB|MPMB|MCJB|MKCB|MCWEM|ZSHC|NCPL|NMRR|NDSN|NWMM|RCSA|SKCA|OPRR|OHJB|OTTJ|PGJG|PNRP|RCOB|BGRB|PGMI|GCR9|RPTB|REEB|RORB|SGNB|SNWES|SSII|SBUB|WSUS|SAJJ|SSMB|WAJ1|SHSB|CSSB|SJSS|SNHH|KUTK|TCET|TREM|TCT7|TTSB|TC2C|VPTB|WWKB|WBBB|WMUK|WLBW|WWTB|ZILG|AK|AKJB|AMAB|BNOH|ZMAF|BWNB|TB|BNB2B|BCOC|BSTC|ZMAB|C7WWD|ZILD|CHSC|CECC|CHN9|CK|CCN6|CEC4|COAB|OCAB|CBC8|CCOH|CLDB|CDBC|CEC2|CMOH|CPC5|CPMBC|CCPP|CPMM|FOCB|DLNY|DRCC|PDSB|DDNB|DEOH|DND8|DND9|ELOH|FFEB|FSOS|FNDD|WJWF|ZILE|FOH7|GNOH|GDTB|GVGG|OGCN|CHOH|HNNH|IMOB|ICOUT|ITOH|JTJJ|JYOY|HONB|KCGG|LCOC|LEOH|LM|LNBL|LDNL|MSOH|MSOO|MOJB|N4WM|ZILF|ONAN|NRCC|NSC1|NBN4|NNOB|NCNC|NRNN|OROCO|OVNO|OPCB|OOOCT|OFPB|PSPC|OPCT|PTSP|PCNW|CPDB|PDBC|PDWEC|PDTB|PAOB1|PJLB|RCOC|RBCC|RTFB|RNOH|SRSO|STBO|SOUA|SNSB|SBAB|SGOG|SMOH|LSP1|SPC1|SSA9|SSC1|KTSB|TWNB|TCNBC|TOH9|TRNN|TEOH|TVNO|UANA|ZMGF|VCCB|OWDN|WSSN|WNOB|WNPO|WNOO|WA12|WNW7|WNOH|XNCC|YEYY|BD|BEME|KBJB|WMSB|PEME|ME|SNME|SJVT|BBNH|BCTB|CTNK|CMOB|ZMAO|NDNW|ZMCY|FDD2|GNNH|HBH8|KSKK|LTNH|MCOO|MENH|MLNH|UL|NHUNH|NPNH|RTNH|SOS9|NTGB|TBNH|TTTC|VNL1|WNH9|ACIM|AEVT|BBJR|BBRB|BRFB|BEVT|CRS1|CBJR|CSVB|VERB|GMOM|MJVB|MCVT|MIVB|NMPM|NDEB|NNT1|RBJR|RHDB|RNBR|VSAB|BMAB|TABBB|VVBJ|VVM1|VBMZ|VCVT|ZIFG|ZBAA|MASA|ZBAB|ABMA|ATMA|ZBAC|ZBAD|ZBAE|DAAA|AMMA|BFPW|BTMA|BWBBC|ZBAF|ZBAG|ZBAH|ZBAI|PBEB|ZBAJ|ZBAK|ZBAL|BEMA|BNHB|BHBL|BOBH|BCMA|ZBAM|BIMI|ZBAN|ZBAO|ZBAP|ZBAR|CABC|CAPB|CT|ZBAS|CRMA|ZIFF|ZBAT|ZBAU|CMJB|ZBAV|ZBAW|DFPBV|DHGB|DHGBN|LMDB|DNNB|ZBAX|NHTB|DRDD|ZBAY|DCMA|DRMA|ETLL|EBSB|ZBAZ|ELEF|EMAB|FBFB|ZIFD|ZBBA|ZBBB|MGDT|GLMB|HPRH|ZBBC|ZBBD|HNSM|HTCM|HHSB|ZBBE|ZBBF|HGHB|ZMAE|CHWC|HNSH|ZBBG|ZBBH|DHH9|ZBBI|ZBBJ|ZBBK|NNBBC|JPGB|ZIFE|ZBBL|ZBBM|LCMA|LMKB|DLL8|LCMB|ZBBN|ZBBO|ZBBP|ZBBQ|ZBBR|ZBBS|ZBBT|ZBBU|MDCUM|MLWB|MNM5|ZBBV|ZBBW|ZBBX|MRBB|MWNB|RME2|DMMA|MFDB|MHGB|NITB|ZBBY|ZIFI|ZBBZ|ZBCA|ZBCB|NATB|ZBCC|NAMA|ZBCD|DNMA|DNN9|ZBCE|ZBCF|NWBM|OJF1|OCMB|PAKB|PLQB|ZIFC|PEMA|ZBCG|PFPB|ZBCH|PGP8|PTED|PBPP|APSB|RHSS|RSJB|ZBCI|GMRB|ZBCJ|REM1|UN|RBSS|RWEAS|ZBCK|ZBCL|SNBBB|SBMA|ZBCM|ZBCN|FSEB|MSNT|ZBCO|SOCB|ZBCP|DSMA|SVMA|ZBCQ|SNMA|SENB|REME|CTVB|SEMA|ZBCR|ZBCS|ZBCT|SJB1|SVSUB|LO|SNCB|ZBCU|TCLM|TDGB|ZBCV|ZBCW|TTMB|ZBCX|TDM1|ZBCY|VADB|DPNB|VPNN|ZBCZ|ZBDA|WTWB|WMTB|ZBDB|ZBDC|ZBDD|ZIFH|WBMB|WMA8|WNMA|ZBDE|WBTBB|ZBDF|DWMA|ZBDG|WEN1|ZBDH|ZBDI|ZBDJ|ZBDK|WHEX|WTRB|WLAV|WLBM|WLEBE|WLH9|WLP8|WLWBR|WLWR|ZBDL|ZBDM|ZBDN|WO|BDHP|CWRB|CTRI|RPCB|CCRI|EGPE|GFCCK|KCDT|NTRI|RN1W|NPBN|PERI|ZMFC|RILB|STRI|TPRP|VBOS|VBCB|VBPE|WPPB|WESB|RWRB|NWAB|AOCB|BCZB|BNCB|BPCT|ZIBF|CBUNW|CCC2C|CSHB|WMCB|CRHH|CTPB|ZMAL|DADD|DEEE|EDCD|DFFF|DGGG|DNCN|DNCT|QCHH|DSS9|DWW9|DWWW|DWCT|DRNB|DTMB|DCT8|DNCB|CECB|FFCB|FCWB|FSSB|F61W|FMCB|GCZB|GWPB|GRTB|HJCB|HAVB|HC|HECT|HFNB|HHPN|HBCT|ZMET|HHCB|IWCW|MJIB|MMCB|MCCB|MRPB|NCAB|NNRB|NHAB|NHRB|MFSB|DNEB|NTBB|NHCB|NCNB|NRBB|OGCB|PVCB|PREB|MRJB|RDPB|RCTT|WRAB|RFPB|RNBB|SECT|SCYB|SCZB|SFAB|TMCB|TWTB|OVTB|TTCB|VGCB|WCVB|WAMM|WHVC|WCTB|CWFB|WTNB|WLBB|WMZB|YHN1|ZMGR|ZIKH|AJNY|ANOB|AENN|BGN2|NARB|DANY|NBBB|BHNY|MBNB2|BTVB|DBBB|BHBB1|BSB2|BEB2|DBB9|BPPB|BRKB|DBNY|BDTB|BNY4|BENY|BN|BPNP|CTURR|BCCB|RTNB|CRN8|ZIKA|DCC7|CHR2|CBC6|CSNB|CEPB|GNCB|CHNH|CIRC1|CANA|CZBG|CSN2|CTHB|CLN9|CBC5|CNY2|CSDD |CYUN|CONC1|CCCC|CDSI1|DCC8|SCAB|DCC9|C1WN|DOMB|DNB9|SDGB|DMCB|DMBC|DMSB|JDMB|DNBB|DRRB|DSNY|DENE|DESB|DDFD|DEXB|ENY4|EBSS|ENOS|MONY|SNC9|EABE|EMHB|ERRB|DENY|ERYB|DLPB|EEE7|EVSB|ETHB|ETNY|ETSH|PERP|FONY|FPRB|FPDC|FHTB|FORB|ZIKD|FSEH|GCLC|GSPB|GAYB|GCE1|GCRP|QGRB|GNRG|GEPB|GCNR|DGNY|NGSB|GBNB|GSD1|HTNB|DHNY|HRRB|HIHB|DHHH|HENB|HHAWG|HCN7|HINC|INNN|ZMDU|ZIJZ|ZIKE|IENE|IWCB|INY7|IRVB|IRPB|GIDG|IBUB|JSLB|LNJB|JC|OBJB|JRMM|KTBK|KNQCQ|LSAGG|LBNY|DLL7|LNYBB|NLOB|LTLL|DLL9|LBLB|LPSL|LNYB|LBHB|LIAB|LINB|LAHB|LIE1|LIPS|LERH|MNYB|MWHH|DMNY|MPNY|MOMM|MPNB|MHNY|MRNB|MYW1|MAMM|MNP8|DMPM|MVIB|MENY|DMKM|NHL9|ZIKB|DNRN|NRRB|NYDB|NYE1|NYN1|NYOB|NY|NYSB|NENY|ITNB|NWD1|NBLB|NNWCE|NGNY|NWTN|NCNN|NCN3|NCTWY|NCEE|DNSN|OYUN|UODB|OIPH|OPBO|DOOO|OTPB|OURB|ODTB|OBEP|OBG1|PPPUP|DPP8|DPP7|PSNY|NPPB|PRFB|PNNB|BPDN|POBH|DPNY|PVW9|PLYT|DPCP|PWNC|SY|PSBS|PSWES|ZMDI|DPRP|PPRB|QEXB|QGZB|QNLB|QTRB|RNY9|RNHR|RBSUB|TRDB|RSHB|RVPB|RDVH|RENY|RCHBB|RNNY|DRRR|RCRR|RSRB|SCS2|STNY|SARB|NSPS|DSS7|SCS22|SLIUB|SSS2S|SPS8|DSHS|DSS8|SOTB|SNNN|SEQB|NSHC|SDND|STSAO|SIAB|SIAWS|SNY6|CPNY|SV9S|NSNB|SLBB|SJTS|SENY|DTT8|TVTC|ZMCW|TTT2T|AL|QTLB|TNNN|TWRB|NTTB|USJB|ZIKI|UEUU|VNE1|VSHB|VPNY|VNWCV|VILB|WWAB|WSN7|WA|WENY|WPLL|ZIJY|WBPB|WDRB|WSBW|WSSB|WTWW|WCN9|NDWP|WJNY|HNTB|DYYY|2BRR|2HRR|ANEB|AJJN|ASCN|AWMW|AKNB|NACE|ALNL|2RNR|BYJ2|BTNJ|BLNJ|BBB8|BTBN|WBCB|NCRB|CSNS|CYJB|CPC2|CJNJ|CNNJ|NJCB|CCNJ|CCWEC|DPPP|DTNN1|DVNF|EBSE|EVNJ|EMSE|ENEB|HUDB|ENPB|ENUB|EMNM|FLS1|FLOS|GFNF|GRUCC|GRVB|NGRB|GCTW|GCTWW|HCNJ|NHHB|NHNB|HNN9|HRNR|HUDD|HRALH|HCDB|HCDWF|HOFB|IMNM|IPNB|IPWES|IMAS|JCEJ|NJJ2|JJWEJ|KRJ2|LLNJ|LFLL|NMSM|NJMB|NSPR|MGWES|MPSN|MTM2|NNMM|EYPB|NENJ|BNB7|NCCWB|SNRB|NTMB|MTNB|NBNJ|NWNW|NBWW|NSBS|NVSE|NSNJ|ZMBG|PLNJ|PVCL|PVTL|PENJ|ZIMZ|NPGB|PDWB|AC|RSNR|BE|RBZB|RCNC|RPPB|RNNJ|SCJB|SBS6|SJTN|NSIB|STL2|SLWEN|SONO|SNAPR|STNJ|TSNJ|TTTB|TTN8|TSSB|TSWES|TJRB|TNRR|NTJB|TRJB|TTNJ|NTBN|VCGT|WRHB|WFJ2|WTNJ|WMMB|WRPW|WRUG|WSNJ|WSN9|3SMP|ZINC|A1WW|ZINM|ATCC|AEPA|ANPA|AUSS|PAGB|BWUW|PBCT|JRCBM|BLNB|PBCN|BDWB|BATB|BNPA|BPLB|LBCB|BELB|BFMM|CPIS|CNPA|ZINN|CVMM|DT|CDTBB|CHDB|CCPO|CSC21|CHLP|CZSB|CZVB|CVSVW|PCLB|CMLB|CMCB|CSPA|CTYB|JRCCP|TCSD|CJM1|DAPA|DCCB|DISB|JDLB|LDNB|DNMB|DPP9|DPUBP|DPSS|DRVB|DNDD|DCDT|PDLB|DWLB|DYPB|ENNB|ETNB|EPGG|ECCB|EZCB|ECLE|EEPA|ET|HESB|ETEB|ETWEE|FRFB|ZINA|F4WY|QFPB|GKGUE|GVPB|GTCB|LNGB|GLNN|OAAP|HBIB|HEPA|LNBB|HVPB|HPA1|HSPS|HSUP|HSBU|HSHB|HWPB|LNOB|LNHB|ZIND|IOSI|DPIB|JSPA|JDBB|JKTB|JEPA|KRKB|KNPB|KSTK|KNGB|KVNM|KZPB|LVCLA|LVZB|PLHB|LC|LTP9|KLTB|LDRB|LVNN|LEPA|LLCW|MLLB|MLSLB|MLKB|PMLB|MJPA|MTPA|MEPB|MRCB|PPMB|AMCB|MVMM|MPJM|MAEB|MSM1|ZIMY|N1WWP|ZINO|ZIRQ|NCPB|NHGB|NEHB|GLEB|NDCB|BGHB|UDCB|HNDB|NMDB|NWIB|NAVB|NHJM|NEZB|NPBB|NOTB|NSMM|WORB|ONPB|OXTB|PKLB|PRKB|HRNB|PNBH|PNWEH|ZIRR|ZMAW|PHPM|PTSM|PCTN|PPXB|PPA9|PCP7|DN|PEP9|PI|PMPA|PTPA|PCCB|PCJH|PEPA|PG|PTRB|ALPA|PMJB|PRS4|PRPB|PREHP|PAJM|PFCB|CPOB|PSPP|QUADV|ZMFK|PRCB|RHWW|LREB|REVB|RRPA|LNRB|SUCB|SEPA|SPCP|SRMUM|SHPA|SSSP|SIPA|SMPM|SSLB|SHRS|SBKB|SGFB|SHNP|SUBB|SUVB|SCIB|HZSB|TNPP|TEMM|THNN|WB|TSWW|SRTB|TTBS|JRCTT|TWAB|TWCB|TTKB|TTEB|TTNB|TKSB|TTWB|TRCY|TDEM|TRGB|AVAB|VIMB|KVNB|VVH1|LNMB|WIHB|WWNWN|WCLB|WSWB|WCQB|WGVB|WMPM|NAEB|PYNB|YK|YWRB|YKDB|WHAS|ZIED|APKY|AMDD|ANLL|BGEB|BLLL|CNDC|CCNL|ZIEC|CKNJ|CCML|CJKY|CDC7|DIAB|BGDB|FCTB|ZIEE|KGNG|GDTG|HKGB|GCNW|GCGB|HDEB|HZHB|HCLN|IJSJ|JJNJ|JTGO|KYPB|KSBBB|LCHN|LELB|LIKI|LEL7|LH|LHLBB|LCKY|LEOB|LEL6|LMLV|MCRW|MMKM|KDNB|MNKY|MABB|ZIEB|NJCC|KNDB|NEEB|NOLSL|NHK1|OELB|OMIB|ONHB|PEKY|ZMFA|PNKY|RLKB|RRRR|SELB|SNKY|SLKL|SMTT|SSKY|TTCC|TBBB1|WCOB|WSKY|ZIOI|ZIOA|ZINX|ZIOD|ANTN|MCAD|BTMM|BLTN|CCJJ|C3WM|ZIOE|ZIOK|ZIOB|C1WJ|ZINU|CCC2B|CETN|CHAT|CPTN|CBPB|CDBB|CA|CABM|CAWEM|CNTN|CCC2A|CDHB|TDPA|MDTB|ETMNK|ETJJ|ZIOC|ZIOH|ZINZ|ZINW|FLTN|GSCC|GKBJ|GLSB|HNTN|HCCB|HNDBB|JTEJ|KEKK|KETN|KX|KNSBB|LPTN|LDTN|MTTB|METN|TMMN|TMCN|MPSS|MVNN|NETN|TTMN|NPM9|NPN9|NSN9|ZINV|ZIOJ|ZIOG|ZINY|PTTN|NHLL|NTN7|TORB|PPIT|RCNB|RRTN|MSM6|MCEE|TTTN|VHNN|WTMNN|BEB3|BAWF|BCCC|C1WNA|C2WH|CPDA|CDLB|CPMS|CPC2M|CDPB|DCMS|DMOO|DTLB|DDTB|DCTO|EJMB|GWCB|GMEG|HEMS|IETI|JANA|JEJJ|LTPP|MLLC|MCSC|MSMM|MBJB|MLNA|MMN6|PMPB|MPWEG|ZMHB|NAGN|NRN9|ZMGJ|NSJJ|OEO1|PNHH|PIMS|RSMS1|SCTF|SHKB|MSDN|SPZU|BX|SHBB|TEMS|WPTB|WTMS|WCJL|ABA6|ANSB|BEAL|ABMN|BI|BNWEB|BTAL|CW5K|CW1H|UEH1|CBNB|CTAL|DLHB|DMEJ|DSAB|DDAB|DOTH|DEBD|DEAL|ENTL|EFAL|FAAL|HEAL|HUTB|HTWEH|JVNB|MLAL|LNLN|MEAL|MEM9|N1WNA|NCAA|NJNG|OPAN|OANB|PJPB|MBRB|PRWEM|AMRB|STCB|SCNA|SASCT|FPJB|VTNB|UVM1|RWPB|ZIMF|ZIML|AENB|AEA7|ATOB|ARCV|AAFF|AMOB|AAAB|EEBBB|BTB2B|CNJCU|ZIMK|ZIMG|OCDP|DAOB|DOCOK|DTPB|DBDD|DDDB|ESEE|ENEE|ESCC|ZIMJ|ZIMD|OFLB|FGTB|GLVV|OGDN|GDHB|ZISH|OJRB|OBNB|LCOB|MNCD|MNRB|OMCS|MTDB|ZISF|ZIMI|N4KO|ZIME|NTOK|NSOK|OOCE|ODNN|OK|PVDD|PJCP|ZIMH|PDJ1|PDNS|OSNS|NPSS|OTDP|TEOK|TLWB|TTOK|VDJV|WNDB|WDNW|WNWW|1TTDH|ZIPL|ZIOM|ZIOQ|WFAA|ZIPO|ZIPF|ZIOT|A2KA|ZIPU|ZIPJ|AEA4|ARNB|ARNBB|AFNDD|ALHED|ALEDD|AOCE|APHE|AGSB|ADAB|AENJ|AATX|TAPB|AEA3|AGNB|AGTB|AMTA|AATB|AMGB|AOTB|ADRB|TACJ|AASB|AETX|AVTX|CZBB|BCYB|BTSB|BT|BEB5|BTX7|BELEX|BTPB|BEXB|BSHJB|BSHBT|BCN6|BWPB|BJB9|BNHBT|BCCTN|BZSB|BZFB|BCAH|BATX|BEB4|BHTX|BWBB|BNTX|BBTX|CTTX|CLTX|CCS2|C5KS|ZIPR|ZIPM|ZIOR|ZIOL|ZIPT|ZIPE|C1KH|ZIPI|ZIOV|CCPG|CRTX|CSH9|CTRCB|CAVB|CRC7|CCTX|CCSS|CLTT|CJTX|CEXB|CGTX|CFSB|CCCB|CCCT|TCCE|TCDS|CTXB|CRTT|C33D|C3KH|CFSH|CCMCH|TCC9|CCMCC|TCCMC|CYPY|CCMKH|CSC2|DCHH|NDSB|DSKFF|DTTX|DTL9|DETX|DM|DMNBB|DYNB|DPBB|DELB|DRCB|DRCBB|FPTX|EGLB|MCOB|EXAB|EDRE|EEE6|EMAA|EHBB|TEPE|EPTB|ESOB|TECB|ENJB|FRTX|FMLB|FBSB|BPFB|FWE1|ST|FWST|ZIOS|ZIOO|ZIPG|ZIPP|ZIPK|FAHH|FSRPF|FJTB|FETX|GDRG|GDNB|GCDNG|GETX|GMTX|TGRR|GRMB|GSSG|GCSB|GHWH|GHBB|HHTX|THCN|HDH9|HDSS|HTX7|HMTM|HCCT|HCBF|HETX|HTX8|HGTX|HOVB|HITX|IRTX|JCHT|JDPB|JNTX|KSTB|KCTB|KDTB|KNHB|KWOB|KSHH|LAEB|LASB|LVDHH|LCPT|LCLM|LFOLS|LHPB|LHSB|LWPB|LEL4|LRTB|LLLB|LLTX|TLNT|LEJB|LCJL|TLSL|LTJB|LAJB|LETX|LTNB|MPTX|MNMB|TXMB|MCGB|MEXB|MTTX|MNTX|FMMB|MDNM|MOEM|MRTB|TMMB|MVTC|MMM3|MWIB|MTXM|MPDB|ZIPD|ZIPQ|ZIOP|ZION|ZIPS|ZIPN|ZIPH|ZIOU|NAFMD|NGBS|NCFBD|NGMD|NICD|NLFMD|NGDAL|NPMWD|NRLHD|NRRD|NWRED|NBZB|NCNS|NTCB|NHTX|NWTX|NCRS|OCPB|OACS|OAMB|OEOO|OLOO|OCAA|OPTX|PHPP|PAEE|PWTX|PTNB|PCPB|PCZB|PLJB|PGTX|PDHB|PETX|PITX|PSCP|PANP|PTX8|PHPB|PPTX|RPTX|RFTF|RTXR|RCDD|WTXW|ROEB|RCN4|RCHBG|RLTB|RCHB|RDHB|SAE9|SAGB|SACB|TSAE|SAEC|SMDR|SGEB|SES5|SATA|STTAK|SJTX|STTX1|SRTX|SOBB|SETX|SCOH|TSLS|SRSS|TGTZ|TGBT|TCSB|TDLO|PMTB|TRPB|ZMFY|USTXU|UMRR|HVMS|VTCX|VALV|VA|WTVB|WETX|WTHB|WTHBW|WCZB|WDLB|WAXB|WDWB|WTTX|WPOB|WUEB|WFEW|WFTB|WFTR|WCDQ|XHTH|YNV1|YHNH|ZIAI|ZIAE|ZIAC|AJAA|ADGL|NADGF|ADGWL|ATAR|ATBL1|ATFF|ALAL|BNMM|BCDR|BHUS|BDBB|BSAUM|CSHC|CNCC|CICC|C5KF|ZIAD|ZIAF|CEAR|CRAR|DCSY|DSHA|DWHB|EDNT|ELAR|FFWB|FSEF|ZIRY|ZIAG|GDAR|GTAA|HJAJ|HSTA|HSWB|JPJJ|JEAR|JSJ1|ALRE|LDAR|AMDR|MMAR|MNAA|MNNA|M3KF|ZIAH|ZIRZ|NINN|ANCP|NATF|NBFF|ANWEA|PDPB|PEPB|PBCP|PACV|RMNR|BCBB|SRH9|SVAR|HLSS|STRF|ASMN|SDLB|STH1|SAR8|TNAN|TNBCP|UFLL|VBCD|AWCEL|WVBV|WEOD|WHJB|WHPW|WHSF|AMLA|WGNO|APTC|AD|ABLA|ANOEN|AELA|AMPB|ATDA|AJMM|LBDE|BREB|BDND|BPTB|WWL4|NSRB|LCPS|MCDB|DINB|DNBA|DSH1|DCLA|ENLA|FPGF|FBTB|ACAA|GJGG|HML1|KHLA|LLA9|LELA|LASTL|LLCE|LDLB|LMNL|MCMN|MPHM|MELA|NOBB|NOE1|NDLA|ZMBB|PPSH|PGLA|RATB|LRBN|SELA|SDSUB|SDNS|SBVA|STNC|STLA|TNLA|TP|TPBN|TPWEA|UMNN|VPGB|VLLL|VTLA|ZPZZ|AINT|ZCFF|AMN2A|AMB8|EBFN|DST9|DSTB|FCN4|FCB9|MPT9|MPTB2|PNA2P|PMN6|PMBN|ZCAB|ATNB|ATYB|ZCAI|ZCDH|ZCAF|AMBB|AMNB|ASRB|TDNB|ZCEO|ZCCY|BICB|BLRB|TNBB|BBYB|BBN2|BSN5|ZCDG|BMZB|BIRU|BIZWIRE|ZCDO|ZCEK|ZCEP|CTGB|CTMB|CMGB|ZCCF|ZCAJ|CQDB|CDJB|CDRB|ZMCN|CUJB|ZCDM|ZCFE|ZCEQ|ZCER|ZCDR|ZCFH|ZCDW|ZCEF|NDMN|DJO1|DJS9|ZCFI|ZCAO|ZCAP|ZCAQ|ZCBV|EBAB|EBNB|EBCB|ZCFD|ZCFJ|EQUB|FDW1|FWD9|ZCAR|FPGB|ZCAT|ZCFL|ZCBE|ZCCH|HDAB|ZCCJ|HPN8|HPN7|HYRB|HEWU|RDMB|ZCAV|ZCCN|INWB|IBDB|IDGB|IMWB|ZCAW|ISOB|ZCAX|KMN8|KMBK|ZCAZ|LWKB|MNN7|ZCBA|MARB|DMJB|MLTC|MNA6|MTEN|ZCDD|ZCDA|MNA7|MMEB|MNEY|MBKB|MVNB|TMTB|NMNB|ZCBD|ZCBB|ZCBC|NBRB|TMWB|OTNB|PU98|ZCDK|NUSB|PWUP|TPAB|PPLB|PNA2|QWNQ|QWBQ|ZCES|RGRB|RCE9|RCEB|ZCDQ|ZCDT|ZCDU|SMN2S|SDNB|SWN8|SWBN|SNA2|SFUB|ZCFC|ZCDZ|ZCEA|ZCEB|ZCEC|ZCEE|FEN8|TFOW|FSNS|TITE|TMZB|TBUS|ZMFM|TMBB|UNA2|VLJB|ZCEH|ZCBL|ZCFN|ZCEL|WWD9|ZCFO|ZCFP|MINN|AULL|ADUD|BAUT|BNA2|CNTU|EDEA|GU98|GU9Q|LUCK|SULF|SBN5|TVN9|VUGU|BTKB|PARB|PSYY|WMN3|WMN2|ASPJ|AFLR|AFTB|ANUB|AHUB|AFJB|ANUN|ACN8|ALNN|ALN7|ARMB|ISRB|CACR|CEUB|DECB|DFNB|FJFF|FEDB|FFAJ|FSNTY|FNUN|GOVB|INUB|JFQB|MTMB|MNUB|MIPBB|MAGB|MTE9|NAN9|NWCR|NVTB|NJCO|PJAW|REPB|SNUN|SPSB|SWNN|SASN|SWMN|TSJB|APAB|BBAB|CUM9|ZCAL|COPB|ZCAS|KR|MCSS|SN|ZCBI|TNS1|UVWB|ZCBK|ZUAA|UCHB|UERB|UETB|UIIB|UNTB|USIB|WSOB|AASN|POSB|SIN7|SNW1|WURD|CNEB|WEEU|USLB|GDUG|GWUW|SNNI|BTN9|CBSB|CRSB|CNBB|CNNB|CNIB|CNFB|FDCB|DRRU|FOXB|ZCAU|SNBB|NR|NPR9|NPRW|NBCB|JLNB|ARN7|ANA2|AOFN|ADLB|AMB9|CFIR|CNA2C|CCA2C|CWN6|CNY7|CSMB|CAN4|DBNN|DRSU|EDWB|EU9E|EAEN|AFTA|EFPN|IFCI|FSUM|FFMF|FAFB|GNW|GNA2W|HENN|ICCA|INN9|JSD1|KNSN|ERN7|MNA2M|MMMNA|MNN5|NMPRM|NIHN|NJDW|NJHW|NJHWW|NJW1|NDC9|NRU9|NORX|NMWN|NRUR|NNAW|NYUY|NMX2|NWEC|NGN4|NBN8|ENN8|NNA2NW|ONA6|PFWB|PNN9|RNA2|RRR2|RNSB|RUNR|SEPN|S2P2N|SVAB|SMNN|SATH|IRN5|ESN7|FENB|UONL|USTB|VFUF|WIWW|IPI7|WNA2|ZMGT" NAME="p_multi" TYPE="HIDDEN"><INPUT VALUE="1" NAME="xcal_xpandlevel" TYPE="HIDDEN"><INPUT VALUE="1" NAME="xcal_xpandlimit" TYPE="HIDDEN"><INPUT VALUE="smart" NAME="p_widesearch" TYPE="HIDDEN"><INPUT VALUE="200" NAME="p_maxdocs" TYPE="HIDDEN"><INPUT VALUE="10" NAME="p_perpage" TYPE="HIDDEN">
+<table valign="top" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td valign="top" class="searchFieldTitlesBig">SEARCHING: </td><td valign="top" class="searchTextBig">&nbsp;UNITED STATES&nbsp;
+					<span class="searchSourceLink"><i> (4972 title(s) - <A HREF="/nl-search/we/Archives?p_action=sourcelist&d_sources=location&d_place=United%20States" class="info2" target="_blank">see a list</A>)</i></span></td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="search" width="50" align="right">for:</td><td><INPUT size="25" value="hello" class="searchForm" name="p_text_base-0"></td><td nowrap="" colspan="2"><INPUT height="25" width="60" align="top" name="Search" value="Search" border="0" alt="search" src="http://images.newsbank.com/infoweb/newslibrary2/search.gif" type="image">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<A href="/nl-search/we/Archives/?p_action=search&p_product=NewsLibrary&p_theme=newslibrary2&p_queryname=4000&d_sources=location&d_place=United%20States&p_nbid=&p_multi=&s_search_type=customized&&p_field_psudo-sort-0=psudo-sort&p_field_date-0=YMD_date&p_params_date-0=date:B,E&p_field_base-0=&p_text_base-0=hello&p_sort=_rank_:D" onClick="" class="basic-text">advanced search</A>
+				&nbsp;&nbsp;&nbsp;
+				<A HREF="/nl-search/we/Archives/?p_action=keyword&s_search_type=keyword&p_product=NewsLibrary&p_theme=newslibrary2&d_sources=location&d_place=United%20States&p_nbid=&p_text_base-0=" class="basic-text">new search</A></td>
+</tr>
+<tr>
+<td class="search" width="50" align="right">return:</td><td><SELECT style="width:175px" class="searchForm" height="1" name="p_sort"><OPTION selected VALUE="_rank_:D">Best matches first</OPTION><OPTION VALUE="YMD_date+source:D">Most recent matches first</OPTION><OPTION VALUE="YMD_date+source:A">Oldest matches first</OPTION></SELECT></td><td class="search" align="right">from:</td><td><INPUT VALUE="YMD_date" NAME="p_field_date-0" TYPE="HIDDEN"><INPUT VALUE="date:B,E" NAME="p_params_date-0" TYPE="HIDDEN"><SELECT class="searchForm" height="1" id="dateList" NAME="p_text_date-0"><OPTION selected="true" VALUE="">all documents</OPTION><OPTION VALUE="-1qzD">yesterday or today</OPTION><OPTION VALUE="-7qzD">the past 7 days</OPTION><OPTION VALUE="-3qzM">the past three months</OPTION><OPTION VALUE="-6qzM">the past six months</OPTION><OPTION VALUE="-1qzY">the past twelve months</OPTION>
+    		
+        		<script>
+        		    initVal = '1978'
+        		    yearSelected =  ''
+ 
+        		    var optionText='';
+        		    for(idx=initVal; idx<2014; idx++){
+        		        if (yearSelected == idx) {
+        		            selectedString = " SELECTED "
+        		        } else {
+        		            selectedString = " " 
+        		        }
+        		        optionText = '<OPTION VALUE="'+idx+'"' + selectedString + '>'+ idx +'</OPTION>' + optionText
+        		    }
+        		    document.write(optionText)
+        		</script>
+    			
+    		</SELECT></td><td width="300">&nbsp;</td>
+</tr>
+<tr>
+<td class="basic-text-blue" colspan="5"><b>Search Hint: </b><span class="basic-text">To find an exact name use quotation marks, e.g., "Mary Smith"</span>
+<BR>
+</td>
+</tr>
+</TABLE>
+<span class="notification"></span></FORM> 
+
+<TABLE cellspacing="5" cellpadding="0" WIDTH="100%" border="0">
+<TR>
+<TD>
+<TABLE cellspacing="2" cellpadding="0" bgcolor="40627E" WIDTH="100%" HEIGHT="25" border="0">
+<TR>
+<TD width="25%" ALIGN="left" valign="center"><span class="basic-text-white">Results: 1 - 10 of 936153</span></TD><TD align="right">
+<table cellpadding="1" class="basic-text-white">
+<tr>
+<td>
+<div style="font-size:125%;font-weight:bold">1</div>
+</td><td><a href="/nl-search/we/Archives?p_action=list&p_topdoc=11&d_sources=location" style="color:white">2</a></td><td><a href="/nl-search/we/Archives?p_action=list&p_topdoc=21&d_sources=location" style="color:white">3</a></td><td><a href="/nl-search/we/Archives?p_action=list&p_topdoc=31&d_sources=location" style="color:white">4</a></td><td><a href="/nl-search/we/Archives?p_action=list&p_topdoc=41&d_sources=location" style="color:white">5</a></td><td><a href="/nl-search/we/Archives?p_action=list&p_topdoc=51&d_sources=location" style="color:white">6</a></td><td><a href="/nl-search/we/Archives?p_action=list&p_topdoc=61&d_sources=location" style="color:white">7</a></td><td><a href="/nl-search/we/Archives?p_action=list&p_topdoc=71&d_sources=location" style="color:white">8</a></td><td><a href="/nl-search/we/Archives?p_action=list&p_topdoc=81&d_sources=location" style="color:white">9</a></td><td><a href="/nl-search/we/Archives?p_action=list&p_topdoc=91&d_sources=location" style="color:white">10</a></td><td><a href="/nl-search/we/Archives?p_action=list&p_topdoc=101&d_sources=location" style="color:white">11</a></td><td><a href="/nl-search/we/Archives?p_action=list&p_topdoc=111&d_sources=location" style="color:white">12</a></td><td><a href="/nl-search/we/Archives?p_action=list&p_topdoc=121&d_sources=location" style="color:white">13</a></td><td><a href="/nl-search/we/Archives?p_action=list&p_topdoc=131&d_sources=location" style="color:white">14</a></td><td><a href="/nl-search/we/Archives?p_action=list&p_topdoc=141&d_sources=location" style="color:white">15</a></td><td><a href="/nl-search/we/Archives?p_action=list&p_topdoc=151&d_sources=location" style="color:white">16</a></td><td><a href="/nl-search/we/Archives?p_action=list&p_topdoc=161&d_sources=location" style="color:white">17</a></td><td><a href="/nl-search/we/Archives?p_action=list&p_topdoc=171&d_sources=location" style="color:white">18</a></td><td><a href="/nl-search/we/Archives?p_action=list&p_topdoc=181&d_sources=location" style="color:white">19</a></td><td><a href="/nl-search/we/Archives?p_action=list&p_topdoc=191&d_sources=location" style="color:white">20</a></td><td>|</td><td><a href="/nl-search/we/Archives?p_action=list&p_topdoc=11&d_sources=location" style="color:white">Next</a></td>
+</tr>
+</table>
+</TD>
+</TR>
+</TABLE>
+</TD>
+</TR>
+<TR>
+<TD>
+<TABLE cellspacing="2" cellpadding="0" bgcolor="CCCCCC" WIDTH="100%" border="0">
+<TR>
+<TD width="300" class="basic-text" ALIGN="left" valign="bottom"></TD><TD ALIGN="right" valign="top">
+<FORM method="POST" action="/nl-search/we/Archives" name="resultsParagraph" style="margin-bottom:0;">
+<span class="basic-text">Show First Paragraph </span><INPUT TYPE="checkbox" NAME="markthis" onClick="yesNo(this.form,this,1); this.form.submit();" checked><INPUT VALUE="yes" NAME="s_para" TYPE="HIDDEN"><INPUT VALUE="" NAME="p_nbid" TYPE="HIDDEN"><INPUT VALUE="NewsLibrary" NAME="p_product" TYPE="HIDDEN"><INPUT VALUE="search" NAME="s_para" TYPE="HIDDEN"><INPUT VALUE="search" NAME="p_action" TYPE="HIDDEN">
+</FORM>
+</TD>
+</TR>
+<TR>
+<TD width="300" class="basic-text" ALIGN="left" valign="top"></TD><TD ALIGN="right" valign="top"></TD>
+</TR>
+</TABLE>
+</TD>
+</TR>
+</TABLE>
+<TABLE BORDERCOLOR="#000000" CELLSPACING="15" CELLPADDING="0" VALIGN="top" BORDER="0" WIDTH="100%">
+<TR BGCOLOR="FFFFFF">
+<TD width="100%">
+<table border="0" width="100%">
+<tr>
+<td class="basic-text" width="5%" align="center" valign="top">1. </td><td class="basic-title" width="80%" align="left" valign="top"><b>PR Newswire (USA)</b> - October 17, 2011 <br>
+<br>
+<b>Language Learning Goes Social on Mobile,&nbsp;
+				Hello-Hello Launches the World's First Language Learning App that Integrates Social Networking</b></td><td class="basic-text-blue" align="right" width="15%"></td>
+</tr>
+<tr>
+<td>&nbsp;</td><td class="basic-title" colspan="2">WASHINGTON, Oct. 17, 2011 /PRNewswire-iReach/ -- Hello-Hello, an innovative mobile language learning company, announced the launch of Hello-Hello World, a free application for the iPad that helps people learn a new language by connecting them with native speakers through social networking. (Photo: http://photos.prnewswire.com/prnh/20111012/CG85524) The application lets users complete language lessons and connect with Hello-Hello's already established global community of...<br>
+<br>
+<A ONCLICK="ngate('13A711C039964770','Language+Learning+Goes+Social+on+Mobile','1','PR+Newswire+%28USA%29','NewsLibrary','','','NL2',''); return false;" HREF="/nojavascript.html" class="med-link">
+									Purchase Complete Article, of 528&nbsp;words</A></td>
+</tr>
+</table>
+</TD>
+</TR>
+<TR BGCOLOR="EEEEEE">
+<TD width="100%">
+<table border="0" width="100%">
+<tr>
+<td class="basic-text" width="5%" align="center" valign="top">2. </td><td class="basic-title" width="80%" align="left" valign="top"><b>PR Newswire (USA)</b> - October 12, 2011 <br>
+<br>
+<b>Language Learning Goes Social on Mobile,&nbsp;
+				Hello-Hello Launches the World's First Language Learning App that Integrates Social Networking</b></td><td class="basic-text-blue" align="right" width="15%"></td>
+</tr>
+<tr>
+<td>&nbsp;</td><td class="basic-title" colspan="2">WASHINGTON, Oct. 12, 2011 /PRNewswire-iReach/ -- Hello-Hello, an innovative mobile language learning company, announced the launch of Hello-Hello World, a free application for the iPad that helps people learn a new language by connecting them with native speakers through social networking. (Photo: http://photos.prnewswire.com/prnh/20111012/CG85524) The application lets users complete language lessons and connect with Hello-Hello's already established global community of...<br>
+<br>
+<A ONCLICK="ngate('13A5828E5B718728','Language+Learning+Goes+Social+on+Mobile','2','PR+Newswire+%28USA%29','NewsLibrary','','','NL2',''); return false;" HREF="/nojavascript.html" class="med-link">
+									Purchase Complete Article, of 528&nbsp;words</A></td>
+</tr>
+</table>
+</TD>
+</TR>
+<TR BGCOLOR="FFFFFF">
+<TD width="100%">
+<table border="0" width="100%">
+<tr>
+<td class="basic-text" width="5%" align="center" valign="top">3. </td><td class="basic-title" width="80%" align="left" valign="top"><b>FOX - 61 WDSI (Chattanooga, TN)</b> - September 10, 2011 <br>
+<br>
+<b>Late Extra - 22:29:36</b></td><td class="basic-text-blue" align="right" width="15%"></td>
+</tr>
+<tr>
+<td>&nbsp;</td><td class="basic-title" colspan="2">TIME START: 22:29:36 why not take your dog an end- some folks are taking vo advantage of any remaining pool days-- and today was no exception.We'll explain why dogs are swimming with people- next!It was a perfect day to lounge by the pool, so why not take your dog to the water with you?Vo that was the idea behind an event that let pet owners swim with their pooches.The Warner park pool hosted today's event Pet owners paid 15 dollars each, so their...<br>
+<br>
+<A ONCLICK="ngate('139B639560DCDB68','Late+Extra+-+22%3A29%3A36','3','FOX+-+61+WDSI+%28Chattanooga%2C+TN%29','NewsLibrary','','','NL2',''); return false;" HREF="/nojavascript.html" class="med-link">
+									Purchase Complete Article, of 10967&nbsp;words</A></td>
+</tr>
+</table>
+</TD>
+</TR>
+<TR BGCOLOR="EEEEEE">
+<TD width="100%">
+<table border="0" width="100%">
+<tr>
+<td class="basic-text" width="5%" align="center" valign="top">4. </td><td class="basic-title" width="80%" align="left" valign="top"><b>Entertainment Examiner (USA)</b> - June 15, 2009 <br>
+<br>
+<b>New Hello Kitty iPhone/iPod Touch applications</b></td><td class="basic-text-blue" align="right" width="15%"></td>
+</tr>
+<tr>
+<td>&nbsp;</td><td class="basic-title" colspan="2">Sanrio has introduced three new 35th anniversary iPhone/iPod Touch applications to celebrate Hello Kitty's birthday. The three new apps are "Hello Kitty 35th anniversary", "Hello Kitty Camera", and "Hello Kitty Tokyo". iHello Kitty 35th anniversary, a FREE app, features a Hello Kitty birthday countdown clock, Hello Kitty news, and much more: Application Description Welcome to the Hello Kitty 35th Anniversary!As part of the Hello Kitty 35th Anniversary celebration...<br>
+<br>
+<A ONCLICK="ngate('1342007102196250','New+Hello+Kitty+iPhone%2FiPod+Touch+applications','4','Entertainment+Examiner+%28USA%29','NewsLibrary','','','NL2',''); return false;" HREF="/nojavascript.html" class="med-link">
+									Purchase Complete Article, of 531&nbsp;words</A></td>
+</tr>
+</table>
+</TD>
+</TR>
+<TR BGCOLOR="FFFFFF">
+<TD width="100%">
+<table border="0" width="100%">
+<tr>
+<td class="basic-text" width="5%" align="center" valign="top">5. </td><td class="basic-title" width="80%" align="left" valign="top"><b>Market Wire (USA)</b> - January 19, 2012 <br>
+<br>
+<b>New Study Reveals Hello Music as Major Influencer for Musical Product 
+Sales,&nbsp;
+				Hello Music Creates New Brand Awareness by Driving the Most Influential Consumers to Traditional Retailers and Manufacturers</b></td><td class="basic-text-blue" align="right" width="15%"></td>
+</tr>
+<tr>
+<td>&nbsp;</td><td class="basic-title" colspan="2">NAMM -- Hello Music, the fastest growing centralized marketplace  and opportunity platform for musicians, today announced the research-driven value Hello Music adds to the musical product industry. The result of a month-long case study conducted by Interpret LLC, Hello Music and its rapidly growing customer community are bringing incremental sales and considerable brand awareness to manufacturers and retailers of all shapes and sizes.  Interpret...<br>
+<br>
+<A ONCLICK="ngate('13C6422937489298','New+Study+Reveals+Hello+Music+as+Major+Influencer+for+Musical+ProductSales','5','Market+Wire+%28USA%29','NewsLibrary','','','NL2',''); return false;" HREF="/nojavascript.html" class="med-link">
+									Purchase Complete Article, of 831&nbsp;words</A></td>
+</tr>
+</table>
+</TD>
+</TR>
+<TR BGCOLOR="EEEEEE">
+<TD width="100%">
+<table border="0" width="100%">
+<tr>
+<td class="basic-text" width="5%" align="center" valign="top">6. </td><td class="basic-title" width="80%" align="left" valign="top"><b>Miami Herald, The (FL)</b> - August 18, 1990 <br>
+<br>
+<b>FAULTY PHONE BEGETS THE EVIL GENIUS</b></td><td class="basic-text-blue" align="right" width="15%"></td>
+</tr>
+<tr>
+<td>&nbsp;</td><td class="basic-title" colspan="2">Although our phone is busy on weekends (lower long-distance rates equal lengthier conversation), it became even busier one weekend when our out-of-town daughters were visiting. They used the phone a lot. It was almost like when they were teen-agers, what with the phone cord stretched all the way from the kitchen to the living room sofa.And then, on Saturday evening, something eerie happened. The phone rang."Hello!" I heard one daughter, Peggy, say. There was a long pause. "Hello?"...<br>
+<br>
+<A ONCLICK="ngate('0EB3415F806C659A','FAULTY+PHONE+BEGETS+THE+EVIL+GENIUS','6','Miami+Herald%2C+The+%28FL%29','NewsLibrary','','','NL2',''); return false;" HREF="/nojavascript.html" class="med-link">
+									Purchase Complete Article, of 765&nbsp;words</A></td>
+</tr>
+</table>
+</TD>
+</TR>
+<TR BGCOLOR="FFFFFF">
+<TD width="100%">
+<table border="0" width="100%">
+<tr>
+<td class="basic-text" width="5%" align="center" valign="top">7. </td><td class="basic-title" width="80%" align="left" valign="top"><b>The Florida Times-Union</b> - February 17, 2000 <br>
+<br>
+<b>Japan's endearing Hello Kitty endures amid fast-fading fads</b></td><td class="basic-text-blue" align="right" width="15%"></td>
+</tr>
+<tr>
+<td>&nbsp;</td><td class="basic-title" colspan="2">TOKYO -- There are many profound questions about Japan one might contemplate. But for an American living in this tradition-bound culture of Zen Buddhism and tea ceremony, surely the greatest mystery is: Why is Hello Kitty is so darned popular?So I poured a cup of coffee into my pink Hello Kitty mug, made a piece of toast in my pink Hello Kitty toaster and got to work.To research the story properly also requires a pink Hello Kitty telephone and pink Hello Kitty fax machine. No...<br>
+<br>
+<A ONCLICK="ngate('0EB425F99BFE0605','Japan%27s+endearing+Hello+Kitty+endures+amid+fast-fading+fads','7','The+Florida+Times-Union','NewsLibrary','','','NL2',''); return false;" HREF="/nojavascript.html" class="med-link">
+									Purchase Complete Article, of 1354&nbsp;words</A></td>
+</tr>
+</table>
+</TD>
+</TR>
+<TR BGCOLOR="EEEEEE">
+<TD width="100%">
+<table border="0" width="100%">
+<tr>
+<td class="basic-text" width="5%" align="center" valign="top">8. </td><td class="basic-title" width="80%" align="left" valign="top"><b>New York Daily News (NY)</b> - December 13, 2012 <br>
+<br>
+<b>The Cult of Kitty 
+
+Top fans reveal why she's the cat's meow</b></td><td class="basic-text-blue" align="right" width="15%"></td>
+</tr>
+<tr>
+<td>&nbsp;</td><td class="basic-title" colspan="2">Hello Kitty is making the most of her nine lives.Nearly four decades after the brand launched, the cool cat is more popular than ever, leaving fans of all ages purring for more.An exhibit boasting art inspired by the pop culture icon, "Hello Kitty, Hello Art!," opens Friday in Little Italy. It celebrates a new book of the same name. - The fashion-conscious feline also has partnered with style and beauty brands like Sephora and Forever 21.She recently made her debut as a...<br>
+<br>
+<A ONCLICK="ngate('1432D6442B681750','The+Cult+of+Kitty%0ATop+fans+reveal+why+she%27s+the+cat%27s+meow','8','New+York+Daily+News+%28NY%29','NewsLibrary','','','NL2',''); return false;" HREF="/nojavascript.html" class="med-link">
+									Purchase Complete Article, of 674&nbsp;words</A></td>
+</tr>
+</table>
+</TD>
+</TR>
+<TR BGCOLOR="FFFFFF">
+<TD width="100%">
+<table border="0" width="100%">
+<tr>
+<td class="basic-text" width="5%" align="center" valign="top">9. </td><td class="basic-title" width="80%" align="left" valign="top"><b>Worcester Telegram &amp; Gazette (MA)</b> - May 13, 2007 <br>
+<br>
+<b>Theatre announces TAMY Awards nominees</b></td><td class="basic-text-blue" align="right" width="15%"></td>
+</tr>
+<tr>
+<td>&nbsp;</td><td class="basic-title" colspan="2">GARDNER - Theatre at the Mount has announced the nominees in the 2006-2007 TAMY Awards High School Musical Theatre Competition.The TAMY Award program recognizes the extraordinary amount of work, creativity, and devotion that faculty and students pour into their high school theatrical productions. The TAMY Awards celebrate the entire art of musical theatre: casts and crews, directors and designers, and the great musical theatre works that inspire such devotion.Winners will be...<br>
+<br>
+<A ONCLICK="ngate('11921FD233A1AE90','Theatre+announces+TAMY+Awards+nominees','9','Worcester+Telegram+%26+Gazette+%28MA%29','NewsLibrary','','','NL2',''); return false;" HREF="/nojavascript.html" class="med-link">
+									Purchase Complete Article, of 1072&nbsp;words</A></td>
+</tr>
+</table>
+</TD>
+</TR>
+<TR BGCOLOR="EEEEEE">
+<TD width="100%">
+<table border="0" width="100%">
+<tr>
+<td class="basic-text" width="5%" align="center" valign="top">10. </td><td class="basic-title" width="80%" align="left" valign="top"><b>Entertainment Examiner (USA)</b> - June 9, 2009 <br>
+<br>
+<b>Hello Kitty Sweets: an amazing Hello Kitty dessert fantasyland</b></td><td class="basic-text-blue" align="right" width="15%"></td>
+</tr>
+<tr>
+<td>&nbsp;</td><td class="basic-title" colspan="2">Ever since it opened its glittering pink doors in January 2008, it has been one of my life goals to go to Hello Kitty Sweets, the official Hello Kitty themed restaurant and bakery located in Taipei, Taiwan. I believe this is the only official Hello Kitty themed restaurant in the world! A fantasyland of Hello Kitty AND dessert?! My idea of heaven! And lucky me, I was finally able to go and now I get to share the fantasy with you! Hello Kitty Sweets is Amazing, yes, with a capital 'A', even for...<br>
+<br>
+<A ONCLICK="ngate('13420025405E9EA8','Hello+Kitty+Sweets%3A+an+amazing+Hello+Kitty+dessert+fantasyland','10','Entertainment+Examiner+%28USA%29','NewsLibrary','','','NL2',''); return false;" HREF="/nojavascript.html" class="med-link">
+									Purchase Complete Article, of 556&nbsp;words</A></td>
+</tr>
+</table>
+</TD>
+</TR>
+<TR BGCOLOR="EEEEEE">
+<TD colspan="2">
+<TABLE cellspacing="2" cellpadding="0" bgcolor="40627E" WIDTH="100%" HEIGHT="25" border="0">
+<TR>
+<TD width="25%" ALIGN="left" valign="center"><span class="basic-text-white">Results: 1 - 10 of 936153</span></TD><TD align="right">
+<table cellpadding="1" class="basic-text-white">
+<tr>
+<td>
+<div style="font-size:125%;font-weight:bold">1</div>
+</td><td><a href="/nl-search/we/Archives?p_action=list&p_topdoc=11&d_sources=location" style="color:white">2</a></td><td><a href="/nl-search/we/Archives?p_action=list&p_topdoc=21&d_sources=location" style="color:white">3</a></td><td><a href="/nl-search/we/Archives?p_action=list&p_topdoc=31&d_sources=location" style="color:white">4</a></td><td><a href="/nl-search/we/Archives?p_action=list&p_topdoc=41&d_sources=location" style="color:white">5</a></td><td><a href="/nl-search/we/Archives?p_action=list&p_topdoc=51&d_sources=location" style="color:white">6</a></td><td><a href="/nl-search/we/Archives?p_action=list&p_topdoc=61&d_sources=location" style="color:white">7</a></td><td><a href="/nl-search/we/Archives?p_action=list&p_topdoc=71&d_sources=location" style="color:white">8</a></td><td><a href="/nl-search/we/Archives?p_action=list&p_topdoc=81&d_sources=location" style="color:white">9</a></td><td><a href="/nl-search/we/Archives?p_action=list&p_topdoc=91&d_sources=location" style="color:white">10</a></td><td><a href="/nl-search/we/Archives?p_action=list&p_topdoc=101&d_sources=location" style="color:white">11</a></td><td><a href="/nl-search/we/Archives?p_action=list&p_topdoc=111&d_sources=location" style="color:white">12</a></td><td><a href="/nl-search/we/Archives?p_action=list&p_topdoc=121&d_sources=location" style="color:white">13</a></td><td><a href="/nl-search/we/Archives?p_action=list&p_topdoc=131&d_sources=location" style="color:white">14</a></td><td><a href="/nl-search/we/Archives?p_action=list&p_topdoc=141&d_sources=location" style="color:white">15</a></td><td><a href="/nl-search/we/Archives?p_action=list&p_topdoc=151&d_sources=location" style="color:white">16</a></td><td><a href="/nl-search/we/Archives?p_action=list&p_topdoc=161&d_sources=location" style="color:white">17</a></td><td><a href="/nl-search/we/Archives?p_action=list&p_topdoc=171&d_sources=location" style="color:white">18</a></td><td><a href="/nl-search/we/Archives?p_action=list&p_topdoc=181&d_sources=location" style="color:white">19</a></td><td><a href="/nl-search/we/Archives?p_action=list&p_topdoc=191&d_sources=location" style="color:white">20</a></td><td>|</td><td><a href="/nl-search/we/Archives?p_action=list&p_topdoc=11&d_sources=location" style="color:white">Next</a></td>
+</tr>
+</table>
+</TD>
+</TR>
+</TABLE>
+</TD>
+</TR>
+</TABLE>
+<FORM METHOD="POST" ACTION="/cgi-bin/ngate/NewsLibrary" NAME="ngateform">
+<INPUT NAME="from" TYPE="HIDDEN"><INPUT NAME="destination" TYPE="HIDDEN"><INPUT NAME="p_docid" TYPE="HIDDEN"><INPUT NAME="p_hed" TYPE="HIDDEN"><INPUT NAME="p_docnum" TYPE="HIDDEN"><INPUT NAME="p_paper" TYPE="HIDDEN"><INPUT NAME="dbcode" TYPE="HIDDEN"><INPUT NAME="pubcode" TYPE="HIDDEN"><INPUT NAME="s_referrer" TYPE="HIDDEN"><INPUT NAME="s_siteloc" TYPE="HIDDEN"><INPUT NAME="s_trackval" TYPE="HIDDEN">
+</FORM>
+<SCRIPT LANGUAGE="Javascript">
+
+function ngate(p_docid,p_hed,p_docnum,p_paper,dbcode,pubcode,s_referrer,s_siteloc,s_trackval) {
+
+  // passed values
+  document.ngateform.p_docid.value    = p_docid;
+  document.ngateform.p_hed.value      = p_hed;
+  document.ngateform.p_docnum.value   = p_docnum;
+  document.ngateform.p_paper.value    = p_paper;
+  document.ngateform.dbcode.value     = dbcode;
+  document.ngateform.pubcode.value    = pubcode;
+  document.ngateform.s_referrer.value = s_referrer;
+  document.ngateform.s_siteloc.value  = s_siteloc;
+  document.ngateform.s_trackval.value = s_trackval;
+  
+  // derived values
+  document.ngateform.from.value = location.href;
+  document.ngateform.destination.value = 'http://nl.newsbank.com/nl-search/we/Archives?p_action=doc&p_docid=' + p_docid + '&p_docnum=' + p_docnum;
+  // document.ngateform.destination.value = 'http://docs.newsbank.com/s/Archives/newslibrary2/' + pubcode + '/' + p_docid + '?';
+  // document.ngateform.destination.value = 'http://nl.newsbank.com/nl-search/we/Archives?p_action=doc&p_theme=newslibrary2&p_topdoc=1&p_docnum=1&p_sort=YMD_date:D&p_product=' + pubcode + '&p_text_direct-0=document_id=(%20' + p_docid + '%20)';
+  // document.ngateform.destination.value = 'http://www.newslibrary.com/nl-search/we/Archives?p_action=doc&p_theme=newslibrary2&p_topdoc=1&p_docnum=1&p_sort=YMD_date:D&p_product=' + pubcode + '&p_text_direct-0=document_id=(%20' + p_docid + '%20)';
+  // submit the form
+  document.ngateform.submit();
+}
+
+</SCRIPT></TD>
+</TR>
+</TABLE>
+</TD>
+</TR>
+</TABLE>
+</TD><TD HEIGHT="100%" VALIGN="top" WIDTH="120">
+<TABLE CELLSPACING="0" CELLPADDING="0" BGCOLOR="CCCCCC" BORDER="0" HEIGHT="100%" WIDTH="120">
+<TR>
+<TD valign="top" class="ad">
+<center>&nbsp;</center>
+</TD>
+</TR>
+<TR>
+<TD valign="top"><a target="_blank" HREF="http://nl.newsbank.com/cgi-bin/ngate/NewsLibrary?intver=20081217A&s_trackval=nltrial&nextpage=https://verify1.newsbank.com/cgi-bin/ncom/NewsLibrary/ec_register"><IMG style="border-color: black;" BORDER="1" HEIGHT="373" WIDTH="117" ALT="NewsLibrary" SRC="http://images.newsbank.com/infoweb/genealogybank/ads/nl_117x420_02.gif"></a></TD>
+</TR>
+<TR>
+<TD valign="top" class="ad">
+<center>&nbsp;</center>
+</TD>
+</TR>
+<TR>
+<TD valign="top"><script type="text/javascript">google_ad_client = "pub-5129794483941878";
+                google_ad_width = 120;
+                google_ad_height = 600;
+                google_ad_format = "120x600_as";
+                google_ad_channel ="5085291173";
+                google_color_border = "999999";
+                google_color_bg = "FFFFFF";
+                google_color_link = "0000FF";
+                google_color_url = "008000";
+                google_color_text = "000000";</script><script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script></TD>
+</TR>
+<TR>
+<TD valign="top" class="ad">
+<center>&nbsp;</center>
+</TD>
+</TR>
+<TR>
+<TD valign="top"><a target="_blank" HREF="http://www.obitsarchive.com/enter/NL-right-1"><IMG style="border-color: black;" BORDER="1" HEIGHT="298" WIDTH="120" ALT="ObitsArchive.com" SRC="http://images.newsbank.com/infoweb/genealogybank/ads/obits_120x298_01.gif"></a></TD>
+</TR>
+<TR>
+<TD HEIGHT="100%" WIDTH="120"></TD>
+</TR>
+</TABLE>
+</TD>
+</TR>
+</TABLE>
+<div style="width: 782px; border-top: 2px solid #CCCCCC; text-align: left; margin-bottom: 10px;" class="footerpartner">
+<img src="http://images.newsbank.com/infoweb/newsbank_logo_footer.jpg"> Websites: &nbsp;<a target="_blank" class="partnerlink" href="http://www.genealogybank.com/">GenealogyBank</a>&nbsp;/&nbsp;<a target="_blank" class="partnerlink" href="http://www.newsbank.com/">NewsBank</a>&nbsp;/&nbsp;<a target="_blank" class="partnerlink" href="http://www.newsinhistory.com/">NewsInHistory</a>&nbsp;/&nbsp;<a target="_blank" class="partnerlink" href="http://www.obitsarchive.com/">ObitsArchive</a>
+</div>
+</TD>
+</TR>
+</TABLE>
+</CENTER>
+<script language="javascript">
+	
+	if(isNS4 == false){
+		document.write("</div>");
+	}else{
+		document.write("<form name='nsForm' />");
+	}
+	
+</script>
+<div style="position:absolute; width:100%; height:100%; z-index:2; overflow: hidden; visibility: hidden; left: 0px; top: 0px;" id="searchingLayer">
+<TABLE bgcolor="#FFFFFF" cellSpacing="0" cellPadding="0" border="0" height="500" width="100%" align="center" valign="top">
+<tr>
+<td>
+<table cellspacing="0" cellpadding="0" align="center" border="0" height="111" width="250">
+<tr>
+<td height="25">
+<div align="center">
+<font face="Arial, Helvetica, sans-serif" color="003399"><strong>Searching millions of news

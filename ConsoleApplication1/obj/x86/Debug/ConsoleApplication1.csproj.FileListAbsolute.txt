@@ -1,0 +1,8 @@
+c:\users\sennis\documents\visual studio 2010\Projects\WebApplication1\ConsoleApplication1\bin\Debug\ConsoleApplication1.exe
+c:\users\sennis\documents\visual studio 2010\Projects\WebApplication1\ConsoleApplication1\bin\Debug\ConsoleApplication1.pdb
+c:\users\sennis\documents\visual studio 2010\Projects\WebApplication1\ConsoleApplication1\obj\x86\Debug\ResolveAssemblyReference.cache
+c:\users\sennis\documents\visual studio 2010\Projects\WebApplication1\ConsoleApplication1\obj\x86\Debug\ConsoleApplication1.exe
+c:\users\sennis\documents\visual studio 2010\Projects\WebApplication1\ConsoleApplication1\obj\x86\Debug\ConsoleApplication1.pdb
+c:\users\sennis\documents\visual studio 2010\Projects\WebApplication1\ConsoleApplication1\bin\Debug\HtmlAgilityPack.dll
+c:\users\sennis\documents\visual studio 2010\Projects\WebApplication1\ConsoleApplication1\bin\Debug\HtmlAgilityPack.pdb
+c:\users\sennis\documents\visual studio 2010\Projects\WebApplication1\ConsoleApplication1\bin\Debug\HtmlAgilityPack.xml

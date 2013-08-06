@@ -1,0 +1,14 @@
+C:\Users\sennis\documents\visual studio 2010\Projects\WebApplication1\WebApplication2\bin\NewsLibrarySearchUI.dll
+C:\Users\sennis\documents\visual studio 2010\Projects\WebApplication1\WebApplication2\bin\NewsLibrarySearchUI.pdb
+C:\Users\sennis\documents\visual studio 2010\Projects\WebApplication1\WebApplication2\bin\NewsLibrarySearch.dll
+C:\Users\sennis\documents\visual studio 2010\Projects\WebApplication1\WebApplication2\bin\NewsLibrarySearch.pdb
+C:\Users\sennis\documents\visual studio 2010\Projects\WebApplication1\WebApplication2\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\sennis\documents\visual studio 2010\Projects\WebApplication1\WebApplication2\obj\Debug\NewsLibrarySearchUI.dll
+C:\Users\sennis\documents\visual studio 2010\Projects\WebApplication1\WebApplication2\obj\Debug\NewsLibrarySearchUI.pdb
+C:\Users\sennis\Documents\Visual Studio 2010\Projects\NewsLibrary\WebApplication2\bin\NewsLibrarySearchUI.dll
+C:\Users\sennis\Documents\Visual Studio 2010\Projects\NewsLibrary\WebApplication2\bin\NewsLibrarySearchUI.pdb
+C:\Users\sennis\Documents\Visual Studio 2010\Projects\NewsLibrary\WebApplication2\bin\NewsLibrarySearch.dll
+C:\Users\sennis\Documents\Visual Studio 2010\Projects\NewsLibrary\WebApplication2\bin\NewsLibrarySearch.pdb
+C:\Users\sennis\Documents\Visual Studio 2010\Projects\NewsLibrary\WebApplication2\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\sennis\Documents\Visual Studio 2010\Projects\NewsLibrary\WebApplication2\obj\Debug\NewsLibrarySearchUI.dll
+C:\Users\sennis\Documents\Visual Studio 2010\Projects\NewsLibrary\WebApplication2\obj\Debug\NewsLibrarySearchUI.pdb

@@ -24,6 +24,9 @@
     
 
     <p>Enter a date range to search or choose from the dropdown menu. Defaults to all documents. </p>
+    
+
+
     <asp:TextBox ID="DateRangeFrom" CssClass="field" runat="server">Start date</asp:TextBox>  &nbsp; to &nbsp; 
     <asp:TextBox ID="DateRangeTo" CssClass="field" runat="server">End date</asp:TextBox>
     

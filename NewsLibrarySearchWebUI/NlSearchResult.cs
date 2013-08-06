@@ -4,11 +4,10 @@ namespace NewsLibrarySearchUI
 {
     public class NlSearchResult
     {
-        public string Date { get; set; }
-
-       // private DateTime dateFrom { get; set; }
-       // private DateTime dateTo { get; set; }
-
+        public string DateString { get; set; }
+        public DateTime DateFrom { get; set; }
+        public DateTime DateTo { get; set; }
+        public DateTime Time { get; set; }
         public string SearchTerm { get; set; }
         public string FieldTarget { get; set; }
         public int Count { get; set; }

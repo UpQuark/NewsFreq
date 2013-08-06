@@ -14,9 +14,9 @@
     <div class="page">
         <div class="sidebar">
             <div class="sidebarTop">
-                <a href ="www.NewsLibrary.com">NewsLibrary</a><br/>
-                <a href="">Source code</a><br/>
-                <a href="email.address@host.com">Email</a><br/>
+                <a href ="http://www.NewsLibrary.com" target="_blank">NewsLibrary</a><br/>
+                <a href="https://github.com/UpQuark/newslibrary" target="_blank">Source code</a><br/>
+                <a href="mailto:sam.e.ennis@gmail.com" target="_blank">Email</a><br/>
             </div>
             <div class="sidebarBot">
                 <asp:ContentPlaceHolder ID="SidebarContent" runat="server"></asp:ContentPlaceHolder>

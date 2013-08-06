@@ -31,6 +31,60 @@ namespace NewsLibrarySearchUI {
         protected global::System.Web.UI.WebControls.DropDownList FieldTargetsList;
         
         /// <summary>
+        /// DateRangeFromMonth control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList DateRangeFromMonth;
+        
+        /// <summary>
+        /// DateRangeFromDay control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList DateRangeFromDay;
+        
+        /// <summary>
+        /// DateRangeFromYear control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList DateRangeFromYear;
+        
+        /// <summary>
+        /// DateRangeToMonth control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList DateRangeToMonth;
+        
+        /// <summary>
+        /// DateRangeToDay control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList DateRangeToDay;
+        
+        /// <summary>
+        /// DateRangeToYear control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList DateRangeToYear;
+        
+        /// <summary>
         /// DateRangeFrom control.
         /// </summary>
         /// <remarks>

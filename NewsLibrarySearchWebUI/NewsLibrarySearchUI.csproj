@@ -96,7 +96,7 @@
     <Content Include="Site.Master" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ClassLibrary1\NewsLibrarySearch.csproj">
+    <ProjectReference Include="..\NlSearchLib\NewsLibrarySearch.csproj">
       <Project>{1B295501-ACBB-44EE-B99B-7D03F44643E4}</Project>
       <Name>NewsLibrarySearch</Name>
     </ProjectReference>

@@ -39,7 +39,7 @@
  * Copyright 2010, The Dojo Foundation
  * Released under the MIT, BSD, and GPL Licenses.
  *
- * Date: Mon Jan 25 19:43:33 2010 -0500
+ * DateString: Mon Jan 25 19:43:33 2010 -0500
  */
 
 (function( window, undefined ) {
@@ -1155,7 +1155,7 @@ function now() {
 	///	<summary>
 	///		Gets the current date.
 	///	</summary>
-	///	<returns type="Date">The current date.</returns>
+	///	<returns type="DateString">The current date.</returns>
 
 	return (new Date).getTime();
 }
@@ -4304,7 +4304,7 @@ function getText( elems ) {
 (function(){
 	// We're going to inject a fake input element with a specified name
 	//	var form = document.createElement("div"),
-	//		id = "script" + (new Date).getTime();
+	//		id = "script" + (new DateString).getTime();
 	//	form.innerHTML = "<a name='" + id + "'/>";
 
 	//	// Inject it into the root element, check its status, and remove it quickly

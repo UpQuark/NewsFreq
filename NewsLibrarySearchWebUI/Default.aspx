@@ -5,11 +5,18 @@
 </asp:Content>
 <asp:Content ID="BodyContent" runat="server" ContentPlaceHolderID="MainContent">
     <p>You can use the operators AND, OR, and NOT to refine results, as well as quotation marks.</p>
+    
+    <script language="javascript" type="text/javascript">
+        clicked = false;
+    </script>
 
     <p>Enter terms to search with or without boolean operators</p>
-    <asp:TextBox ID="SearchForm" CssClass="SearchForm" runat="server">Search Terms</asp:TextBox>
+    <asp:TextBox ID="SearchForm" CssClass="SearchForm" runat="server" OnClick="if (clicked == false){this.value=''; clicked=true}">Search Terms</asp:TextBox>
 
-    <asp:DropDownList ID="FieldTargetsList" runat="server">
+    
+    
+    &nbsp; in &nbsp;
+    <asp:DropDownList ID="FieldTargetsList" CssClass="dropDown" runat="server">
         <asp:ListItem>All Text</asp:ListItem>
         <asp:ListItem>Lede</asp:ListItem>
         <asp:ListItem>Headline</asp:ListItem>
@@ -22,9 +29,10 @@
         <asp:ListItem>Source</asp:ListItem>
     </asp:DropDownList>
     
-
+    
     <p>Enter a date range to search or choose from the dropdown menu. Defaults to all documents. </p>
-    <asp:DropDownList ID="DateRangeFromMonth" OnSelectedIndexChanged="LoadDaysInMonth" AutoPostBack="true" runat="server">
+    <div id="DateDropDowns">    
+    <asp:DropDownList ID="DateRangeFromMonth" OnSelectedIndexChanged="LoadDaysInMonth" AutoPostBack="true" CssClass="dropDown" runat="server">
         <asp:ListItem Value="1">January</asp:ListItem>
         <asp:ListItem Value="2">February</asp:ListItem>
         <asp:ListItem Value="3">March</asp:ListItem>
@@ -38,12 +46,10 @@
         <asp:ListItem Value="11">November</asp:ListItem>
         <asp:ListItem Value="12">December</asp:ListItem>
     </asp:DropDownList>
-    <asp:DropDownList ID="DateRangeFromDay"  runat="server"></asp:DropDownList>
-    <asp:DropDownList ID="DateRangeFromYear" runat="server"></asp:DropDownList>
-    
+    <asp:DropDownList ID="DateRangeFromDay" CssClass="dropDown"  runat="server"></asp:DropDownList>
+    <asp:DropDownList ID="DateRangeFromYear" CssClass="dropDown" runat="server"></asp:DropDownList>
     &nbsp; to &nbsp; 
-    
-        <asp:DropDownList ID="DateRangeToMonth" OnSelectedIndexChanged="LoadDaysInMonth" AutoPostBack="true" runat="server">
+    <asp:DropDownList ID="DateRangeToMonth" OnSelectedIndexChanged="LoadDaysInMonth" AutoPostBack="true" CssClass="dropDown" runat="server">
         <asp:ListItem Value="1">January</asp:ListItem>
         <asp:ListItem Value="2">February</asp:ListItem>
         <asp:ListItem Value="3">March</asp:ListItem>
@@ -57,9 +63,17 @@
         <asp:ListItem Value="11">November</asp:ListItem>
         <asp:ListItem Value="12">December</asp:ListItem>
     </asp:DropDownList>
-    <asp:DropDownList ID="DateRangeToDay"  runat="server"></asp:DropDownList>
-    <asp:DropDownList ID="DateRangeToYear" runat="server"></asp:DropDownList>
-    
+    <asp:DropDownList ID="DateRangeToDay" CssClass="dropDown" runat="server"></asp:DropDownList>
+    <asp:DropDownList ID="DateRangeToYear" CssClass="dropDown" runat="server"></asp:DropDownList>
+
+    </div>
+    <div id="DateTextFields"></div>
+    <%--
+    <asp:RadioButtonList ID="RadioButtonList1" runat="server">
+        <asp:ListItem>Button1</asp:ListItem>
+        <asp:ListItem>Button2</asp:ListItem>
+    </asp:RadioButtonList>
+    --%>
     <p>Add search terms and click update to view results</p>
     <asp:Button ID="newSearch" runat="server" Text="Add search" OnClick="AddSearchMethod"/>
     <asp:Button ID="clearSearch" runat="server" Text="Clear search" OnClick="ClearSearchMethod"/>
@@ -69,10 +83,10 @@
         <ContentTemplate>
             <fieldset>
                 <asp:Label ID="resultsLabel" runat="server" Text=""></asp:Label>
-                <asp:Timer ID="Timer1" Interval="1000" OnTick="UpdateMethod" runat="server">
+                <asp:Timer ID="Timer1" Interval="2000" OnTick="UpdateMethod" runat="server">
                 </asp:Timer>
                 <asp:GridView CssClass="dataDisplay" ID="resultsGV" runat="server" 
-                    AllowSorting="true" AutoGenerateColumns="false">
+                    AllowSorting="true" OnSorting="ListSortMethod" AutoGenerateColumns="false">
                     <Columns>
                         <asp:BoundField HeaderText="Term" DataField="SearchTerm" SortExpression="SearchTerm" ItemStyle-HorizontalAlign="Left" HeaderStyle-HorizontalAlign="Left"/>
                         <asp:BoundField HeaderText="Date" DataField="DateString" SortExpression="Date" ItemStyle-HorizontalAlign="Left" HeaderStyle-HorizontalAlign="Left"/>

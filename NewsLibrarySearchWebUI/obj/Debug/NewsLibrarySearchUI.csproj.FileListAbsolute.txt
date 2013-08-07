@@ -19,3 +19,10 @@ C:\Users\sennis\Documents\Visual Studio 2010\Projects\NewsLibrary\NewsLibrarySea
 C:\Users\sennis\Documents\Visual Studio 2010\Projects\NewsLibrary\NewsLibrarySearchWebUI\obj\Debug\ResolveAssemblyReference.cache
 C:\Users\sennis\Documents\Visual Studio 2010\Projects\NewsLibrary\NewsLibrarySearchWebUI\obj\Debug\NewsLibrarySearchUI.dll
 C:\Users\sennis\Documents\Visual Studio 2010\Projects\NewsLibrary\NewsLibrarySearchWebUI\obj\Debug\NewsLibrarySearchUI.pdb
+C:\Users\Sam\Documents\Visual Studio 2010\Projects\newslibrary\NewsLibrarySearchWebUI\bin\NewsLibrarySearchUI.dll
+C:\Users\Sam\Documents\Visual Studio 2010\Projects\newslibrary\NewsLibrarySearchWebUI\bin\NewsLibrarySearchUI.pdb
+C:\Users\Sam\Documents\Visual Studio 2010\Projects\newslibrary\NewsLibrarySearchWebUI\bin\NewsLibrarySearch.dll
+C:\Users\Sam\Documents\Visual Studio 2010\Projects\newslibrary\NewsLibrarySearchWebUI\bin\NewsLibrarySearch.pdb
+C:\Users\Sam\Documents\Visual Studio 2010\Projects\newslibrary\NewsLibrarySearchWebUI\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Sam\Documents\Visual Studio 2010\Projects\newslibrary\NewsLibrarySearchWebUI\obj\Debug\NewsLibrarySearchUI.dll
+C:\Users\Sam\Documents\Visual Studio 2010\Projects\newslibrary\NewsLibrarySearchWebUI\obj\Debug\NewsLibrarySearchUI.pdb

@@ -40,6 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="NlQuery.cs" />
+    <Compile Include="NlSearchResult.cs" />
     <Compile Include="NlSearchTargets.cs" />
     <Compile Include="NlSearchBody.cs" />
     <Compile Include="NlAdvancedSearch.cs" />

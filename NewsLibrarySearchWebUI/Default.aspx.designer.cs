@@ -85,24 +85,6 @@ namespace NewsLibrarySearchUI {
         protected global::System.Web.UI.WebControls.DropDownList DateRangeToYear;
         
         /// <summary>
-        /// DateRangeFrom control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox DateRangeFrom;
-        
-        /// <summary>
-        /// DateRangeTo control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox DateRangeTo;
-        
-        /// <summary>
         /// newSearch control.
         /// </summary>
         /// <remarks>
@@ -112,13 +94,13 @@ namespace NewsLibrarySearchUI {
         protected global::System.Web.UI.WebControls.Button newSearch;
         
         /// <summary>
-        /// addTerm control.
+        /// clearSearch control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button addTerm;
+        protected global::System.Web.UI.WebControls.Button clearSearch;
         
         /// <summary>
         /// ScriptManager control.
@@ -130,13 +112,13 @@ namespace NewsLibrarySearchUI {
         protected global::System.Web.UI.ScriptManager ScriptManager;
         
         /// <summary>
-        /// UpdatePanel1 control.
+        /// UpdatePanel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpdatePanel1;
+        protected global::System.Web.UI.UpdatePanel UpdatePanel;
         
         /// <summary>
         /// resultsLabel control.

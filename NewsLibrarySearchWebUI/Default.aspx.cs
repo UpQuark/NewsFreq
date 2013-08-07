@@ -14,7 +14,7 @@ namespace NewsLibrarySearchUI
     {
         public List<NlSearchResult> resultsList;
         private int daysInMonth = 31;
-        
+        bool yearSet = false;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -27,11 +27,19 @@ namespace NewsLibrarySearchUI
             }
 
             //Fill year drop down
-            for (int i = DateTime.Now.Year; i >= 1978 ; i--)
+            if (!yearSet)
             {
-                DateRangeFromYear.Items.Add(i.ToString());
+                for (int i = DateTime.Now.Year; i >= 1978; i--)
+                {
+                    DateRangeFromYear.Items.Add(i.ToString());
+                    DateRangeToYear.Items.Add(i.ToString());
+                }
+                yearSet = true;
             }
-            
+
+            LoadDaysInMonth(DateRangeFromDay, null);
+            LoadDaysInMonth(DateRangeToDay, null);
+
             //Set gridView appearance characteristics
             resultsGV.DataSource = resultsList;
             resultsGV.GridLines = GridLines.None;
@@ -40,26 +48,46 @@ namespace NewsLibrarySearchUI
             resultsGV.Width = 720;
             resultsGV.CellPadding = 4;
             resultsGV.BorderWidth = 0;
-            resultsGV.DataBind();
+            //resultsGV.DataBind();
+
         }
 
         protected void LoadDaysInMonth(object sender, EventArgs e)
         {
-            int monthAsInt = Convert.ToInt32(DateRangeFromMonth.SelectedItem.Value);
-            int yearAsInt = Convert.ToInt32(DateRangeFromYear.SelectedItem.Text);
+            DropDownList listMonth = (DropDownList) sender;
+            DropDownList listDay;
+            DropDownList listYear;
+            int monthAsInt;
+            int yearAsInt;
+
+            if (listMonth.ID.Contains("DateRangeFrom"))
+            {
+                listDay = DateRangeFromDay;
+                monthAsInt = Convert.ToInt32(DateRangeFromMonth.SelectedItem.Value);
+                yearAsInt = Convert.ToInt32(DateRangeFromYear.SelectedItem.Text);
+            }
+
+            else //if (listMonth.ID.Contains("DateRangeTo"))
+            {
+                listDay = DateRangeToDay;
+                monthAsInt = Convert.ToInt32(DateRangeFromMonth.SelectedItem.Value);
+                yearAsInt = Convert.ToInt32(DateRangeFromYear.SelectedItem.Text);
+            }
+
+
             daysInMonth = DateTime.DaysInMonth(yearAsInt, monthAsInt);
 
             List<int> dayList = new List<int>();
 
-
-            DateRangeFromDay.DataSource = dayList;
+            listDay.DataSource = dayList;
 
             for (int i = 1; i <= daysInMonth; i++ )
             {
                 dayList.Add(i);
             }
 
-            DateRangeFromDay.DataBind();
+            listDay.DataBind();
+            
         }
 
         protected void AddSearchMethod(object sender, EventArgs e)
@@ -68,7 +96,7 @@ namespace NewsLibrarySearchUI
             DateTime dateTo;
 
             // Do not send search if dates are blank
-            if (DateRangeFrom.Text != "" && DateRangeTo.Text != "")
+            /*if (DateRangeFrom.Text != "" && DateRangeTo.Text != "")
             {
                 try
                 {
@@ -82,15 +110,22 @@ namespace NewsLibrarySearchUI
             } else
             {
                 return;
-            }
-        
+            }*/
+
+            dateFrom = new DateTime(Convert.ToInt32(DateRangeFromYear.SelectedItem.Text),
+                                    Convert.ToInt32(DateRangeFromMonth.SelectedItem.Value),
+                                    Convert.ToInt32(DateRangeFromDay.SelectedItem.Text));
+            dateTo = new DateTime(Convert.ToInt32(DateRangeToYear.SelectedItem.Text),
+                                    Convert.ToInt32(DateRangeToMonth.SelectedItem.Value),
+                                    Convert.ToInt32(DateRangeToDay.SelectedItem.Text));
+
             //Get searchTerm and fieldTarget
             var searchTerm = SearchForm.Text;
             var fieldTarget = NlSearchTargets.Target(FieldTargetsList.Text);
 
             //Create new task
             Task.Factory.StartNew(() => MakeRequest(dateFrom, dateTo, searchTerm, fieldTarget, DateTime.Now));
-            UpdatePanel1.Visible = true;
+            UpdatePanel.Visible = true;
         }
 
         protected void UpdateMethod(object sender, EventArgs e)
@@ -101,7 +136,7 @@ namespace NewsLibrarySearchUI
         protected void ClearSearchMethod(object sender, EventArgs e)
         {
             //Clear resultsLabel and clear resultsList
-            UpdatePanel1.Visible = false;
+            UpdatePanel.Visible = false;
             resultsLabel.Text = "";
             resultsList.Clear();
         }

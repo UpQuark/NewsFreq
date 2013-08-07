@@ -3,6 +3,8 @@ using System.IO;
 using System.Net;
 using System.Text.RegularExpressions;
 
+////// DEPRECATED, DO NOT USE ///////
+
 namespace NewsLibrarySearch
 {
     public class NlBasicSearch

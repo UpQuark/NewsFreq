@@ -25,7 +25,6 @@
 
     <p>Enter a date range to search or choose from the dropdown menu. Defaults to all documents. </p>
     <asp:DropDownList ID="DateRangeFromMonth" OnSelectedIndexChanged="LoadDaysInMonth" AutoPostBack="true" runat="server">
-        <asp:ListItem Value="0">&nbsp;</asp:ListItem>
         <asp:ListItem Value="1">January</asp:ListItem>
         <asp:ListItem Value="2">February</asp:ListItem>
         <asp:ListItem Value="3">March</asp:ListItem>
@@ -45,7 +44,6 @@
     &nbsp; to &nbsp; 
     
         <asp:DropDownList ID="DateRangeToMonth" OnSelectedIndexChanged="LoadDaysInMonth" AutoPostBack="true" runat="server">
-        <asp:ListItem Value="0">&nbsp;</asp:ListItem>
         <asp:ListItem Value="1">January</asp:ListItem>
         <asp:ListItem Value="2">February</asp:ListItem>
         <asp:ListItem Value="3">March</asp:ListItem>
@@ -61,26 +59,23 @@
     </asp:DropDownList>
     <asp:DropDownList ID="DateRangeToDay"  runat="server"></asp:DropDownList>
     <asp:DropDownList ID="DateRangeToYear" runat="server"></asp:DropDownList>
-
-    <asp:TextBox ID="DateRangeFrom" CssClass="field" runat="server">Start date</asp:TextBox>  &nbsp; to &nbsp; 
-    <asp:TextBox ID="DateRangeTo" CssClass="field" runat="server">End date</asp:TextBox>
     
     <p>Add search terms and click update to view results</p>
     <asp:Button ID="newSearch" runat="server" Text="Add search" OnClick="AddSearchMethod"/>
-    <asp:Button ID="addTerm" runat="server" Text="Clear search" OnClick="ClearSearchMethod"/>
+    <asp:Button ID="clearSearch" runat="server" Text="Clear search" OnClick="ClearSearchMethod"/>
     
     <asp:ScriptManager ID="ScriptManager" runat="server" />
-    <asp:UpdatePanel ID="UpdatePanel1" CssClass="updatePanel" AutoPostBack="true" UpdateMode="Always" Visible="False" runat="server">
+    <asp:UpdatePanel ID="UpdatePanel" CssClass="updatePanel" AutoPostBack="true" UpdateMode="Always" Visible="False" runat="server">
         <ContentTemplate>
             <fieldset>
                 <asp:Label ID="resultsLabel" runat="server" Text=""></asp:Label>
                 <asp:Timer ID="Timer1" Interval="1000" OnTick="UpdateMethod" runat="server">
                 </asp:Timer>
                 <asp:GridView CssClass="dataDisplay" ID="resultsGV" runat="server" 
-                    AllowSorting="true" AutoGenerateColumns="false" OnSorting="OnSort">
+                    AllowSorting="true" AutoGenerateColumns="false">
                     <Columns>
                         <asp:BoundField HeaderText="Term" DataField="SearchTerm" SortExpression="SearchTerm" ItemStyle-HorizontalAlign="Left" HeaderStyle-HorizontalAlign="Left"/>
-                        <asp:BoundField HeaderText="Date" DataField="Date" SortExpression="Date" ItemStyle-HorizontalAlign="Left" HeaderStyle-HorizontalAlign="Left"/>
+                        <asp:BoundField HeaderText="Date" DataField="DateString" SortExpression="Date" ItemStyle-HorizontalAlign="Left" HeaderStyle-HorizontalAlign="Left"/>
                         <asp:BoundField HeaderText="Field" DataField="FieldTarget" SortExpression="FieldTarget" ItemStyle-HorizontalAlign="Left" HeaderStyle-HorizontalAlign="Left"/>
                         <asp:BoundField HeaderText="Occurances" DataField="Count" SortExpression="Count" ItemStyle-HorizontalAlign="Left" HeaderStyle-HorizontalAlign="Left"/>
                     </Columns>

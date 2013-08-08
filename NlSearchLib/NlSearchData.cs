@@ -10,6 +10,17 @@ namespace NewsLibrarySearch
         public string DateString { get; set; }
         public DateTime DateFrom { get; set; }
         public DateTime DateTo { get; set; }
+
+        public string DateFromString
+        {
+            get { return DateFrom.ToString("MMMM dd, yyyy"); }
+        }
+
+        public string DateToString
+        {
+            get { return DateTo.ToString("MMMM dd, yyyy"); }
+        }
+
         public DateTime Time { get; set; }
         public string SearchTerm { get; set; }
         public string FieldTarget { get; set; }

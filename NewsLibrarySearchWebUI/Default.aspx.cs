@@ -14,7 +14,8 @@ namespace NewsLibrarySearchUI
     {
         public List<NlSearchData> resultsList;
         private int daysInMonth = 31;
-
+        bool _yearSet;
+        bool _sortDirection;
         protected void Page_Load(object sender, EventArgs e)
         {
             //Get session variables
@@ -24,19 +25,26 @@ namespace NewsLibrarySearchUI
                 resultsList = new List<NlSearchData>();
                 HttpContext.Current.Session["List"] = resultsList;
             }
-            
-            bool yearSet;
+
             if( HttpContext.Current.Session["yearSet"] == null)
             {
-                yearSet = false;
-                HttpContext.Current.Session["yearSet"] = yearSet;
+                HttpContext.Current.Session["yearSet"] = false;
             } else
             {
-                yearSet = (bool) HttpContext.Current.Session["yearSet"];
+                _yearSet = (bool) HttpContext.Current.Session["_yearSet"];
+            }
+
+            if (HttpContext.Current.Session["sortDirection"] == null)
+            {
+                HttpContext.Current.Session["sortDirection"] = false;
+            }
+            else
+            {
+                _sortDirection = (bool)HttpContext.Current.Session["sortDirection"];
             }
 
             //Fill year drop down
-            if (!yearSet)
+            if (!_yearSet)
             {
                 for (int i = DateTime.Now.Year; i >= 1978; i--)
                 {
@@ -44,8 +52,8 @@ namespace NewsLibrarySearchUI
                     DateRangeFromYear.Items.Add(i.ToString());
                     DateRangeToYear.Items.Add(i.ToString());
                 }
-                yearSet = true;
-                HttpContext.Current.Session["yearSet"] = yearSet;
+                _yearSet = true;
+                HttpContext.Current.Session["_yearSet"] = _yearSet;
             }
 
             LoadDaysInMonth(DateRangeFromDay, null);
@@ -113,15 +121,41 @@ namespace NewsLibrarySearchUI
             var fieldTarget = NlSearchTargets.Target(FieldTargetsList.Text);
 
             //Create new task
-            Task.Factory.StartNew(() => resultsList.Add(NlQuery.MakeRequest(dateFrom, dateTo, searchTerm, fieldTarget, DateTime.Now)));
+            Task.Factory.StartNew(() =>
+                {
+                    resultsList.Add(NlQuery.MakeRequest(dateFrom, dateTo, searchTerm, fieldTarget, DateTime.Now));
+                  //  resultsList.Sort((x, y) =>
+                  //      x.Count.CompareTo(y.Count));
+                });
             UpdatePanel.Visible = true;
         }
 
         protected void ListSortMethod(object sender, EventArgs e)
         {
             string expression = ((System.Web.UI.WebControls.GridViewSortEventArgs) (e)).SortExpression;
-            resultsList.Sort((x,y) =>
-                x.Count.CompareTo(y.Count));
+            switch (expression)
+            {
+                case "SearchTerm":
+                    resultsList.Sort((x, y) =>
+                        String.Compare(x.SearchTerm, y.SearchTerm));
+                    break;
+                case "DateFrom":
+                    resultsList.Sort((x, y) =>
+                        x.DateFrom.CompareTo(y.DateFrom));
+                    break;
+                case "DateTo":
+                    resultsList.Sort((x, y) =>
+                        x.DateTo.CompareTo(y.DateTo));
+                    break;
+                case "FieldTarget":
+                    resultsList.Sort((x, y) =>
+                        String.Compare(x.FieldTarget, y.FieldTarget));
+                    break;
+                case "Count":
+                    resultsList.Sort((y, x) =>
+                        x.Count.CompareTo(y.Count));
+                    break;
+            }
         }
 
         //Update the contents of the data grid. Called by updatePanel tick.

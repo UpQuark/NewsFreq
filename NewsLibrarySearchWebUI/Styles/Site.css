@@ -179,6 +179,10 @@ tr:nth-child(odd)
     line-height: normal;
 }
 
+.updatePanel {
+    border: 0px;
+}
+
 
 /* FORM ELEMENTS   
 ----------------------------------------------------------*/

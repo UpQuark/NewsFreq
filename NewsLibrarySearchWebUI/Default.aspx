@@ -78,18 +78,19 @@
     <asp:Button ID="newSearch" runat="server" Text="Add search" OnClick="AddSearchMethod"/>
     <asp:Button ID="clearSearch" runat="server" Text="Clear search" OnClick="ClearSearchMethod"/>
     
-    <asp:ScriptManager ID="ScriptManager" runat="server" />
+    <asp:ScriptManager ID="ScriptManager" EnablePartialRendering="True" runat="server" />
     <asp:UpdatePanel ID="UpdatePanel" CssClass="updatePanel" AutoPostBack="true" UpdateMode="Always" Visible="False" runat="server">
         <ContentTemplate>
             <fieldset>
                 <asp:Label ID="resultsLabel" runat="server" Text=""></asp:Label>
-                <asp:Timer ID="Timer1" Interval="2000" OnTick="UpdateMethod" runat="server">
+                <asp:Timer ID="Timer1" Interval="500" OnTick="UpdateMethod" runat="server">
                 </asp:Timer>
                 <asp:GridView CssClass="dataDisplay" ID="resultsGV" runat="server" 
                     AllowSorting="true" OnSorting="ListSortMethod" AutoGenerateColumns="false">
                     <Columns>
                         <asp:BoundField HeaderText="Term" DataField="SearchTerm" SortExpression="SearchTerm" ItemStyle-HorizontalAlign="Left" HeaderStyle-HorizontalAlign="Left"/>
-                        <asp:BoundField HeaderText="Date" DataField="DateString" SortExpression="Date" ItemStyle-HorizontalAlign="Left" HeaderStyle-HorizontalAlign="Left"/>
+                        <asp:BoundField HeaderText="From" DataField="DateFromString" SortExpression="DateFrom" ItemStyle-HorizontalAlign="Left" HeaderStyle-HorizontalAlign="Left"/>
+                        <asp:BoundField HeaderText="To" DataField="DateToString" SortExpression="DateTo" ItemStyle-HorizontalAlign="Left" HeaderStyle-HorizontalAlign="Left"/>
                         <asp:BoundField HeaderText="Field" DataField="FieldTarget" SortExpression="FieldTarget" ItemStyle-HorizontalAlign="Left" HeaderStyle-HorizontalAlign="Left"/>
                         <asp:BoundField HeaderText="Occurances" DataField="Count" SortExpression="Count" ItemStyle-HorizontalAlign="Left" HeaderStyle-HorizontalAlign="Left"/>
                     </Columns>

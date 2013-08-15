@@ -1,16 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace NewsLibrarySearch.Query
 {
     public class NlQuery
     {
+        private NlSearchData _searchData;
+
 
         public NlQuery(DateTime dateFrom, DateTime dateTo, string searchTerm, string fieldTarget, DateTime now) 
         {
-
+          //  _searchData
         }
 
         public NlQuery(NlSearchData n)
@@ -20,7 +19,6 @@ namespace NewsLibrarySearch.Query
 
         public static NlSearchData MakeRequest(DateTime dateFrom, DateTime dateTo, string searchTerm, string fieldTarget, DateTime now)
         {
-            //Create a new search object
             NlAdvancedSearch search = new NlAdvancedSearch();
 
             string dateString = dateFrom.ToString("MMMM dd, yyyy") + " to " + dateTo.ToString("MMMM dd, yyyy");
@@ -34,7 +32,7 @@ namespace NewsLibrarySearch.Query
                 DateString = dateString,
                 FieldTarget = NlSearchTargets.Key(fieldTarget),
                 Count = search.SendSearchRequest(dateString, searchTerm, fieldTarget),
-                Time = now,
+                TimeofQuery = now,
             };
 
             return s;

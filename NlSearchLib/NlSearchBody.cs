@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace NewsLibrarySearch
+﻿namespace NewsLibrarySearch
 {
+    /// <summary>
+    /// Builder for NewsLibrary request body
+    /// </summary>
     public class NlSearchBody
     {
         public string Body
@@ -26,7 +24,6 @@ namespace NewsLibrarySearch
         //Single search, single _date and single target
         public NlSearchBody(string date, string searchTerm, string fieldTarget)
         {
-
             _date = date;
             if (date == "")
                 DateBase = "";

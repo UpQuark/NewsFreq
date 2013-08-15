@@ -192,6 +192,8 @@ tr:nth-child(odd)
 
 .dropDown {
     color: #5c5c5c;
+    margin-top: 8px;
+    margin-bottom: 8px;
 }
 
 .field {

@@ -15,7 +15,7 @@ namespace NewsLibrarySearchUI
         public List<NlSearchData> resultsList;
         private int daysInMonth = 31;
         bool _yearSet;
-        bool _sortDirection;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             //Get session variables
@@ -34,21 +34,11 @@ namespace NewsLibrarySearchUI
                 _yearSet = (bool) HttpContext.Current.Session["_yearSet"];
             }
 
-            if (HttpContext.Current.Session["sortDirection"] == null)
-            {
-                HttpContext.Current.Session["sortDirection"] = false;
-            }
-            else
-            {
-                _sortDirection = (bool)HttpContext.Current.Session["sortDirection"];
-            }
-
             //Fill year drop down
             if (!_yearSet)
             {
                 for (int i = DateTime.Now.Year; i >= 1978; i--)
                 {
-
                     DateRangeFromYear.Items.Add(i.ToString());
                     DateRangeToYear.Items.Add(i.ToString());
                 }
@@ -67,42 +57,6 @@ namespace NewsLibrarySearchUI
             resultsGV.Width = 720;
             resultsGV.CellPadding = 4;
             resultsGV.BorderWidth = 0;
-
-        }
-
-        //Update date drop down lists to reflect the correct number of days in a given month. Called by month drop down.
-        protected void LoadDaysInMonth(object sender, EventArgs e)
-        {
-            DropDownList listMonth = (DropDownList) sender;
-            DropDownList listDay;
-            int monthAsInt;
-            int yearAsInt;
-
-            if (listMonth.ID.Contains("DateRangeFrom"))
-            {
-                listDay = DateRangeFromDay;
-                monthAsInt = Convert.ToInt32(DateRangeFromMonth.SelectedItem.Value);
-                yearAsInt = Convert.ToInt32(DateRangeFromYear.SelectedItem.Text);
-            }
-            else if (listMonth.ID.Contains("DateRangeTo"))
-            {
-                listDay = DateRangeToDay;
-                monthAsInt = Convert.ToInt32(DateRangeFromMonth.SelectedItem.Value);
-                yearAsInt = Convert.ToInt32(DateRangeFromYear.SelectedItem.Text);
-            }
-            else
-            {
-                throw new WebException("Date dropdowns do not have expected ID");
-            }
-
-            daysInMonth = DateTime.DaysInMonth(yearAsInt, monthAsInt);
-            List<int> dayList = new List<int>();
-            listDay.DataSource = dayList;
-            for (int i = 1; i <= daysInMonth; i++ )
-            {
-                dayList.Add(i);
-            }
-            listDay.DataBind();
         }
 
         //Add a search term to the search collection. Called by add search button.
@@ -116,20 +70,35 @@ namespace NewsLibrarySearchUI
                                     Convert.ToInt32(DateRangeToMonth.SelectedItem.Value),
                                     Convert.ToInt32(DateRangeToDay.SelectedItem.Text));
 
-            //Get searchTerm and fieldTarget from UI
-            var searchTerm = SearchForm.Text;
-            var fieldTarget = NlSearchTargets.Target(FieldTargetsList.Text);
+            //Get params from UI
+            string searchTerm = SearchForm.Text;
+            string fieldTarget = NlSearchTargets.Target(FieldTargetsList.Text);
+            SearchTypes searchType = (SearchTypes) Convert.ToInt32(searchTypeMenu.SelectedItem.Value);
 
-            //Create new task
-            Task.Factory.StartNew(() =>
+            if (searchType.Equals(SearchTypes.Basic))
+            {
+                Task.Factory.StartNew(() =>
                 {
                     resultsList.Add(NlQuery.MakeRequest(dateFrom, dateTo, searchTerm, fieldTarget, DateTime.Now));
-                  //  resultsList.Sort((x, y) =>
-                  //      x.Count.CompareTo(y.Count));
+                    resultsList.Sort((x, y) =>
+                        x.TimeofQuery.CompareTo(y.TimeofQuery));
                 });
+            }
+            else
+            {
+                switch (searchType)
+                {
+                    case SearchTypes.EveryYear:
+                        break;
+                }
+            }
+
+            //Create new task
+            
             UpdatePanel.Visible = true;
         }
 
+        //Sort
         protected void ListSortMethod(object sender, EventArgs e)
         {
             string expression = ((System.Web.UI.WebControls.GridViewSortEventArgs) (e)).SortExpression;
@@ -170,5 +139,50 @@ namespace NewsLibrarySearchUI
             UpdatePanel.Visible = false;
             resultsList.Clear();
         }
+
+        //Update date drop down lists to reflect the correct number of days in a given month. Called by month drop down.
+        protected void LoadDaysInMonth(object sender, EventArgs e)
+        {
+            DropDownList listMonth = (DropDownList)sender;
+            DropDownList listDay;
+            int monthAsInt;
+            int yearAsInt;
+
+            if (listMonth.ID.Contains("DateRangeFrom"))
+            {
+                listDay = DateRangeFromDay;
+                monthAsInt = Convert.ToInt32(DateRangeFromMonth.SelectedItem.Value);
+                yearAsInt = Convert.ToInt32(DateRangeFromYear.SelectedItem.Text);
+            }
+            else if (listMonth.ID.Contains("DateRangeTo"))
+            {
+                listDay = DateRangeToDay;
+                monthAsInt = Convert.ToInt32(DateRangeFromMonth.SelectedItem.Value);
+                yearAsInt = Convert.ToInt32(DateRangeFromYear.SelectedItem.Text);
+            }
+            else
+            {
+                throw new WebException("Date dropdowns do not have expected ID");
+            }
+
+            daysInMonth = DateTime.DaysInMonth(yearAsInt, monthAsInt);
+            List<int> dayList = new List<int>();
+            listDay.DataSource = dayList;
+            for (int i = 1; i <= daysInMonth; i++)
+            {
+                dayList.Add(i);
+            }
+            listDay.DataBind();
+        }
+    }
+
+    internal enum SearchTypes
+    {
+        Basic = 0,
+        EveryYear,
+        EveryMonth,
+        EveryWeek,
+        TenYears,
+        TwelveMonths
     }
 }

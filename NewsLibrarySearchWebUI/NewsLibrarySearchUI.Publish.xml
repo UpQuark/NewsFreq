@@ -1,17 +1,42 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <publishData>
-  <publishProfile publishUrl="ftp://184.173.161.69/httpdocs" deleteExistingFiles="True" ftpAnonymousLogin="False" ftpPassiveMode="True" msdeploySite="" msdeploySiteID="" msdeployRemoteSitePhysicalPath="" msdeployAllowUntrustedCertificate="False" msdeploySkipExtraFilesOnServer="True" msdeployMarkAsApp="False" profileName="NlProf1" publishMethod="FTP" replaceMatchingFiles="False" userName="Salrillian" savePWD="True" userPWD="AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAz3PZrn+c4ESWyB0+87SoHQAAAAACAAAAAAAQZgAAAAEAACAAAADynBVhnBR3sHDnfWLy3FE92QKIyoBsU9dwVzruDQhBewAAAAAOgAAAAAIAACAAAACmmQhGvpfxgB90zVT8NdsdJAlymSblw9lF6ZdI0H6qRSAAAAC1nYwSO2sWCDPRpUP1ESvWacD1uhzsFtQu+ZIT4leGUUAAAAClVTGZN8JiUDUbNNxjgS/TKDamQUOaUXcpyoW2gUJoVNpYAsLE2TBvmWA9fqCq6ivgl9lPfu+YFNN84mET+Y8A" SelectedForPublish="True">
-    <file relUrl="bin/NewsLibrarySearch.dll" publishTime="08/06/2013 22:05:06" />
-    <file relUrl="bin/NewsLibrarySearch.pdb" publishTime="08/06/2013 22:05:06" />
-    <file relUrl="Scripts/jquery-1.4.1.min.js" publishTime="08/06/2013 21:55:44" />
-    <file relUrl="Scripts/jquery-1.4.1-vsdoc.js" publishTime="08/06/2013 21:55:44" />
-    <file relUrl="Web.config" publishTime="08/06/2013 21:55:44" />
-    <file relUrl="Styles/Site.css" publishTime="08/06/2013 21:55:44" />
-    <file relUrl="bin/NewsLibrarySearchUI.dll" publishTime="08/06/2013 22:54:40" />
-    <file relUrl="Default.aspx" publishTime="08/06/2013 22:54:34" />
-    <file relUrl="Site.Master" publishTime="08/06/2013 21:55:44" />
-    <file relUrl="bin/NewsLibrarySearchUI.pdb" publishTime="08/06/2013 22:54:40" />
-    <file relUrl="Global.asax" publishTime="08/06/2013 21:55:44" />
-    <file relUrl="Scripts/jquery-1.4.1.js" publishTime="08/06/2013 21:55:44" />
+  <publishProfile publishUrl="ftp://184.173.161.69/httpdocs" deleteExistingFiles="False" ftpAnonymousLogin="False" ftpPassiveMode="True" msdeploySite="" msdeploySiteID="" msdeployRemoteSitePhysicalPath="" msdeployAllowUntrustedCertificate="False" msdeploySkipExtraFilesOnServer="True" msdeployMarkAsApp="False" profileName="NlProf1" publishMethod="FTP" replaceMatchingFiles="True" userName="Salrillian" savePWD="True" userPWD="AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAvuZgJQDW+km+sZMLk9455wAAAAACAAAAAAADZgAAwAAAABAAAAC8HcAmRTIj4DfRNz9iHJ/zAAAAAASAAACgAAAAEAAAAMClcIC1IasDoNO9slUHb2UYAAAAOwb5FoZhTpDjPIskF8wQEWVMIPCfg4OVFAAAAOsjMvlsILhQp8VJX/4fIzJJLnjH" SelectedForPublish="True">
+    <file relUrl="bin/cs/AjaxControlToolkit.resources.dll" publishTime="08/07/2013 09:48:37" />
+    <file relUrl="bin/NewsLibrarySearch.dll" publishTime="08/08/2013 11:18:47" />
+    <file relUrl="Global.asax" publishTime="08/06/2013 11:13:58" />
+    <file relUrl="Site.Master" publishTime="08/06/2013 11:01:06" />
+    <file relUrl="Styles/Site.css" publishTime="08/08/2013 11:51:56" />
+    <file relUrl="bin/es/AjaxControlToolkit.resources.dll" publishTime="08/07/2013 09:48:37" />
+    <file relUrl="Scripts/jquery-1.4.1.js" publishTime="08/07/2013 09:26:35" />
+    <file relUrl="bin/hi/AjaxControlToolkit.resources.dll" publishTime="08/07/2013 09:48:37" />
+    <file relUrl="TestPage.aspx" publishTime="08/07/2013 15:04:20" />
+    <file relUrl="bin/zh-CHS/AjaxControlToolkit.resources.dll" publishTime="08/07/2013 09:48:37" />
+    <file relUrl="bin/AjaxMin.dll" publishTime="08/07/2013 09:48:38" />
+    <file relUrl="bin/ru/AjaxControlToolkit.resources.dll" publishTime="08/07/2013 09:48:37" />
+    <file relUrl="Scripts/NlSearchScripts.js" publishTime="08/07/2013 13:56:50" />
+    <file relUrl="bin/de/AjaxControlToolkit.resources.dll" publishTime="08/07/2013 09:48:37" />
+    <file relUrl="packages.config" publishTime="08/07/2013 09:48:40" />
+    <file relUrl="Scripts/jquery-1.4.1.min.js" publishTime="08/07/2013 09:26:35" />
+    <file relUrl="bin/AjaxControlToolkit.dll" publishTime="08/07/2013 09:48:37" />
+    <file relUrl="bin/ja/AjaxControlToolkit.resources.dll" publishTime="08/07/2013 09:48:37" />
+    <file relUrl="bin/fr/AjaxControlToolkit.resources.dll" publishTime="08/07/2013 09:48:37" />
+    <file relUrl="Default.aspx" publishTime="08/08/2013 11:58:14" />
+    <file relUrl="bin/ko/AjaxControlToolkit.resources.dll" publishTime="08/07/2013 09:48:37" />
+    <file relUrl="bin/he/AjaxControlToolkit.resources.dll" publishTime="08/07/2013 09:48:37" />
+    <file relUrl="bin/NewsLibrarySearchUI.dll" publishTime="08/08/2013 11:20:57" />
+    <file relUrl="bin/nl/AjaxControlToolkit.resources.dll" publishTime="08/07/2013 09:48:37" />
+    <file relUrl="bin/tr-TR/AjaxControlToolkit.resources.dll" publishTime="08/07/2013 09:48:37" />
+    <file relUrl="bin/HtmlAgilityPack.dll" publishTime="08/07/2013 09:48:35" />
+    <file relUrl="bin/it/AjaxControlToolkit.resources.dll" publishTime="08/07/2013 09:48:37" />
+    <file relUrl="bin/zh-CHT/AjaxControlToolkit.resources.dll" publishTime="08/07/2013 09:48:37" />
+    <file relUrl="bin/NewsLibrarySearchUI.pdb" publishTime="08/08/2013 11:20:56" />
+    <file relUrl="NewsLibrary.aspx" publishTime="08/07/2013 16:22:41" />
+    <file relUrl="Web.config" publishTime="08/08/2013 11:40:15" />
+    <file relUrl="bin/HtmlAgilityPack.pdb" publishTime="08/07/2013 09:48:35" />
+    <file relUrl="bin/pt/AjaxControlToolkit.resources.dll" publishTime="08/07/2013 09:48:37" />
+    <file relUrl="bin/ar/AjaxControlToolkit.resources.dll" publishTime="08/07/2013 09:48:37" />
+    <file relUrl="bin/HtmlAgilityPack.xml" publishTime="08/07/2013 09:48:35" />
+    <file relUrl="bin/NewsLibrarySearch.pdb" publishTime="08/08/2013 11:18:47" />
+    <file relUrl="Scripts/jquery-1.4.1-vsdoc.js" publishTime="08/07/2013 09:26:35" />
   </publishProfile>
 </publishData>

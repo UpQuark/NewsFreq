@@ -132,7 +132,7 @@ tr:nth-child(odd)
 .sidebar 
 {
     position: absolute;
-    margin: 10px 0px 0px 560px;
+    margin: 0px 0px 0px 600px;
     width: 220px;
     height: 439px;
     padding: 6px;
@@ -179,11 +179,21 @@ tr:nth-child(odd)
     line-height: normal;
 }
 
+.updatePanel {
+    border: 0px;
+}
+
 
 /* FORM ELEMENTS   
 ----------------------------------------------------------*/
 .updatePanel {
     width: 920px;
+}
+
+.dropDown {
+    color: #5c5c5c;
+    margin-top: 8px;
+    margin-bottom: 8px;
 }
 
 .field {

@@ -13,10 +13,8 @@
     <p>Enter terms to search with or without boolean operators</p>
     <asp:TextBox ID="SearchForm" CssClass="SearchForm" runat="server" OnClick="if (clicked == false){this.value=''; clicked=true}">Search Terms</asp:TextBox>
 
-    
-    
     &nbsp; in &nbsp;
-    <asp:DropDownList ID="FieldTargetsList" CssClass="dropDown" runat="server">
+    <asp:DropDownList ID="FieldTargetsList" CssClass="dropDown" style="color: #5c5c5c;" runat="server">
         <asp:ListItem>All Text</asp:ListItem>
         <asp:ListItem>Lede</asp:ListItem>
         <asp:ListItem>Headline</asp:ListItem>
@@ -29,10 +27,9 @@
         <asp:ListItem>Source</asp:ListItem>
     </asp:DropDownList>
     
-    
     <p>Enter a date range to search or choose from the dropdown menu. Defaults to all documents. </p>
     <div id="DateDropDowns">    
-    <asp:DropDownList ID="DateRangeFromMonth" OnSelectedIndexChanged="LoadDaysInMonth" AutoPostBack="true" CssClass="dropDown" runat="server">
+    <asp:DropDownList ID="DateRangeFromMonth" OnSelectedIndexChanged="LoadDaysInMonth" AutoPostBack="true" CssClass="dropDown" style="color: #5c5c5c;" runat="server">
         <asp:ListItem Value="1">January</asp:ListItem>
         <asp:ListItem Value="2">February</asp:ListItem>
         <asp:ListItem Value="3">March</asp:ListItem>
@@ -46,10 +43,10 @@
         <asp:ListItem Value="11">November</asp:ListItem>
         <asp:ListItem Value="12">December</asp:ListItem>
     </asp:DropDownList>
-    <asp:DropDownList ID="DateRangeFromDay" CssClass="dropDown"  runat="server"></asp:DropDownList>
-    <asp:DropDownList ID="DateRangeFromYear" CssClass="dropDown" runat="server"></asp:DropDownList>
+    <asp:DropDownList ID="DateRangeFromDay" CssClass="dropDown" style="color: #5c5c5c;" runat="server"></asp:DropDownList>
+    <asp:DropDownList ID="DateRangeFromYear" CssClass="dropDown" style="color: #5c5c5c;" runat="server"></asp:DropDownList>
     &nbsp; to &nbsp; 
-    <asp:DropDownList ID="DateRangeToMonth" OnSelectedIndexChanged="LoadDaysInMonth" AutoPostBack="true" CssClass="dropDown" runat="server">
+    <asp:DropDownList ID="DateRangeToMonth" OnSelectedIndexChanged="LoadDaysInMonth" AutoPostBack="true" CssClass="dropDown" style="color: #5c5c5c;" runat="server">
         <asp:ListItem Value="1">January</asp:ListItem>
         <asp:ListItem Value="2">February</asp:ListItem>
         <asp:ListItem Value="3">March</asp:ListItem>
@@ -63,20 +60,22 @@
         <asp:ListItem Value="11">November</asp:ListItem>
         <asp:ListItem Value="12">December</asp:ListItem>
     </asp:DropDownList>
-    <asp:DropDownList ID="DateRangeToDay" CssClass="dropDown" runat="server"></asp:DropDownList>
-    <asp:DropDownList ID="DateRangeToYear" CssClass="dropDown" runat="server"></asp:DropDownList>
+    <asp:DropDownList ID="DateRangeToDay" CssClass="dropDown" style="color: #5c5c5c;" runat="server"></asp:DropDownList>
+    <asp:DropDownList ID="DateRangeToYear" CssClass="dropDown" style="color: #5c5c5c;" runat="server"></asp:DropDownList>
 
     </div>
-    <div id="DateTextFields"></div>
-    <%--
-    <asp:RadioButtonList ID="RadioButtonList1" runat="server">
-        <asp:ListItem>Button1</asp:ListItem>
-        <asp:ListItem>Button2</asp:ListItem>
-    </asp:RadioButtonList>
-    --%>
-    <p>Add search terms and click update to view results</p>
+
+    <p>Add search terms. Choose a search setting for powerful custom searches</p>
     <asp:Button ID="newSearch" runat="server" Text="Add search" OnClick="AddSearchMethod"/>
     <asp:Button ID="clearSearch" runat="server" Text="Clear search" OnClick="ClearSearchMethod"/>
+    <asp:DropDownList ID="searchTypeMenu" CssClass="dropDown" style="color: #5c5c5c;" runat="server">
+        <asp:ListItem Value="0">Basic search</asp:ListItem>
+        <asp:ListItem Value="1">Every year in range</asp:ListItem>
+        <asp:ListItem Value="2">Every month in range</asp:ListItem>
+        <asp:ListItem Value="3">Every week in range</asp:ListItem>
+        <asp:ListItem Value="4">Last 10 years from today</asp:ListItem>
+        <asp:ListItem Value="5">Last 12 months from today</asp:ListItem>
+    </asp:DropDownList>
     
     <asp:ScriptManager ID="ScriptManager" EnablePartialRendering="True" runat="server" />
     <asp:UpdatePanel ID="UpdatePanel" CssClass="updatePanel" AutoPostBack="true" UpdateMode="Always" Visible="False" runat="server">

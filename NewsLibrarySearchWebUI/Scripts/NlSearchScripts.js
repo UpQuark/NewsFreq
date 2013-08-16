@@ -8,18 +8,29 @@ function searchClick() {
 
 //Black magic happens here
 function addSearch(searchTerm) {
-        $.ajax({
-            accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-            url: "http://nl.newsbank.com/nl-search/we/Archives",
-            contentType: "application/x-www-form-urlencoded",
-            beforeSend : function (xhr) {
-                xhr.setRequestHeader("AcceptLanguage", "en-US,en;q=0.5");
-                xhr.setRequestHeader("AcceptEncoding", "gzip, deflate");
-            },
-            type: "POST",
-            data: createBody(searchTerm),
-            complete: doStuffOnComplete(xhr, status)
-        });
+
+
+
+
+    $.getJSON({
+        url: "http://nl.newsbank.com/nl-search/we/Archives&callback=?",
+        data: "message=" + createBody(searchTerm),
+        success: doStuffOnComplete(jqXHR)
+    });
+
+//       $.ajax({
+//            accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+//           url: "http://nl.newsbank.com/nl-search/we/Archives" + "&callback=?",
+//           contentType: "application/x-www-form-urlencoded",
+//            beforeSend : function (xhr) {
+//                xhr.setRequestHeader("AcceptLanguage", "en-US,en;q=0.5");
+//                xhr.setRequestHeader("AcceptEncoding", "gzip, deflate");
+//            },
+//            type: 'GET',
+//            dataType: "jsonp",
+//            data: "message=" + createBody(searchTerm),
+//            complete: doStuffOnComplete(xhr, status)
+//        });   
 }
 
 function doStuffOnComplete(xhr, status) {

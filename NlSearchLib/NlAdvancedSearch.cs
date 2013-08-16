@@ -7,30 +7,11 @@ namespace NewsLibrarySearch
 {
     public class NlAdvancedSearch
     {
-        //////////// Public members ////////////
-        
-        /// <summary>
-        ///  Send newslibrary query
-        /// </summary>
-        /// <param name="date">stringified date</param>
-        /// <param name="searchTerm">search criteria</param>
-        /// <param name="fieldTarget">field to search</param>
-        /// <returns></returns>
 
-        public int SendSearchRequest(string date, string searchTerm, string fieldTarget)
-        {
-            HttpWebResponse response;
-            int searchResultCount = 0;
-            if (NlRequest(out response, date, searchTerm, fieldTarget))
-            {
-                Stream dataStream = response.GetResponseStream();
-                StreamReader reader = new StreamReader(dataStream);
-                string responseHtml = reader.ReadToEnd();
-                searchResultCount = GetSearchResultCountFromHtml(responseHtml);
-                response.Close();
-            }
-            return searchResultCount;
-        }
+        #region constructors
+        #endregion
+
+        #region public methods
 
         /// <summary>
         /// Send newslibrary query with searchTerm only
@@ -52,9 +33,31 @@ namespace NewsLibrarySearch
             return searchResultCount;
         }
 
-        //////////// Private members ////////////
+        /// <summary>
+        ///  Send newslibrary query
+        /// </summary>
+        /// <param name="date">stringified date</param>
+        /// <param name="searchTerm">search criteria</param>
+        /// <param name="fieldTarget">field to search</param>
+        public int SendSearchRequest(string date, string searchTerm, string fieldTarget)
+        {
+            HttpWebResponse response;
+            int searchResultCount = 0;
+            if (NlRequest(out response, date, searchTerm, fieldTarget))
+            {
+                Stream dataStream = response.GetResponseStream();
+                StreamReader reader = new StreamReader(dataStream);
+                string responseHtml = reader.ReadToEnd();
+                searchResultCount = GetSearchResultCountFromHtml(responseHtml);
+                response.Close();
+            }
+            return searchResultCount;
+        }
+        
+        #endregion
 
-        // Regex for finding search results phrase
+        #region private methods
+
         private readonly Regex _regexResultsSpan = new Regex("(<span class=\"basic-text-white\">)(Results: )([0-9]*)( - )([0-9]*)( of )([0-9]*)(</span>)");
         // Regex for finding total results in results phrase
         private readonly Regex _regexResultsMaxValue = new Regex(@"(?<=(\D|^))\d+(?=\D*$)");
@@ -131,5 +134,7 @@ namespace NewsLibrarySearch
             }
             return true;
         }
+       
+        #endregion
     }
 }

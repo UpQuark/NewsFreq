@@ -12,7 +12,6 @@
      
      <input type="text" id="searchText" class="SearchForm" placeholder="Enter search terms"/>
     
-    
     <input type = "button" id="newSearchButton" onclick="searchClick()" value="New search"/>
     <input type = "button" id="clearSearchButton" value="Clear search"/>
     

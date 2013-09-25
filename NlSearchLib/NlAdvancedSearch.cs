@@ -100,7 +100,7 @@ namespace NewsLibrarySearch
             {
                 //Build request data
                 HttpWebRequest request = (HttpWebRequest) WebRequest.Create(nlUri);
-                request.UserAgent = "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:22.0) Gecko/20100101 Firefox/22.0";
+                //request.UserAgent = "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:22.0) Gecko/20100101 Firefox/22.0";
                 request.Accept = "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8";
                 request.Headers.Set(HttpRequestHeader.AcceptLanguage, "en-US,en;q=0.5");
                 request.Headers.Set(HttpRequestHeader.AcceptEncoding, "gzip, deflate");

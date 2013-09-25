@@ -1,0 +1,5 @@
+C:\Users\sennis\Documents\Visual Studio 2010\Projects\NewsLibrary\CensusDataGrab\bin\Debug\CensusDataGrab.dll
+C:\Users\sennis\Documents\Visual Studio 2010\Projects\NewsLibrary\CensusDataGrab\bin\Debug\CensusDataGrab.pdb
+C:\Users\sennis\Documents\Visual Studio 2010\Projects\NewsLibrary\CensusDataGrab\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\sennis\Documents\Visual Studio 2010\Projects\NewsLibrary\CensusDataGrab\obj\Debug\CensusDataGrab.dll
+C:\Users\sennis\Documents\Visual Studio 2010\Projects\NewsLibrary\CensusDataGrab\obj\Debug\CensusDataGrab.pdb

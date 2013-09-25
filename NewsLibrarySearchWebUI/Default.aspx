@@ -101,7 +101,3 @@
     </asp:UpdatePanel>
     
 </asp:Content>
-
-<asp:Content ID="rightColumnContent" runat="server" ContentPlaceHolderID="SidebarContent">
-    
-</asp:Content>

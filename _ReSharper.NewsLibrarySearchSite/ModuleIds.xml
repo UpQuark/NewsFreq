@@ -1,4 +1,7 @@
 <Modules>
   <Module PersistentId="532E9CD2-4070-42C9-BE6E-44B95D2AF0E4" ModuleId="NewsLibrarySearchUI" />
   <Module PersistentId="1B295501-ACBB-44EE-B99B-7D03F44643E4" ModuleId="NewsLibrarySearch" />
+  <Module PersistentId="CEADB613-D517-496A-9A54-3862C1B5A5FD" ModuleId="CensusDataGrab" />
+  <Module PersistentId="FA8F4131-CA41-409E-8832-312215701C5E" ModuleId="WebApplication1" />
+  <Module PersistentId="C6129DB1-8CA5-4188-981B-B967BE5DE35D" ModuleId="WebApplication2" />
 </Modules>

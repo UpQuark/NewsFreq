@@ -2,33 +2,24 @@
   <RecentFiles>
     <File id="532E9CD2-4070-42C9-BE6E-44B95D2AF0E4/f:Default.aspx.designer.cs" caret="5859" fromTop="168" />
     <File id="1B295501-ACBB-44EE-B99B-7D03F44643E4/f:NlSearchTargets.cs" caret="571" fromTop="13" />
-    <File id="532E9CD2-4070-42C9-BE6E-44B95D2AF0E4/f:TestPage.aspx" caret="618" fromTop="15" />
     <File id="1B295501-ACBB-44EE-B99B-7D03F44643E4/d:Query/f:NlResultsList.cs" caret="0" fromTop="0" />
     <File id="1B295501-ACBB-44EE-B99B-7D03F44643E4/f:NlSearchData.cs" caret="977" fromTop="23" />
-    <File id="532E9CD2-4070-42C9-BE6E-44B95D2AF0E4/f:Default.aspx" caret="0" fromTop="0" />
-    <File id="532E9CD2-4070-42C9-BE6E-44B95D2AF0E4/f:Default.aspx.cs" caret="3510" fromTop="30" />
     <File id="532E9CD2-4070-42C9-BE6E-44B95D2AF0E4/d:Styles/f:Site.css" caret="398" fromTop="0" />
-    <File id="532E9CD2-4070-42C9-BE6E-44B95D2AF0E4/f:NewsLibrary.aspx" caret="0" fromTop="0" />
-    <File id="1B295501-ACBB-44EE-B99B-7D03F44643E4/d:Query/f:NlQuery.cs" caret="698" fromTop="19" />
-    <File id="1B295501-ACBB-44EE-B99B-7D03F44643E4/f:NlAdvancedSearch.cs" caret="1054" fromTop="0" />
-    <File id="1B295501-ACBB-44EE-B99B-7D03F44643E4/f:NlSearchBody.cs" caret="1133" fromTop="17" />
-    <File id="532E9CD2-4070-42C9-BE6E-44B95D2AF0E4/f:NewsLibrary.aspx.cs" caret="411" fromTop="15" />
-    <File id="532E9CD2-4070-42C9-BE6E-44B95D2AF0E4/d:Scripts/f:NlSearchScripts.js" caret="764" fromTop="25" />
+    <File id="1B295501-ACBB-44EE-B99B-7D03F44643E4/f:NlSearchBody.cs" caret="115" fromTop="4" />
+    <File id="532E9CD2-4070-42C9-BE6E-44B95D2AF0E4/f:NewsLibrary.aspx.cs" caret="372" fromTop="11" />
+    <File id="532E9CD2-4070-42C9-BE6E-44B95D2AF0E4/d:Scripts/f:NlSearchScripts.js" caret="2022" fromTop="33" />
+    <File id="1B295501-ACBB-44EE-B99B-7D03F44643E4/f:NlAdvancedSearch.cs" caret="743" fromTop="19" />
+    <File id="532E9CD2-4070-42C9-BE6E-44B95D2AF0E4/f:Site.Master" caret="555" fromTop="12" />
+    <File id="1B295501-ACBB-44EE-B99B-7D03F44643E4/d:Query/f:NlQuery.cs" caret="704" fromTop="24" />
+    <File id="532E9CD2-4070-42C9-BE6E-44B95D2AF0E4/f:Default.aspx.cs" caret="619" fromTop="0" />
+    <File id="532E9CD2-4070-42C9-BE6E-44B95D2AF0E4/f:Default.aspx" caret="0" fromTop="0" />
+    <File id="532E9CD2-4070-42C9-BE6E-44B95D2AF0E4/f:NewsLibrary.aspx" caret="380" fromTop="5" />
   </RecentFiles>
   <RecentEdits>
-    <File id="532E9CD2-4070-42C9-BE6E-44B95D2AF0E4/d:Scripts/f:NlSearchScripts.js" caret="1044" fromTop="12" />
-    <File id="532E9CD2-4070-42C9-BE6E-44B95D2AF0E4/d:Scripts/f:NlSearchScripts.js" caret="1216" fromTop="30" />
-    <File id="532E9CD2-4070-42C9-BE6E-44B95D2AF0E4/d:Scripts/f:NlSearchScripts.js" caret="1044" fromTop="18" />
-    <File id="532E9CD2-4070-42C9-BE6E-44B95D2AF0E4/d:Scripts/f:NlSearchScripts.js" caret="389" fromTop="12" />
-    <File id="532E9CD2-4070-42C9-BE6E-44B95D2AF0E4/d:Scripts/f:NlSearchScripts.js" caret="1058" fromTop="37" />
-    <File id="532E9CD2-4070-42C9-BE6E-44B95D2AF0E4/d:Scripts/f:NlSearchScripts.js" caret="1044" fromTop="25" />
-    <File id="532E9CD2-4070-42C9-BE6E-44B95D2AF0E4/d:Scripts/f:NlSearchScripts.js" caret="390" fromTop="23" />
-    <File id="532E9CD2-4070-42C9-BE6E-44B95D2AF0E4/d:Scripts/f:NlSearchScripts.js" caret="383" fromTop="11" />
-    <File id="532E9CD2-4070-42C9-BE6E-44B95D2AF0E4/f:NewsLibrary.aspx.cs" caret="1217" fromTop="38" />
     <File id="532E9CD2-4070-42C9-BE6E-44B95D2AF0E4/f:NewsLibrary.aspx.cs" caret="397" fromTop="15" />
     <File id="1B295501-ACBB-44EE-B99B-7D03F44643E4/f:NlAdvancedSearch.cs" caret="1320" fromTop="24" />
     <File id="1B295501-ACBB-44EE-B99B-7D03F44643E4/f:NlAdvancedSearch.cs" caret="2031" fromTop="12" />
-    <File id="1B295501-ACBB-44EE-B99B-7D03F44643E4/f:NlAdvancedSearch.cs" caret="5514" fromTop="23" />
+    <File id="1B295501-ACBB-44EE-B99B-7D03F44643E4/f:NlAdvancedSearch.cs" caret="5516" fromTop="23" />
     <File id="1B295501-ACBB-44EE-B99B-7D03F44643E4/f:NlAdvancedSearch.cs" caret="1054" fromTop="10" />
     <File id="1B295501-ACBB-44EE-B99B-7D03F44643E4/f:NlAdvancedSearch.cs" caret="1984" fromTop="14" />
     <File id="1B295501-ACBB-44EE-B99B-7D03F44643E4/f:NlAdvancedSearch.cs" caret="1054" fromTop="30" />
@@ -42,9 +33,18 @@
     <File id="1B295501-ACBB-44EE-B99B-7D03F44643E4/f:NlSearchBody.cs" caret="372" fromTop="22" />
     <File id="1B295501-ACBB-44EE-B99B-7D03F44643E4/f:NlSearchBody.cs" caret="205" fromTop="8" />
     <File id="1B295501-ACBB-44EE-B99B-7D03F44643E4/f:NlSearchBody.cs" caret="1115" fromTop="15" />
-    <File id="532E9CD2-4070-42C9-BE6E-44B95D2AF0E4/d:Scripts/f:NlSearchScripts.js" caret="1044" fromTop="25" />
-    <File id="532E9CD2-4070-42C9-BE6E-44B95D2AF0E4/d:Scripts/f:NlSearchScripts.js" caret="1044" fromTop="37" />
-    <File id="532E9CD2-4070-42C9-BE6E-44B95D2AF0E4/d:Scripts/f:NlSearchScripts.js" caret="1044" fromTop="33" />
-    <File id="532E9CD2-4070-42C9-BE6E-44B95D2AF0E4/d:Scripts/f:NlSearchScripts.js" caret="380" fromTop="17" />
+    <File id="532E9CD2-4070-42C9-BE6E-44B95D2AF0E4/d:Scripts/f:NlSearchScripts.js" caret="1677" fromTop="25" />
+    <File id="532E9CD2-4070-42C9-BE6E-44B95D2AF0E4/d:Scripts/f:NlSearchScripts.js" caret="1677" fromTop="37" />
+    <File id="532E9CD2-4070-42C9-BE6E-44B95D2AF0E4/d:Scripts/f:NlSearchScripts.js" caret="80" fromTop="3" />
+    <File id="532E9CD2-4070-42C9-BE6E-44B95D2AF0E4/d:Scripts/f:NlSearchScripts.js" caret="2279" fromTop="16" />
+    <File id="532E9CD2-4070-42C9-BE6E-44B95D2AF0E4/f:Site.Master" caret="891" fromTop="18" />
+    <File id="1B295501-ACBB-44EE-B99B-7D03F44643E4/f:NlAdvancedSearch.cs" caret="1783" fromTop="32" />
+    <File id="1B295501-ACBB-44EE-B99B-7D03F44643E4/f:NlAdvancedSearch.cs" caret="3902" fromTop="24" />
+    <File id="532E9CD2-4070-42C9-BE6E-44B95D2AF0E4/d:Scripts/f:NlSearchScripts.js" caret="199" fromTop="9" />
+    <File id="532E9CD2-4070-42C9-BE6E-44B95D2AF0E4/d:Scripts/f:NlSearchScripts.js" caret="1644" fromTop="25" />
+    <File id="532E9CD2-4070-42C9-BE6E-44B95D2AF0E4/d:Scripts/f:NlSearchScripts.js" caret="1366" fromTop="17" />
+    <File id="532E9CD2-4070-42C9-BE6E-44B95D2AF0E4/d:Scripts/f:NlSearchScripts.js" caret="438" fromTop="12" />
+    <File id="1B295501-ACBB-44EE-B99B-7D03F44643E4/d:Query/f:NlQuery.cs" caret="1229" fromTop="19" />
+    <File id="1B295501-ACBB-44EE-B99B-7D03F44643E4/d:Query/f:NlQuery.cs" caret="704" fromTop="19" />
   </RecentEdits>
 </RecentFiles>

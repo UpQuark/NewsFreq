@@ -8,12 +8,13 @@ using System.Text.RegularExpressions;
 
 namespace NewsLibrarySearch.API
 {
-    internal class NlQuery
+    public class NlQuery
     {
         #region Constants
 
-        private readonly Uri _nlUriBase = new Uri("http://nl.newsbank.com/nl-search/we/Archives");
-        private readonly Uri _nlUriStem = new Uri("/?s_siteloc=NL2&p_queryname=4000&p_action=search&p_product=NewsLibrary&p_theme=newslibrary2&s_search_type=customized&d_sources=location&d_place=United%20States&p_nbid=&p_field_psudo-sort-0=psudo-sort&f_multi=&p_multi=&p_widesearch=smart&p_sort=YMD_date%3aD&p_maxdocs=200&p_perpage=1");
+        private const string NlUriBase = "http://nl.newsbank.com/nl-search/we/Archives";
+
+        private const string NlUriStem = "/?s_siteloc=NL2&p_queryname=4000&p_action=search&p_product=NewsLibrary&p_theme=newslibrary2&s_search_type=customized&d_sources=location&d_place=United%20States&p_nbid=&p_field_psudo-sort-0=psudo-sort&f_multi=&p_multi=&p_widesearch=smart&p_sort=YMD_date%3aD&p_maxdocs=200&p_perpage=1";
 
         #endregion
 
@@ -97,8 +98,8 @@ namespace NewsLibrarySearch.API
         {
             return new Uri
                 (
-                _nlUriBase
-                + _nlUriStem.ToString()
+                NlUriBase
+                + NlUriStem
                 + "&p_text_base-0="
                 + SearchString
                 + "&p_text_base-0="

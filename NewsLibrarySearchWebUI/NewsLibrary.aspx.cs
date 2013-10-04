@@ -6,6 +6,7 @@ using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using NewsLibrarySearch;
+using NewsLibrarySearch.API;
 
 namespace NewsLibrarySearchUI
 {
@@ -16,25 +17,10 @@ namespace NewsLibrarySearchUI
 
         }
 
-        public static NlSearchData MakeRequest(DateTime dateFrom, DateTime dateTo, string searchTerm, string fieldTarget, DateTime now)
+        [WebMethod]
+        public static Object Query(DateTime dateFrom, DateTime dateTo, String dateString, String searchString, String searchTarget)
         {
-            NlAdvancedSearch search = new NlAdvancedSearch();
-
-            string dateString = dateFrom.ToString("MMMM dd, yyyy") + " to " + dateTo.ToString("MMMM dd, yyyy");
-
-            //Create search result to populate label
-            NlSearchData s = new NlSearchData
-            {
-                DateFrom = dateFrom,
-                DateTo = dateTo,
-                SearchTerm = searchTerm,
-                DateString = dateString,
-                FieldTarget = NlSearchTargets.Key(fieldTarget),
-                Count = search.SendSearchRequest(dateString, searchTerm, fieldTarget),
-                TimeofQuery = now,
-            };
-
-            return s;
+            return new NlQuery(dateFrom, dateTo, dateString, searchString, searchTarget, DateTime.Now);
         }
     }
 }

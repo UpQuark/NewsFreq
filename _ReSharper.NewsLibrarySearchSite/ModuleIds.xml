@@ -1,4 +1,6 @@
 <Modules>
   <Module PersistentId="532E9CD2-4070-42C9-BE6E-44B95D2AF0E4" ModuleId="DataNervesUI" />
   <Module PersistentId="1B295501-ACBB-44EE-B99B-7D03F44643E4" ModuleId="NewsLibrarySearch" />
+  <Module PersistentId="4D36F963-C806-48C2-B82D-D96DDD22B121" ModuleId="DataNervesUIMVC_1" />
+  <Module PersistentId="E532E55C-8AB1-42F4-92DE-AF80229EC474" ModuleId="DataNervesUI_1" />
 </Modules>

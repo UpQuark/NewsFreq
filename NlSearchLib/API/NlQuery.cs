@@ -18,21 +18,44 @@ namespace NewsLibrarySearch.API
 
         #endregion
 
+        #region Fields
+
+        private int _count = -1;
+        #endregion
+
+
         #region Properties
 
-        protected DateTime DateFrom { get; private set; }
-        protected DateTime DateTo { get; private set; }
-        protected String DateString { get; private set; }
-        protected String SearchString { get; private set; }
-        protected String SearchTarget { get; private set; }
-        protected int Count { get; private set; }
-        protected DateTime CreatedDate { get; private set; }
+        public DateTime DateFrom { get; set; }
+        public DateTime DateTo { get; set; }
+        public String DateString { get; set; }
+        public String SearchString { get; set; }
+        public String SearchTarget { get; set; }
+        public int Count
+        {
+            get
+            {
+                if (_count == -1)
+                {
+                    SendQuery();
+                }
+                return _count;
+            }
+            private set { _count = value; }
+        }
+
+        public DateTime CreatedDate { get; private set; }
 
         #endregion
 
         #region Constructors
 
-        public NlQuery(DateTime dateFrom, DateTime dateTo, String dateString, String searchString, String searchTarget, DateTime createdDate)
+        public NlQuery()
+        {
+            
+        }
+
+        public NlQuery(DateTime dateFrom, DateTime dateTo, String dateString, String searchString, String searchTarget)
         {
             DateFrom = dateFrom;
             DateTo = dateTo;
@@ -40,8 +63,20 @@ namespace NewsLibrarySearch.API
             SearchString = searchString;
             SearchTarget = searchTarget;
             Count = Send();
-            CreatedDate = createdDate;
+            CreatedDate = DateTime.Now;
         }
+
+
+        #region Public Methods
+
+        public void SendQuery()
+        {
+            Count = Send();
+        }
+
+        #endregion
+
+
 
         #endregion
 
@@ -50,7 +85,7 @@ namespace NewsLibrarySearch.API
         /// <summary>
         ///  Send newslibrary query
         /// </summary>
-        public int Send()
+        protected int Send()
         {
             HttpWebResponse response;
             var searchResultCount = 0;

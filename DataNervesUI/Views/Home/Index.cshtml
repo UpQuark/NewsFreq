@@ -21,15 +21,18 @@
     @using (Html.BeginForm("Search", "Home", FormMethod.Get))
     {
         <div><span>Enter search term or terms. Boolean operators are supported</span><br/>
-            @Html.TextBoxFor(m => m.SearchString, new { @placeholder = "Search terms" }) <br/>
+            @Html.TextBoxFor(m => m.SearchString, new { @placeholder = "Search terms" })
+            <br/>
 
             <span> Enter date from and date to </span><br/>
-            @Html.TextBoxFor(m => m.DateFrom, new { @placeholder = "", @class = "DatePicker" }) <span>&nbsp; to &nbsp;</span>
-            @Html.TextBoxFor(m => m.DateTo, new { @placeholder = "", @class = "DatePicker" })
+            @Html.TextBox(" ", Model.DateFrom != DateTime.MinValue ? Model.DateFrom.ToString("dd MM yyyy") : " ", new {@class = "DatePicker" })
+            <span>&nbsp; to &nbsp;</span>   
+            @Html.TextBox(" ", Model.DateTo != DateTime.MinValue ? Model.DateTo.ToString("dd MM yyyy") : " ", new {@class = "DatePicker" })
+
             <br/>
     
             <span> Choose search target</span><br/>
-            @*Html.DropDownListFor(m => m.SearchTargetId, new SelectList(Model.SearchTargets, "Value", "Text"))*@
+            @Html.DropDownListFor(m => m.SearchTargetId, Model.SearchTargets)
 
             <input type="submit" value="Search" />
         </div>

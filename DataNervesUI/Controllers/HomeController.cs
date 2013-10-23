@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using DataNervesUIMVC.Models;
 
 namespace DataNervesUIMVC.Controllers
 {
@@ -12,7 +13,24 @@ namespace DataNervesUIMVC.Controllers
         {
             ViewBag.Message = "";
 
-            return View();
+            var li = new List<litem>();
+            li.Add(new litem
+            {
+                Id = 6,
+                Name = "There"
+            }
+            );
+
+            var queryBase = new QueryModel
+            {
+                _list = li,
+               // DateFrom = null,
+               // DateTo = null
+            
+            };
+
+
+            return View(queryBase);
         }
 
         public ActionResult Search()

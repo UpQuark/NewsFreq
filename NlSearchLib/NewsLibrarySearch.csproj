@@ -42,15 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="API\NlQuery.cs" />
-    <Compile Include="API\NlWeb.cs" />
-    <Compile Include="Query\NlQuery.cs" />
-    <Compile Include="NlSearchData.cs" />
-    <Compile Include="NlSearchTargets.cs" />
-    <Compile Include="NlSearchBody.cs" />
-    <Compile Include="NlAdvancedSearch.cs" />
-    <Compile Include="NlBasicSearch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Query\NlResultsList.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -13,7 +13,7 @@ function buildUrl(query) {
 
     var idCount = geoIDs.Count - 1;
 
-    var stem = "http://api.census.gov/data/";`
+    var stem = "http://api.census.gov/data/";
 
     var url = Stem + year + "/" + dataSet + "?" + "key=" + key + "&get=";
 }

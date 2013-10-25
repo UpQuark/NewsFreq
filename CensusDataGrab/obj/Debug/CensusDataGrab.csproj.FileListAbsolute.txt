@@ -3,3 +3,8 @@ C:\Users\sennis\Documents\Visual Studio 2010\Projects\NewsLibrary\CensusDataGrab
 C:\Users\sennis\Documents\Visual Studio 2010\Projects\NewsLibrary\CensusDataGrab\obj\Debug\ResolveAssemblyReference.cache
 C:\Users\sennis\Documents\Visual Studio 2010\Projects\NewsLibrary\CensusDataGrab\obj\Debug\CensusDataGrab.dll
 C:\Users\sennis\Documents\Visual Studio 2010\Projects\NewsLibrary\CensusDataGrab\obj\Debug\CensusDataGrab.pdb
+C:\Users\Sam\Documents\Visual Studio 2010\Projects\newslibrary\CensusDataGrab\bin\Debug\CensusDataGrab.dll
+C:\Users\Sam\Documents\Visual Studio 2010\Projects\newslibrary\CensusDataGrab\bin\Debug\CensusDataGrab.pdb
+C:\Users\Sam\Documents\Visual Studio 2010\Projects\newslibrary\CensusDataGrab\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Sam\Documents\Visual Studio 2010\Projects\newslibrary\CensusDataGrab\obj\Debug\CensusDataGrab.dll
+C:\Users\Sam\Documents\Visual Studio 2010\Projects\newslibrary\CensusDataGrab\obj\Debug\CensusDataGrab.pdb

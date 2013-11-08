@@ -7,7 +7,7 @@ using NewsLibrarySearch;
 
 namespace DataNervesUIMVC.Models
 {
-    public class litem
+    public class ListItem
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -17,8 +17,7 @@ namespace DataNervesUIMVC.Models
     {
 
 
-        public List<litem> _list;
-
+        public List<ListItem> _list;
         
         public DateTime DateFrom { get; set; }
         public DateTime DateTo { get; set; }

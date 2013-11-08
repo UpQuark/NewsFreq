@@ -13,11 +13,11 @@ namespace DataNervesUIMVC.Controllers
         {
             ViewBag.Message = "";
 
-            var li = new List<litem>();
-            li.Add(new litem
+            var li = new List<ListItem>();
+            li.Add(new ListItem
             {
                 Id = 6,
-                Name = "There"
+                Name = ""
             }
             );
 
@@ -35,6 +35,10 @@ namespace DataNervesUIMVC.Controllers
 
         public ActionResult Search()
         {
+
+
+
+
             ViewBag.Message = "";
 
             return View("Index");

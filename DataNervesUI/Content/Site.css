@@ -663,3 +663,12 @@ tr.pager td {
             margin: 0;
         }
 }
+
+    /* newSearch forms
+    ----------------------------------------------------------*/
+    #NewsLibrarySearchForm {
+        border: 0px;
+    }
+    #NewsLibrarySearchForm td {
+        padding-bottom: 8px;
+    }

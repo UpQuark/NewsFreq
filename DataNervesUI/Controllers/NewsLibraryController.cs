@@ -1,23 +1,18 @@
-﻿using System;
-using System.Net.Http;
-using System.Web.Http;
+﻿using System.Web.Http;
 using NewsLibrarySearch.API;
 
-namespace DataNervesUIMVC.Controllers
+namespace DataNervesUI.Controllers
 {
     public class NewsLibraryController : ApiController
     {
-        public int GetCount(string id)
+        public int GetCount(NlQuery query)
         {
-            var queryValues = Request.RequestUri.ParseQueryString();
-            var query = new NlQuery
-            {
-                DateFrom = DateTime.Parse(queryValues[0]),
-                DateTo = DateTime.Parse(queryValues[1]),
-                DateString = queryValues[2],
-                SearchString = queryValues[3],
-                SearchTarget = queryValues[4],
-            };
+            query.SendQuery();
+            return query.Count;
+        }
+
+        public int PostCount(NlQuery query)
+        {
             query.SendQuery();
             return query.Count;
         }

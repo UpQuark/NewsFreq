@@ -18,3 +18,8 @@ C:\Users\sennis\Documents\Visual Studio 2010\Projects\NewsLibrary\NlSearchLib\bi
 C:\Users\sennis\Documents\Visual Studio 2010\Projects\NewsLibrary\NlSearchLib\obj\Debug\ResolveAssemblyReference.cache
 C:\Users\sennis\Documents\Visual Studio 2010\Projects\NewsLibrary\NlSearchLib\obj\Debug\NewsLibrarySearch.dll
 C:\Users\sennis\Documents\Visual Studio 2010\Projects\NewsLibrary\NlSearchLib\obj\Debug\NewsLibrarySearch.pdb
+C:\Users\sennis\Documents\NewsLibrary\NewsLibrary\NlSearchLib\bin\Debug\NewsLibrarySearch.dll
+C:\Users\sennis\Documents\NewsLibrary\NewsLibrary\NlSearchLib\bin\Debug\NewsLibrarySearch.pdb
+C:\Users\sennis\Documents\NewsLibrary\NewsLibrary\NlSearchLib\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\sennis\Documents\NewsLibrary\NewsLibrary\NlSearchLib\obj\Debug\NewsLibrarySearch.dll
+C:\Users\sennis\Documents\NewsLibrary\NewsLibrary\NlSearchLib\obj\Debug\NewsLibrarySearch.pdb

@@ -1,0 +1,94 @@
+﻿@using System.Web.Mvc
+@using System.Web.Mvc.Html
+@model DataNervesUIMVC.Models.QueryModel
+
+@{
+    ViewBag.Title = "NewsLibrary Search";
+}
+@section featured {
+
+        <div class="content-wrapper">
+            <hgroup class="title">
+                <h1>@ViewBag.Title</h1>
+                <h2>@ViewBag.Message</h2>
+            </hgroup>
+        </div>
+
+}
+
+<div>
+        <table id="NewsLibrarySearchForm">
+        <tr>
+            <td>
+                <span>
+                    Enter search term or terms. Boolean operators are supported
+                </span><br/>
+                <input type="text" id="SearchTerms" placeholder="Search Terms"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span> Enter date from and date to </span><br/>
+                <input type="text" id="DateFrom" class = "DatePicker" placeholder = "mm/dd/yyyy"/>
+                <span>&nbsp; to &nbsp;</span>  
+                <input type="text" id="DateTo" class = "DatePicker" placeholder = "mm/dd/yyyy"/>
+            </td>
+        </tr>
+            <tr>
+                <td>
+                    <span> Choose search target</span><br/>
+                    <select>
+                        <option value="">None</option>
+                    </select>
+                    <br/><br/>
+                    <input type="button" value="Search" id="SearchButton" onclick="newsSearch()" />
+                </td>
+            </tr>
+            <tr><td id="dataField"></td></tr>
+        </table>
+</div>
+
+
+<script type="text/javascript">
+    function newsSearch() {
+        var params = new Object();
+        params.DateFrom = $('#DateFrom').val();
+        params.DateTo = $('#DateTo').val();
+        params.DateString = $('#DateFrom').val() + ' to ' + $('#DateTo').val();
+        params.SearchString = $('#SearchTerms').val();
+        params.SearchTarget = '';
+
+        var paramString = {
+            DateFrom: params.DateFrom,
+            DateTo: params.DateTo,
+            DateString: params.DateString,
+            SearchString: params.SearchString,
+            SearchTarget: params.SearchTarget
+        };
+
+        $.ajax({
+            url: 'api/NewsLibrary',
+            type: "POST",
+            data: paramString,
+            dataType: "json",
+            success: function(data) {
+                $('#dataField').append('<tr>' + '<td>' + params.SearchString +'</td>' + '<td>' + params.DateString +'</td>'+ '<td>' + JSON.stringify(data) + '</td>' + '</tr>');
+            }
+        });
+    }
+</script>
+
+<br/>
+
+    <script type="text/javascript">
+
+    </script>
+
+@section Scripts{
+    @*@Scripts.Render("~/bundles/jqueryval")*@
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".DatePicker").datepicker();
+        });
+    </script>
+}

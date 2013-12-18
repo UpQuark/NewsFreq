@@ -14,7 +14,7 @@ namespace NewsLibrarySearch.API
 
         private const string NlUriBase = "http://nl.newsbank.com/nl-search/we/Archives";
 
-        private const string NlUriStem = "/?s_siteloc=NL2&p_queryname=4000&p_action=search&p_product=NewsLibrary&p_theme=newslibrary2&s_search_type=customized&d_sources=location&d_place=United%20States&p_nbid=&p_field_psudo-sort-0=psudo-sort&f_multi=&p_multi=&p_widesearch=smart&p_sort=YMD_date%3aD&p_maxdocs=200&p_perpage=1";
+        private const string NlUriStem = "/?s_siteloc=NL2&p_queryname=4000&p_action=search&p_product=NewsLibrary&p_theme=newslibrary2&s_search_type=customized&d_sources=location&d_place=United+States&p_nbid=&p_field_psudo-sort-0=psudo-sort&f_multi=&p_multi=NewsLibraryAll&p_widesearch=smart&p_sort=YMD_date%3aD&p_maxdocs=200&p_perpage=1";
 
         #endregion
 
@@ -22,7 +22,6 @@ namespace NewsLibrarySearch.API
 
         private int _count = -1;
         #endregion
-
 
         #region Properties
 
@@ -52,7 +51,7 @@ namespace NewsLibrarySearch.API
 
         public NlQuery()
         {
-            
+            CreatedDate = DateTime.Now;
         }
 
         public NlQuery(DateTime dateFrom, DateTime dateTo, String dateString, String searchString, String searchTarget)
@@ -83,10 +82,12 @@ namespace NewsLibrarySearch.API
         #region Protected Methods
 
         /// <summary>
-        ///  Send newslibrary query
+        ///  Send newslibrary query to NewsLibrary frontend via http GET request
         /// </summary>
+        /// <returns>Returns number of results found for the given search criteria</returns>
         protected int Send()
         {
+
             HttpWebResponse response;
             var searchResultCount = 0;
             if (SendSearchRequest(out response))
@@ -103,7 +104,11 @@ namespace NewsLibrarySearch.API
             return searchResultCount;
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="response"></param>
+        /// <returns></returns>
         protected bool SendSearchRequest(out HttpWebResponse response)
         {
             response = null;
@@ -129,6 +134,10 @@ namespace NewsLibrarySearch.API
             return true;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         private Uri CreateUri()
         {
             return new Uri
@@ -137,23 +146,27 @@ namespace NewsLibrarySearch.API
                 + NlUriStem
                 + "&p_text_base-0="
                 + SearchString
-                + "&p_text_base-0="
-                + SearchString
                 + "&p_field_base-0="
-                + "&p_bool_base-1=AND&p_text_base-1=&p_field_base-1=Section&p_bool_base-2=AND&p_text_base-2="
+                + "&p_bool_base-1=AND&p_text_base-1=&p_field_base-1=&p_bool_base-2=AND&p_text_base-2="
                 + "&p_field_base-2="
-                + DateString
-                + "&p_field_YMD_date-0=YMD_date&p_params_YMD_date-0=date%3AB%2CE&p_field_YMD_date-3=YMD_date&p_params_YMD_date-3=date%3AB%2CE&Search.x=18&Search.y=18"
+                //+ SearchTarget
+                + "&p_text_YMD_date-0=" + DateString.Replace(@"/", "%2F") 
+                + "&p_field_YMD_date-0=" 
+                + "YMD_date"
+                + "&p_params_YMD_date-0=" + "date%3AB%2C"
+                + "&p_field_YMD_date-3=YMD_date&p_params_YMD_date-3=date%3AB%2CE&Search.x=18&Search.y=18&Search=Search"
                 );
         }
+
         #endregion
 
-        #region private methods
+        #region Private methods
 
+        // Regex for locating label displaying results count
         private readonly Regex _regexResultsSpan =
             new Regex("(<span class=\"basic-text-white\">)(Results: )([0-9]*)( - )([0-9]*)( of )([0-9]*)(</span>)");
 
-        // Regex for finding total results in results phrase
+        // Regex for locating total results in results label
         private readonly Regex _regexResultsMaxValue = new Regex(@"(?<=(\D|^))\d+(?=\D*$)");
 
         /// <summary>

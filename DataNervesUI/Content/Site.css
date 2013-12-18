@@ -7,7 +7,7 @@
 body {
     background-color: #fff;
     border-top: solid 10px #000;
-    color: #787878;
+    color: #676767;
     font-size: .80em;
     font-family: "Century Gothic", Verdana, Helvetica, Sans-Serif;
     margin: 0;
@@ -60,7 +60,7 @@ mark {
 
 h1, h2, h3,
 h4, h5, h6 {
-    color: #000;
+    color: #2b2b2b;
     margin-bottom: 0;
     padding-bottom: 0;
 }
@@ -120,7 +120,7 @@ footer {
 /* site title
 ----------------------------------------------------------*/
 .site-title {
-    color: #c8c8c8;
+    color: #a4a4a4;
     font-family: Rockwell, Consolas, "Courier New", Courier, monospace;
     font-size: 2.3em;
     margin: 0;
@@ -377,6 +377,7 @@ textarea {
     
 .DatePicker {
     width: 80px;
+    color: #cccccc;
 }
 
 /* info and errors */

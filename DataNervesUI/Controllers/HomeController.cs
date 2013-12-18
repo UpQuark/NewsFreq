@@ -1,47 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 using System.Web.Mvc;
 using DataNervesUIMVC.Models;
 
-namespace DataNervesUIMVC.Controllers
+namespace DataNervesUI.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        public ActionResult NewsLibrarySearch()
         {
-            ViewBag.Message = "";
-
-            var li = new List<ListItem>();
-            li.Add(new ListItem
-            {
-                Id = 6,
-                Name = ""
-            }
-            );
-
-            var queryBase = new QueryModel
-            {
-                _list = li,
-               // DateFrom = null,
-               // DateTo = null
-            
-            };
-
-
-            return View(queryBase);
-        }
-
-        public ActionResult Search()
-        {
-
-
-
-
-            ViewBag.Message = "";
-
-            return View("Index");
+            return View("NewsLibrarySearch");
         }
 
         public ActionResult About()

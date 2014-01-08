@@ -23,7 +23,7 @@ function newsSearch() {
         SearchTarget: ''
     };
 
-    $('#NewsDataTable').show();
+    $('#NewsDataTable').show(); //Table starts hidden when unpopulated
     
     // Send query to API
     $.ajax({
@@ -43,6 +43,7 @@ function newsSearch() {
     });
 }
 
+// Draw table in DOM from results array
 function drawTable(results) {
     var tblBody = "";
     $.each(results, function (r, v) {
@@ -56,6 +57,7 @@ function drawTable(results) {
     $("#NewsDataTableContent").html(tblBody);
 }
 
+// Converts JSON date notation to mm/dd/yy string
 function getDateString(jsonDate) {
     var date = new Date(parseInt(jsonDate.substr(6)));
     return (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear();

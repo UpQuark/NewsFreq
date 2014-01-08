@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Web.Mvc;
-using DataNervesUIMVC.Models;
+using DataNervesUI.Models;
+using NewsLibrarySearch.API;
 
 namespace DataNervesUI.Controllers
 {
@@ -8,19 +9,16 @@ namespace DataNervesUI.Controllers
     {
         public ActionResult NewsLibrarySearch()
         {
-            return View("NewsLibrarySearch");
-        }
-
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your app description page.";
-
-            return View();
+            var newsModel = new NewsDataModel()
+                                {
+                                    Queries = new List<NlQuery>()
+                                };
+            return View("NewsLibrarySearch", newsModel);
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "";
 
             return View();
         }

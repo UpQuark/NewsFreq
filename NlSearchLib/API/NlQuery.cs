@@ -1,35 +1,56 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace NewsLibrarySearch.API
 {
+    /// <summary>
+    /// News Library query class. Encapsulates both the send and response data of a query in a single wrapper
+    /// </summary>
     public class NlQuery
     {
         #region Constants
 
+        // Base archive search URL
         private const string NlUriBase = "http://nl.newsbank.com/nl-search/we/Archives";
 
+        // Static variables
         private const string NlUriStem = "/?s_siteloc=NL2&p_queryname=4000&p_action=search&p_product=NewsLibrary&p_theme=newslibrary2&s_search_type=customized&d_sources=location&d_place=United+States&p_nbid=&p_field_psudo-sort-0=psudo-sort&f_multi=&p_multi=NewsLibraryAll&p_widesearch=smart&p_sort=YMD_date%3aD&p_maxdocs=200&p_perpage=1";
 
         #endregion
 
         #region Fields
 
+        // Flags _count as uninitialized
         private int _count = -1;
+
+        private string _dateString = "";
+
         #endregion
 
         #region Properties
 
+        // Search criteria sent as query
         public DateTime DateFrom { get; set; }
         public DateTime DateTo { get; set; }
-        public String DateString { get; set; }
+        public String DateString { 
+            get
+            {
+                if (_dateString == "")
+                {
+                    _dateString = DateFrom + " to " + DateTo;
+                    return _dateString;
+                }
+                return _dateString;
+            } 
+            private set { _dateString = value; }
+
+        }
         public String SearchString { get; set; }
         public String SearchTarget { get; set; }
+
+        // Count recieved from response
         public int Count
         {
             get
@@ -43,39 +64,67 @@ namespace NewsLibrarySearch.API
             private set { _count = value; }
         }
 
+        // Created Date metadata for sorting.
         public DateTime CreatedDate { get; private set; }
 
         #endregion
 
         #region Constructors
 
+        // Empty constructor.
         public NlQuery()
         {
             CreatedDate = DateTime.Now;
         }
 
-        public NlQuery(DateTime dateFrom, DateTime dateTo, String dateString, String searchString, String searchTarget)
+        // Search constructor, sends query from passed search criteria
+        public NlQuery(DateTime dateFrom, DateTime dateTo, String searchString, String searchTarget)
         {
             DateFrom = dateFrom;
             DateTo = dateTo;
-            DateString = dateString;
             SearchString = searchString;
             SearchTarget = searchTarget;
-            Count = Send();
+            DateString = DateString;
             CreatedDate = DateTime.Now;
+            Count = Send();
+            
         }
 
-
-        #region Public Methods
-
-        public void SendQuery()
+        // Copy constructor
+        public NlQuery(DateTime dateFrom, DateTime dateTo, String searchString, String searchTarget, int count)
         {
-            Count = Send();
+            DateFrom = dateFrom;
+            DateTo = dateTo;
+            SearchString = searchString;
+            SearchTarget = searchTarget;
+            DateString = DateString;
+            CreatedDate = DateTime.Now;
+            Count = count;
+            
+        }
+
+        // Copy constructor
+        public NlQuery(NlQuery query)
+        {
+            DateFrom = query.DateFrom;
+            DateTo = query.DateTo;
+            DateString = DateString;
+            SearchString = query.SearchString;
+            SearchTarget = query.SearchTarget;
+            Count = query.Count;
+            CreatedDate = DateTime.Now;
         }
 
         #endregion
 
+        #region Public Methods
 
+        // Send search Data to retrieve count.
+        public void SendQuery()
+        {
+            DateString = DateString;
+            Count = Send();
+        }
 
         #endregion
 

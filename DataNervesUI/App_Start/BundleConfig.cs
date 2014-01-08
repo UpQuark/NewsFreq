@@ -18,6 +18,11 @@ namespace DataNervesUI
                         "~/Scripts/jquery.unobtrusive*",
                         "~/Scripts/jquery.validate*"));
 
+            bundles.Add(new ScriptBundle("~/bundles/newslib").Include(
+                    "~/Scripts/jquery-{version}.js",
+                    "~/Scripts/newslibrary.js"));
+
+            //<script type="text/javascript" src="@Url.Content("")"></script>
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(

@@ -5,7 +5,7 @@
 }
 
 body {
-    background-color: #fff;
+    background-color: #000;
     border-top: solid 10px #000;
     color: #676767;
     font-size: .80em;
@@ -102,6 +102,7 @@ h5, h6 {
     background-color: #efeeef;
     clear: both;
     padding-bottom: 35px;
+    padding-left: 4px;
 }
 
   
@@ -120,7 +121,7 @@ footer {
 /* site title
 ----------------------------------------------------------*/
 .site-title {
-    color: #a4a4a4;
+    color: #fefefe;
     font-family: Rockwell, Consolas, "Courier New", Courier, monospace;
     font-size: 2.3em;
     margin: 0;
@@ -128,7 +129,7 @@ footer {
 
 .site-title a, .site-title a:hover, .site-title a:active {
     background: none;
-    color: #c8c8c8;
+    color: #fefefe;
     outline: none;
     text-decoration: none;
 }
@@ -152,12 +153,12 @@ ul#menu {
 
         ul#menu li a {
             background: none;
-            color: #999;
+            color: #fefefe;
             text-decoration: none;
         }
 
         ul#menu li a:hover {
-            color: #333;
+            color: #b3d7e0;
             text-decoration: none;
         }
 
@@ -260,7 +261,6 @@ input, textarea {
     font-size: 1.2em;
     margin: 5px 0 6px 0;
     padding: 5px;
-    width: 300px;
 }
 
 textarea {
@@ -364,11 +364,3 @@ tr.pager td {
     padding: 0 0.25em 0 0;
 }
 
-#NewsDataTable .tableHead
-{
-    font-weight: bold;
-}
-
-#NewsDataTable tr:nth-child(even) {
-    background-color: #b3d7e0;
-}

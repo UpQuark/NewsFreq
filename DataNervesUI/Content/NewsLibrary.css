@@ -1,0 +1,9 @@
+﻿#NewsDataTable .tableHead
+{
+    font-weight: bold;
+}
+
+#NewsDataTable tr:nth-child(even) {
+    background-color: #b3d7e0;
+}
+

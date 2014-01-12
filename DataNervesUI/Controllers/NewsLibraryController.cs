@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Web.Helpers;
 using System.Web.Http;
 using System.Web.Script.Serialization;
@@ -28,16 +29,18 @@ namespace DataNervesUI.Controllers
 
                     var queries = new List<NlQuery>();
 
-                    for (DateTime date = dateFrom; date < dateTo; date = date.AddMonths(1) )
-                    {
-                        var monthQuery = new NlQuery();
-                        monthQuery.SearchString = query.SearchString;
-                        monthQuery.DateFrom = date;
-                        monthQuery.DateTo = date.AddMonths(1).AddDays(-1);
-                        monthQuery.SendQuery();
-                        queries.Add(monthQuery);
-                    }
-
+                    Parallel.For(0, MonthsBetween(dateFrom, dateTo), i =>
+                                                                         {
+                                                                             var monthQuery = new NlQuery
+                                                                                                  {
+                                                                                                      SearchString = query.SearchString,
+                                                                                                      DateFrom = dateFrom.AddMonths(i-1),
+                                                                                                      DateTo = dateFrom.AddMonths(i)
+                                                                                                  };
+                                                                             monthQuery.SendQuery();
+                                                                             queries.Add(monthQuery);
+                                                                         });
+                    queries.Sort((a, b) => a.DateFrom.CompareTo(b.DateFrom));
                     var json = new JavaScriptSerializer().Serialize(queries);
                     return json;
 
@@ -49,6 +52,25 @@ namespace DataNervesUI.Controllers
                     return new JavaScriptSerializer().Serialize(query);
             }
             return new JavaScriptSerializer().Serialize(query);
+        }
+
+        /// <summary>
+        /// Calculates the number of months between two dates, inclusively with first and last
+        /// </summary>
+        /// <param name="startDate"></param>
+        /// <param name="endDate"></param>
+        /// <returns></returns>
+        private int MonthsBetween(DateTime startDate, DateTime endDate)
+        {
+            int monthsBetween = 0;
+            if (startDate.Month != endDate.Month && startDate.Year != endDate.Year)
+            {
+                for (DateTime date = startDate; date < endDate; date = date.AddMonths(1))
+                {
+                    monthsBetween++;
+                }
+            }
+            return monthsBetween;
         }
     }
 }

@@ -20,7 +20,8 @@ namespace DataNervesUI
 
             bundles.Add(new ScriptBundle("~/bundles/newslib").Include(
                     "~/Scripts/jquery-{version}.js",
-                    "~/Scripts/newslibrary.js"));
+                    "~/Scripts/newslibrary.js",
+                    "~/Scripts/chart.js"));
 
             //<script type="text/javascript" src="@Url.Content("")"></script>
             // Use the development version of Modernizr to develop with and learn from. Then, when you're

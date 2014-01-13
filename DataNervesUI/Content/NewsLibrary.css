@@ -1,9 +1,46 @@
-﻿#NewsDataTable .tableHead
+﻿#NewsDataTable .newsTableHead
 {
     font-weight: bold;
 }
 
 #NewsDataTable tr:nth-child(even) {
     background-color: #b3d7e0;
+    
 }
 
+#NewsDataTable {
+    display: none;
+    position: relative;
+}
+
+#NewsDataChart
+{
+    display: none;
+}
+
+#NewsSearchForm {
+    position: relative;
+    min-height: 360px;
+}
+
+#SpecialSearchRadioGroup {
+    position: absolute; top: 67px; left: 250px;
+}
+
+#NewsDataChartWrapper {
+    position: absolute;
+    top: -34px;
+    left: 422px;
+}
+
+.modal {
+    display:    none;
+}
+
+body.loading {
+    overflow: hidden;   
+}
+
+body.loading .modal {
+    display: inline;
+}

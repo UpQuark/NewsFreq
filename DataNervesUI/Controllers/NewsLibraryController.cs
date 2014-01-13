@@ -15,47 +15,57 @@ namespace DataNervesUI.Controllers
         /// Sends special searches to backend based on searchType
         /// </summary>
         /// <param name="queryModel">Query request data</param>
-        /// <param name="searchType">String identifier of special search type</param>
         /// <returns>Query object's count</returns>
         public string PostCount(QueryModel queryModel)
         {
             var query = queryModel.Query;
+
+            List<NlQuery> queries;
+            DateTime dateFrom;
+            DateTime dateTo;
+
             switch (queryModel.SearchType)
             {
-                // Search every month from the 1st to last day of that month. Ignore day variables
+                // Search every month from Month/StartDay to Month+1/StartDay-1
                 case "Monthly":
-                    var dateFrom = new DateTime(query.DateFrom.Year, query.DateFrom.Month, 1);
-                    var dateTo = query.DateTo.AddMonths(1).AddDays(-1);
+                    dateFrom = new DateTime(query.DateFrom.Year, query.DateFrom.Month, query.DateFrom.Day);
+                    dateTo = query.DateTo.AddMonths(1).AddDays(-1);
 
-                    var queries = new List<NlQuery>();
-
-                   /* for (DateTime date = dateFrom; date < dateTo; date = date.AddMonths(1) )
-                    {
-                        var monthQuery = new NlQuery();
-                        monthQuery.SearchString = query.SearchString;
-                        monthQuery.DateFrom = date;
-                        monthQuery.DateTo = date.AddMonths(1).AddDays(-1);
-                        monthQuery.SendQuery();
-                        queries.Add(monthQuery);
-                    }*/
+                    queries = new List<NlQuery>();
 
                     Parallel.For(0, MonthsBetween(dateFrom, dateTo), i =>
-                                                                         {
-                                                                             var monthQuery = new NlQuery
-                                                                                                  {
-                                                                                                      SearchString = query.SearchString,
-                                                                                                      DateFrom = dateFrom.AddMonths(i),
-                                                                                                      DateTo = dateFrom.AddMonths(i+1).AddDays(-1)
-                                                                                                  };
-                                                                             monthQuery.SendQuery();
-                                                                             queries.Add(monthQuery);
-                                                                         });
+                                                {
+                                                    var monthQuery = new NlQuery
+                                                                        {
+                                                                            SearchString = query.SearchString,
+                                                                            DateFrom = dateFrom.AddMonths(i),
+                                                                            DateTo = dateFrom.AddMonths(i+1).AddDays(-1)
+                                                                        };
+                                                    monthQuery.SendQuery();
+                                                    queries.Add(monthQuery);
+                                                });
                     queries.Sort((a, b) => a.DateFrom.CompareTo(b.DateFrom));
-                    var json = new JavaScriptSerializer().Serialize(queries);
-                    return json;
+                    return new JavaScriptSerializer().Serialize(queries);
+                    
+                // Search every year from year/month/day to year+1/month/day-1
+                case "Annual":
+                    dateFrom = new DateTime(query.DateFrom.Year, query.DateFrom.Month, query.DateFrom.Day);
+                    dateTo = query.DateTo.AddYears(1).AddDays(-1);
+                    queries = new List<NlQuery>();
 
-                case "Yearly":
-                    break;
+                     Parallel.For(0, YearsBetween(dateFrom, dateTo), i =>
+                                                {
+                                                    var yearQuery = new NlQuery
+                                                                        {
+                                                                            SearchString = query.SearchString,
+                                                                            DateFrom = dateFrom.AddYears(i),
+                                                                            DateTo = dateFrom.AddYears(i+1).AddDays(-1)
+                                                                        };
+                                                    yearQuery.SendQuery();
+                                                    queries.Add(yearQuery);
+                                                });
+                    queries.Sort((a, b) => a.DateFrom.CompareTo(b.DateFrom));
+                    return new JavaScriptSerializer().Serialize(queries);
 
                 case "None":
                     query.SendQuery();
@@ -79,8 +89,23 @@ namespace DataNervesUI.Controllers
                 {
                     monthsBetween++;
                 }
+                monthsBetween--;
             }
             return monthsBetween;
+        }
+
+        private int YearsBetween (DateTime startDate, DateTime endDate)
+        {
+            int yearsBetween = 0;
+            if (startDate.Year != endDate.Year)
+            {
+                for (DateTime date = startDate; date < endDate; date = date.AddYears(1))
+                {
+                    yearsBetween++;
+                }
+                yearsBetween--;
+            }
+            return yearsBetween;
         }
     }
 }

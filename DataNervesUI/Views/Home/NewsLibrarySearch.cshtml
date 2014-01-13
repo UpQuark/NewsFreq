@@ -14,7 +14,8 @@
         </div>
 }
 
-<div>
+
+<div id="NewsSearchForm">
     <table id="NewsLibrarySearchForm">
         <tr>
             <td>
@@ -26,58 +27,86 @@
         </tr>
         <tr>
             <td>
-                <span> Enter date from and date to </span><br/>
-                <input type="text" id="DateFrom" class = "DatePicker" placeholder = "mm/dd/yyyy"/>
+                <span> Enter date range: </span><br/>
+                <input type="text" id="DateFrom" class = "DatePicker" placeholder = "Start date"/>
                 <span>&nbsp; to &nbsp;</span>  
-                <input type="text" id="DateTo" class = "DatePicker" placeholder = "mm/dd/yyyy"/>
+                <input type="text" id="DateTo" class = "DatePicker" placeholder = "End date"/>
                 
             </td>
-            <td>
-                <input type="radio" name="specialSearches" id="Monthly"/> Monthly <br/>
-                <input type="radio" name="specialSearches" id="None"/> None <br/>
-            </td>
+            
         </tr>
         <tr>
             <td>
-            <!--
-                <span> Choose search target</span><br/>
-                <select>
-                    <option value="">None</option>
-                </select>
+                <!--
+                    <span> Choose search target</span><br/>
+                    <select>
+                        <option value="">None</option>
+                    </select>
                 
-                <br/><br/>
-                -->
+                    <br/><br/>
+                    -->
                 <input type="button" value="Search" id="SearchButton" onclick="newsSearch()" />
+                <div class="modal"><img src="http://i.imgur.com/RZPE8Wh.gif"/></div>
+                
             </td>
         </tr>
     </table>
+    
+    
+
+    <div id="SpecialSearchRadioGroup">
+        <span>Special search type:</span><br/>
+        <input type="radio" name="specialSearches" id="None" checked/> None <br/>
+        <input type="radio" name="specialSearches" id="Monthly"/> Monthly <br/>
+        <input type="radio" name="specialSearches" id="Annual"/> Annual <br/>
+    </div>
+    
+    <div id="NewsDataChartWrapper">
+        <canvas id="NewsDataChart" height="450" width="600" style="display:none" ></canvas>
+    </div>
+    
     <table id="NewsDataTable" style="display:none">
-            <tr class="tableHead">
-                <td>
-                    Search terms
-                </td>
-                <td>
-                    Date from
-                </td>
-                <td>
-                    Date to
-                </td>
-                <td>
-                    Number of articles
-                </td>
-            </tr>
-        <tbody id="NewsDataTableContent">
-            
-        </tbody>
-    </table>
+    <tr class="newsTableHead">
+        <td>
+            Search terms
+        </td>
+        <td>
+            Date from
+        </td>
+        <td>
+            Date to
+        </td>
+        <td>
+            Number of articles
+        </td>
+    </tr>
+    <tbody id="NewsDataTableContent">
+    </tbody>
+</table>
+<meta name = "viewport" content = "initial-scale = 1, user-scalable = no">
 </div>
 
-<br/>
+
+
+
 
 @section Scripts{
     <script type="text/javascript">
         $(document).ready(function () {
             $(".DatePicker").datepicker();
+        });
+
+        $body = $("body");
+
+        $(document).on({
+            ajaxStart: function () {
+                if (!$('#None').is(':checked')) {
+                    $body.addClass("loading");
+                }
+            },
+            ajaxStop: function () {
+                $body.removeClass("loading");
+            }
         });
     </script>
 }

@@ -22,5 +22,12 @@ namespace DataNervesUI.Controllers
 
             return View();
         }
+
+        public ActionResult Chart()
+        {
+            ViewBag.Message = "";
+
+            return View();
+        }
     }
 }

@@ -13,6 +13,9 @@ function newsSearch() {
     if ($('#Monthly').is(':checked')) { 
         specialSearchType = "Monthly";
     }
+    if ($('#Annual').is(':checked')) {
+        specialSearchType = "Annual";
+    }
 
     // Create params
     var params = {
@@ -23,7 +26,7 @@ function newsSearch() {
         SearchTarget: ''
     };
 
-    $('#NewsDataTable').show(); //Table starts hidden when unpopulated
+    
     
     // Send query to API
     $.ajax({
@@ -55,10 +58,45 @@ function drawTable(results) {
         tblBody += "<tr>" + tblRow + "</tr>";
     });
     $("#NewsDataTableContent").html(tblBody);
+    $('#NewsDataTable').show(); //Table starts hidden when unpopulated
+    drawChart();
 }
 
 // Converts JSON date notation to mm/dd/yy string
 function getDateString(jsonDate) {
     var date = new Date(parseInt(jsonDate.substr(6)));
     return (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear();
+}
+
+// Draw chart from ALL data in table
+function drawChart() {
+    var resultsCount = new Array();
+    $.each(results, function(r, v) {
+        resultsCount.push(v.Count);
+    });
+
+    var resultsLabels = new Array();
+    $.each(results, function(r, v) {
+        resultsLabels.push(getDateString(v.DateFrom));
+    });
+        
+    var lineChartData = {
+        labels: resultsLabels,
+        datasets: [
+                    {
+                        fillColor: "rgba(220,220,220,0.5)",
+                        strokeColor: "rgba(150,150,220,1)",
+                        pointColor: "rgba(120,220,220,1)",
+                        pointStrokeColor: "#fff",
+                        data: resultsCount
+                    }
+                ]
+    };
+
+    var lineChartOptions = {
+        bezierCurve: false
+    };
+
+    var myLine = new Chart(document.getElementById("NewsDataChart").getContext("2d")).Line(lineChartData, lineChartOptions);
+    $('#NewsDataChart').show(); //Chart starts hidden when unpopulated
 }

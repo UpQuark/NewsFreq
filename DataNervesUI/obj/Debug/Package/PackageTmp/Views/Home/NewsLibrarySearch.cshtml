@@ -46,15 +46,19 @@
                     <br/><br/>
                     -->
                 <input type="button" value="Search" id="SearchButton" onclick="newsSearch()" />
+                <div class="modal"><img src="http://i.imgur.com/RZPE8Wh.gif"/></div>
+                
             </td>
         </tr>
     </table>
     
+    
+
     <div id="SpecialSearchRadioGroup">
         <span>Special search type:</span><br/>
+        <input type="radio" name="specialSearches" id="None" checked/> None <br/>
         <input type="radio" name="specialSearches" id="Monthly"/> Monthly <br/>
         <input type="radio" name="specialSearches" id="Annual"/> Annual <br/>
-        <input type="radio" name="specialSearches" id="None"/> None <br/>
     </div>
     
     <div id="NewsDataChartWrapper">
@@ -90,6 +94,19 @@
     <script type="text/javascript">
         $(document).ready(function () {
             $(".DatePicker").datepicker();
+        });
+
+        $body = $("body");
+
+        $(document).on({
+            ajaxStart: function () {
+                if (!$('#None').is(':checked')) {
+                    $body.addClass("loading");
+                }
+            },
+            ajaxStop: function () {
+                $body.removeClass("loading");
+            }
         });
     </script>
 }

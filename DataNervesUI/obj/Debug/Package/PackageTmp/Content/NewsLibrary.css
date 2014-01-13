@@ -32,3 +32,15 @@
     top: -34px;
     left: 422px;
 }
+
+.modal {
+    display:    none;
+}
+
+body.loading {
+    overflow: hidden;   
+}
+
+body.loading .modal {
+    display: inline;
+}

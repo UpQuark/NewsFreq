@@ -36,10 +36,12 @@ function newsSearch() {
         dataType: "json",
         success: function (data) {
             if (specialSearchType != 'None') {
-                $.merge(results, $.parseJSON(data));
+                //$.merge(results, $.parseJSON(data));
+                results = $.parseJSON(data);
                 drawTable(results);
             } else {
                 results.push($.parseJSON(data));
+                //results = $.parseJSON(data);
                 drawTable(results);
             }
         }

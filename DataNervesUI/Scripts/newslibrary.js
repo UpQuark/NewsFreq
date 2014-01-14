@@ -7,6 +7,8 @@ function Results() {
     this.data = new Array();
 }
 
+var searchTerms = new Array;
+
 Results.prototype.addVariable = function(variable) {
     this.data.push(variable);
 };
@@ -32,6 +34,8 @@ function clearResults() {
 
     $("#AddVariableButton").attr("disabled", "disabled");
     $("#AddVariableButton").addClass('disabledButton');
+
+    $('#GraphLegend').empty();
 
     Results1.clear();
     frozenVariable = false;
@@ -124,6 +128,9 @@ function getDateString(jsonDate) {
 
 // Draw chart from ALL data in table
 function drawChart(results) {
+    var searchTerm;
+    searchTerms = [];
+
     var resultsLabels = new Array();
     $.each(results.data[0], function(r, v) {
         resultsLabels.push(getDateString(v.DateFrom));
@@ -133,13 +140,14 @@ function drawChart(results) {
     $.each(results.data, function (a, b) {
         var resultsCount = new Array();
         $.each(b, function (r, v) {
-                resultsCount.push(v.Count);
-            });
+            resultsCount.push(v.Count);
+            searchTerm = v.SearchString;
+        });
 
         data.push(
         {
             fillColor: "rgba(220,220,220,0.0)",
-            strokeColor: randomColor(),//"#878787",
+            strokeColor: randomColor(searchTerm), //"#878787",
             pointColor: "rgba(179,215,224,1)",
             pointStrokeColor: "#fff",
             data: resultsCount
@@ -157,9 +165,24 @@ function drawChart(results) {
     };
 
     var myLine = new Chart(document.getElementById("NewsDataChart").getContext("2d")).Line(lineChartData, lineChartOptions);
+    drawLegend();
     $('#NewsDataChart').show(); //Chart starts hidden when unpopulated
 }
 
-function randomColor() {
-    return '#' + (0x1000000 + (Math.random()) * 0xffffff).toString(16).substr(1, 6);
+function randomColor(keyword) {
+    var randColor = '#' + (0x1000000 + (Math.random()) * 0xffffff).toString(16).substr(1, 6);
+    searchTerms.push({
+        keyword: keyword,
+        color: randColor
+    });
+    return randColor;
+
+}
+
+function drawLegend() {
+    $('#GraphLegend').empty();
+    $.each(searchTerms, function(a, b) {
+        $('#GraphLegend').append('<span style="background-color:' + b.color + '; border: 1px #ccc solid">&nbsp&nbsp&nbsp&nbsp</span>&nbsp' + b.keyword + '&nbsp');
+    });
+    
 }

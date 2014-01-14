@@ -1,4 +1,16 @@
-﻿#NewsDataTable .newsTableHead
+﻿/* News form page elements */ 
+.descriptionText {
+    font-size: 1em;
+    position: relative;
+    max-width: 430px;
+}
+
+.disclaimer {
+    font-size: 0.8em;
+    max-width: 430px;
+}
+
+#NewsDataTable .newsTableHead
 {
     font-weight: bold;
 }
@@ -24,7 +36,7 @@
 }
 
 #SpecialSearchRadioGroup {
-    position: absolute; top: 67px; left: 250px;
+    position: absolute; top: 180px; left: 250px;
 }
 
 #NewsDataChartWrapper {
@@ -33,6 +45,8 @@
     left: 422px;
 }
 
+
+/* Loading icons */
 .modal {
     display:    none;
 }
@@ -43,4 +57,11 @@ body.loading {
 
 body.loading .modal {
     display: inline;
+}
+
+/* Custom buttons */
+
+/* Inputs */
+input[type=text] {
+    color: #676767;
 }

@@ -16,6 +16,12 @@
 
 
 <div id="NewsSearchForm">
+    <p class="descriptionText">
+        This tool allows you to search American news sources for the usage of keywords in a time span.
+        You can use it to gather data on major trends in American news reporting and visualize them in seconds.
+        Try searching issues of interest to you and see how the volume of coverage has changed over time.<br/>
+    </p>
+    <p class="disclaimer">This application is a work in progress and will change over time. Feedback, comments and bug reports are encouraged; please direct them <a href = "mailto:sam@datanerves.com">here</a></p>
     <table id="NewsLibrarySearchForm">
         <tr>
             <td>
@@ -33,7 +39,6 @@
                 <input type="text" id="DateTo" class = "DatePicker" placeholder = "End date"/>
                 
             </td>
-            
         </tr>
         <tr>
             <td>
@@ -46,6 +51,7 @@
                     <br/><br/>
                     -->
                 <input type="button" value="Search" id="SearchButton" onclick="newsSearch()" />
+                <input type="button" value="Clear data" id="ClearButton" onclick="clearResults()" />
                 <div class="modal"><img src="http://i.imgur.com/RZPE8Wh.gif"/></div>
                 
             </td>
@@ -66,24 +72,24 @@
     </div>
     
     <table id="NewsDataTable" style="display:none">
-    <tr class="newsTableHead">
-        <td>
-            Search terms
-        </td>
-        <td>
-            Date from
-        </td>
-        <td>
-            Date to
-        </td>
-        <td>
-            Number of articles
-        </td>
-    </tr>
-    <tbody id="NewsDataTableContent">
-    </tbody>
-</table>
-<meta name = "viewport" content = "initial-scale = 1, user-scalable = no">
+        <tr class="newsTableHead">
+            <td>
+                Search terms
+            </td>
+            <td>
+                Date from
+            </td>
+            <td>
+                Date to
+            </td>
+            <td>
+                Number of articles
+            </td>
+        </tr>
+        <tbody id="NewsDataTableContent">
+        </tbody>
+    </table>
+    <meta name = "viewport" content = "initial-scale = 1, user-scalable = no">
 </div>
 
 

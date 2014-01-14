@@ -5,6 +5,15 @@
 // Search results are stored in array for display and manipulation
 var results = new Array();
 
+// Clear results and hide displays
+function clearResults() {
+    results = [];
+    drawTable(results);
+    $('#NewsDataChart').hide();
+    $('#NewsDataTable').hide();
+}
+
+
 // Send search to the API backend using UI criteria.
 function newsSearch() {
     var specialSearchType = 'None'; // Defaults to normal searches
@@ -25,8 +34,6 @@ function newsSearch() {
         SearchString: $('#SearchTerms').val(),
         SearchTarget: ''
     };
-
-    
     
     // Send query to API
     $.ajax({
@@ -87,8 +94,8 @@ function drawChart() {
         datasets: [
                     {
                         fillColor: "rgba(220,220,220,0.5)",
-                        strokeColor: "rgba(150,150,220,1)",
-                        pointColor: "rgba(120,220,220,1)",
+                        strokeColor: "#878787",
+                        pointColor: "rgba(179,215,224,1)",
                         pointStrokeColor: "#fff",
                         data: resultsCount
                     }
@@ -97,6 +104,7 @@ function drawChart() {
 
     var lineChartOptions = {
         bezierCurve: false
+        //pointDot: false,
     };
 
     var myLine = new Chart(document.getElementById("NewsDataChart").getContext("2d")).Line(lineChartData, lineChartOptions);

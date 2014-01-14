@@ -61,7 +61,18 @@ body.loading .modal {
 
 /* Custom buttons */
 
+input[type=button].disabledButton {
+    color: #bbb;
+    background-color: #d3dce0;
+    
+}
+
+input[type=button].disabledButton:hover {
+    color: #bbb;
+}
+
 /* Inputs */
 input[type=text] {
     color: #676767;
 }
+

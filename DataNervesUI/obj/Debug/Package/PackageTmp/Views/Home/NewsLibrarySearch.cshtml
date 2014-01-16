@@ -17,7 +17,7 @@
 
 <div id="NewsSearchForm">
     <p class="descriptionText">
-        This tool allows you to analyze the popularity of topics in American news coverage.
+        This tool enables you to analyze the popularity of topics in American news coverage.
         You can use it to gather data on major trends in news reporting and visualize them in seconds.
         Try searching issues that interest you to see how the volume of coverage changes over time and how it compares to other topics.<br/>
     </p>
@@ -51,6 +51,7 @@
                     <br/><br/>
                     -->
                 <input type="button" value="Search" id="SearchButton" onclick="newsSearch()" />
+                <input type="button" class="disabledButton" value="Add Variable" id="AddVariableButton" onclick="newsSearch()" disabled="disabled" />
                 <input type="button" value="Clear data" id="ClearButton" onclick="clearResults()" />
                 <div class="modal"><img src="http://i.imgur.com/RZPE8Wh.gif"/></div>
                 
@@ -61,10 +62,10 @@
     
 
     <div id="SpecialSearchRadioGroup">
-        <span>Special search type:</span><br/>
-        <input type="radio" name="specialSearches" id="None" checked/> None <br/>
-        <input type="radio" name="specialSearches" id="Monthly"/> Monthly <br/>
+        <span>Search type:</span><br/>
+        <input type="radio" name="specialSearches" id="Monthly" checked/> Monthly <br/>
         <input type="radio" name="specialSearches" id="Annual"/> Annual <br/>
+        <input type="radio" name="specialSearches" id="None" /> None <br/>
     </div>
     
     <div id="NewsDataChartWrapper">
@@ -90,6 +91,8 @@
         </tbody>
     </table>
     <meta name = "viewport" content = "initial-scale = 1, user-scalable = no">
+    <div id="GraphLegend"></div>
+
 </div>
 
 

@@ -279,9 +279,8 @@ textarea {
         width: auto;
     }
 
-    input[type="submit"],
-    input[type="button"],
-    button {
+    input[type="button"]
+    {
         background-color: #d3dce0;
         border: 1px solid #cccccc;
         cursor: pointer;

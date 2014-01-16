@@ -42,13 +42,13 @@
 #NewsDataChartWrapper {
     position: absolute;
     top: -34px;
-    left: 422px;
+    left: 492px;
 }
 
 #GraphLegend {
     position: absolute;
     top: 425px;
-    left: 450px;
+    left: 530px;
 }
 
 /* Loading icons */

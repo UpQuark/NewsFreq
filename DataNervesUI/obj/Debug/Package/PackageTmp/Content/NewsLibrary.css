@@ -42,9 +42,14 @@
 #NewsDataChartWrapper {
     position: absolute;
     top: -34px;
-    left: 422px;
+    left: 492px;
 }
 
+#GraphLegend {
+    position: absolute;
+    top: 425px;
+    left: 530px;
+}
 
 /* Loading icons */
 .modal {
@@ -61,7 +66,18 @@ body.loading .modal {
 
 /* Custom buttons */
 
+input[type=button].disabledButton {
+    color: #bbb;
+    background-color: #d3dce0;
+    
+}
+
+input[type=button].disabledButton:hover {
+    color: #bbb;
+}
+
 /* Inputs */
 input[type=text] {
     color: #676767;
 }
+

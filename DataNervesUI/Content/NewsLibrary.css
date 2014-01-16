@@ -64,7 +64,7 @@ body.loading .modal {
     display: inline;
 }
 
-/* Custom buttons */
+/* Custom inputs */
 
 input[type=button].disabledButton {
     color: #bbb;
@@ -73,6 +73,10 @@ input[type=button].disabledButton {
 }
 
 input[type=button].disabledButton:hover {
+    color: #bbb;
+}
+
+.DatePicker.disabled{
     color: #bbb;
 }
 

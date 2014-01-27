@@ -1,13 +1,30 @@
-﻿/* News form page elements */ 
+﻿/* News form elements */ 
 .descriptionText {
     font-size: 1em;
     position: relative;
-    max-width: 430px;
+    max-width: 410px;
 }
 
 .disclaimer {
     font-size: 0.8em;
-    max-width: 430px;
+    max-width: 410px;
+}
+
+#NewsSearchForm {
+    position: relative;
+    min-height: 360px;
+    float: left;
+}
+
+#SpecialSearchRadioGroup {
+    position: absolute; top: 233px; left: 250px;
+}
+
+/* Data table */ 
+#NewsDataTableWrapper {
+    min-width: 410px;
+    position: relative;
+    float: left;
 }
 
 #NewsDataTable .newsTableHead
@@ -22,33 +39,27 @@
 
 #NewsDataTable {
     display: none;
-    position: relative;
+    font-size: 0.9em;
+}
+
+/* Data display */
+#NewsDataChartWrapper {
+    float: left;
+    min-width: 300px;
+    margin-top: 8px;
 }
 
 #NewsDataChart
 {
     display: none;
 }
+    
 
-#NewsSearchForm {
-    position: relative;
-    min-height: 360px;
-}
-
-#SpecialSearchRadioGroup {
-    position: absolute; top: 180px; left: 250px;
-}
-
-#NewsDataChartWrapper {
-    position: absolute;
-    top: -34px;
-    left: 492px;
-}
+/* Legend */ 
 
 #GraphLegend {
-    position: absolute;
-    top: 425px;
-    left: 530px;
+    position: relative;
+    left: 25px;
 }
 
 /* Loading icons */
@@ -64,8 +75,8 @@ body.loading .modal {
     display: inline;
 }
 
-/* Custom inputs */
 
+/* Inputs */
 input[type=button].disabledButton {
     color: #bbb;
     background-color: #d3dce0;
@@ -80,7 +91,6 @@ input[type=button].disabledButton:hover {
     color: #bbb;
 }
 
-/* Inputs */
 input[type=text] {
     color: #676767;
 }

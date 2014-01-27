@@ -19,6 +19,16 @@ Results.prototype.clear = function () {
 
 var searchTerms = new Array;
 var resultsData = new Results();
+var colourValues = [
+        "b3d7e0", "4564a5", "45a2a5", 
+        "800000", "008000", "000080", "808000", "800080", "008080", "808080",
+        "C00000", "00C000", "0000C0", "C0C000", "C000C0", "00C0C0", "C0C0C0",
+        "400000", "004000", "000040", "404000", "400040", "004040", "404040",
+        "200000", "002000", "000020", "202000", "200020", "002020", "202020",
+        "600000", "006000", "000060", "606000", "600060", "006060", "606060",
+        "A00000", "00A000", "0000A0", "A0A000", "A000A0", "00A0A0", "A0A0A0",
+        "E00000", "00E000", "0000E0", "E0E000", "E000E0", "00E0E0", "E0E0E0",
+    ];
 
 // Clear results and hide displays
 function clearResults() {
@@ -30,6 +40,19 @@ function clearResults() {
     $('input[name=specialSearches]').removeAttr('disabled');
     $('.DatePicker').removeAttr('disabled').removeClass('disabled');
     $('#GraphLegend').empty();
+    searchTerms = [];
+
+    //Reset color values to default
+    colourValues = [
+        "b3d7e0", "4564a5", "45a2a5", 
+        "800000", "008000", "000080", "808000", "800080", "008080", "808080",
+        "C00000", "00C000", "0000C0", "C0C000", "C000C0", "00C0C0", "C0C0C0",
+        "400000", "004000", "000040", "404000", "400040", "004040", "404040",
+        "200000", "002000", "000020", "202000", "200020", "002020", "202020",
+        "600000", "006000", "000060", "606000", "600060", "006060", "606060",
+        "A00000", "00A000", "0000A0", "A0A000", "A000A0", "00A0A0", "A0A0A0",
+        "E00000", "00E000", "0000E0", "E0E000", "E000E0", "00E0E0", "E0E0E0",
+    ];
 }
 
 
@@ -100,7 +123,7 @@ function drawTable(results) {
 // Draw chart from resultsData, and draw corresponding legend
 function drawChart(results) {
     var searchTerm;
-    searchTerms = [];
+    //searchTerms = [];
 
     var resultsLabels = new Array();
     $.each(results.data[0], function(r, v) {
@@ -115,7 +138,14 @@ function drawChart(results) {
             searchTerm = v.SearchString;
         });
 
-        var color = randomColor(searchTerm);
+        var color;
+        var index = findWithAttr(searchTerms, 'keyword', searchTerm);
+        if (index != -1) {
+            color = searchTerms[index].color;
+        } else {
+            color = randomColor(searchTerm);
+        }
+
         data.push(
         {
             fillColor: "rgba(220,220,220,0.0)",
@@ -128,7 +158,7 @@ function drawChart(results) {
 
 
     //Trim resultsLabels if they are too many
-    var goalLength = 36;
+    var goalLength = 32;
     if (resultsLabels.length > goalLength) {
         var b = new Array();
         var n2 = resultsLabels.length - 2;
@@ -145,8 +175,15 @@ function drawChart(results) {
             }
             else j += 1;
            }
-        b[m2 + 1] = resultsLabels[n2 + 1];
-        resultsLabels = b;
+        b[m2 + 1] = n2 + 1;
+
+        for (var i = 0; i < resultsLabels.length; i++ ) {
+            if (b.indexOf(resultsLabels[i]) == -1 ) {
+                resultsLabels[i] = '';
+            }
+        }
+
+            //resultsLabels = b;
     }
 
     var lineChartData = {
@@ -168,20 +205,33 @@ function drawChart(results) {
 function drawLegend() {
     $('#GraphLegend').empty();
     $.each(searchTerms, function(a, b) {
-        $('#GraphLegend').append('<span style="background-color:' + b.color + '; border: 1px #ccc solid">&nbsp&nbsp&nbsp&nbsp</span>&nbsp' + b.keyword + '&nbsp');
+        $('#GraphLegend').append('<span style="background-color: #' + b.color + '; border: 1px #000 solid">&nbsp&nbsp&nbsp&nbsp</span>&nbsp' + b.keyword + '&nbsp');
     });
 
 }
 
-
 //////////  Helper functions ////////// 
 function randomColor(keyword) {
-    var randColor = '#' + (0x1000000 + (Math.random()) * 0xaaaaaa).toString(16).substr(1, 6);
+    //var index = Math.floor(Math.random() * colourValues.length);
+    var color = colourValues[0];
+    //if (index > -1) {
+        colourValues.splice(0, 1);
+    //}
+    
     searchTerms.push({
         keyword: keyword,
-        color: randColor
+        color: color
     });
-    return randColor;
+    return color;
+}
+
+function findWithAttr(array, attr, value) {
+    for (var i = 0; i < array.length; i += 1) {
+        if (array[i][attr] === value) {
+            return i;
+        }
+    }
+    return -1;
 }
 
 // Converts JSON date notation to mm/dd/yy string
@@ -189,3 +239,4 @@ function getDateString(jsonDate) {
     var date = new Date(parseInt(jsonDate.substr(6)));
     return (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear();
 }
+

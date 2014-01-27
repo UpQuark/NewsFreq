@@ -2,43 +2,57 @@
  * NewsLibrary client-side request formation from UI and handling of existing data
  */
 
-// Search results are stored in array for display and manipulation
+///////// Results data structure, for future expansion /////////
 function Results() {
     this.data = new Array();
 }
-
-var searchTerms = new Array;
 
 Results.prototype.addVariable = function(variable) {
     this.data.push(variable);
 };
 
-Results.prototype.clear = function() {
+Results.prototype.clear = function () {
     this.data = [];
 };
+////////////////////////////////////////////////////////////////
 
-var Results1 = new Results();
-var results = new Array();
 
-var frozenVariable = false;
+var searchTerms = new Array;
+var resultsData = new Results();
+var colourValues = [
+        "FF0000", "00FF00", "0000FF", "FFFF00", "FF00FF", "00FFFF", "000000",
+        "800000", "008000", "000080", "808000", "800080", "008080", "808080",
+        "C00000", "00C000", "0000C0", "C0C000", "C000C0", "00C0C0", "C0C0C0",
+        "400000", "004000", "000040", "404000", "400040", "004040", "404040",
+        "200000", "002000", "000020", "202000", "200020", "002020", "202020",
+        "600000", "006000", "000060", "606000", "600060", "006060", "606060",
+        "A00000", "00A000", "0000A0", "A0A000", "A000A0", "00A0A0", "A0A0A0",
+        "E00000", "00E000", "0000E0", "E0E000", "E000E0", "00E0E0", "E0E0E0",
+    ];
 
 // Clear results and hide displays
 function clearResults() {
-    results = [];
-    drawTable(results);
+    resultsData.clear();
     $('#NewsDataChart').hide();
     $('#NewsDataTable').hide();
-    
-    $("#SearchButton").removeAttr("disabled", "enabled");
-    $("#SearchButton").removeClass('disabledButton');
 
-    $("#AddVariableButton").attr("disabled", "disabled");
-    $("#AddVariableButton").addClass('disabledButton');
-
+    $("#SearchButton").prop('value', 'New search');
+    $('input[name=specialSearches]').removeAttr('disabled');
+    $('.DatePicker').removeAttr('disabled').removeClass('disabled');
     $('#GraphLegend').empty();
+    searchTerms = [];
 
-    Results1.clear();
-    frozenVariable = false;
+    //Reset color values to default
+    colourValues = [
+        "FF0000", "00FF00", "0000FF", "FFFF00", "FF00FF", "00FFFF", "000000",
+        "800000", "008000", "000080", "808000", "800080", "008080", "808080",
+        "C00000", "00C000", "0000C0", "C0C000", "C000C0", "00C0C0", "C0C0C0",
+        "400000", "004000", "000040", "404000", "400040", "004040", "404040",
+        "200000", "002000", "000020", "202000", "200020", "002020", "202020",
+        "600000", "006000", "000060", "606000", "600060", "006060", "606060",
+        "A00000", "00A000", "0000A0", "A0A000", "A000A0", "00A0A0", "A0A0A0",
+        "E00000", "00E000", "0000E0", "E0E000", "E000E0", "00E0E0", "E0E0E0",
+    ];
 }
 
 
@@ -54,16 +68,12 @@ function newsSearch() {
         specialSearchType = "Annual";
     }
 
+    // Alter UI for in-progress search
     if(specialSearchType != 'None') {
-        $("#SearchButton").attr("disabled", "disabled");
-        $("#SearchButton").addClass("disabledButton");
-
-        $("#AddVariableButton").removeAttr("disabled");
-        $("#AddVariableButton").removeClass('disabledButton');
-        
-        frozenVariable = true;
+        $("#SearchButton").prop('value', 'Add variable');
+        $('input[name=specialSearches]').attr('disabled', 'disabled');
+        $('.DatePicker').prop('disabled', 'disabled').addClass('disabled');
     }
-    
 
     // Create params
     var params = {
@@ -82,27 +92,17 @@ function newsSearch() {
         dataType: "json",
         success: function (data) {
             if (specialSearchType != 'None') {
-                //$.merge(results, $.parseJSON(data));
-                results = $.parseJSON(data);
-                Results1.addVariable(results);
-                drawTable(Results1);
+                resultsData.addVariable($.parseJSON(data));
+                drawTable(resultsData);
             } else {
-
-                results.push($.parseJSON(data));
-                Results1.addVariable(results);
-                //results = $.parseJSON(data);
-                drawTable(Results1);
+                resultsData.addVariable($.parseJSON(data));
+                drawTable(resultsData);
             }
         }
     });
 }
 
-// Add variable to already existing search
-function addVariable() {
-    
-}
-
-// Draw table in DOM from results array
+// Draw table and chart in DOM from results array
 function drawTable(results) {
     var tblBody = "";
     $.each(results.data, function (a, b) {
@@ -120,16 +120,10 @@ function drawTable(results) {
     drawChart(results);
 }
 
-// Converts JSON date notation to mm/dd/yy string
-function getDateString(jsonDate) {
-    var date = new Date(parseInt(jsonDate.substr(6)));
-    return (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear();
-}
-
-// Draw chart from ALL data in table
+// Draw chart from resultsData, and draw corresponding legend
 function drawChart(results) {
     var searchTerm;
-    searchTerms = [];
+    //searchTerms = [];
 
     var resultsLabels = new Array();
     $.each(results.data[0], function(r, v) {
@@ -144,24 +138,62 @@ function drawChart(results) {
             searchTerm = v.SearchString;
         });
 
+        var color;
+        var index = findWithAttr(searchTerms, 'keyword', searchTerm);
+        if (index != -1) {
+            color = searchTerms[index].color;
+        } else {
+            color = randomColor(searchTerm);
+        }
+
         data.push(
         {
             fillColor: "rgba(220,220,220,0.0)",
-            strokeColor: randomColor(searchTerm), //"#878787",
-            pointColor: "rgba(179,215,224,1)",
+            strokeColor: color,
+            pointColor: color,
             pointStrokeColor: "#fff",
             data: resultsCount
         });
     });
-        
+
+
+    //Trim resultsLabels if they are too many
+    var goalLength = 36;
+    if (resultsLabels.length > goalLength) {
+        var b = new Array();
+        var n2 = resultsLabels.length - 2;
+        var m2 = goalLength - 2;
+        b[0] = resultsLabels[0];
+        var j = 0;
+        var k = 0;
+        while (j < n2) {
+            var diff = (k + 1) * n2 - (j + 1) * m2;
+            if (diff < n2 / 2) {
+                k += 1;
+                j += 1;
+                b[k] = resultsLabels[j];
+            }
+            else j += 1;
+           }
+        b[m2 + 1] = n2 + 1;
+
+        for (var i = 0; i < resultsLabels.length; i++ ) {
+            if (b.indexOf(resultsLabels[i]) == -1 ) {
+                resultsLabels[i] = '';
+            }
+        }
+
+            //resultsLabels = b;
+    }
+
     var lineChartData = {
         labels: resultsLabels,
         datasets: data
     };
 
     var lineChartOptions = {
-        bezierCurve: false
-        //pointDot: false,
+        bezierCurve: false,
+        pointDot: false
     };
 
     var myLine = new Chart(document.getElementById("NewsDataChart").getContext("2d")).Line(lineChartData, lineChartOptions);
@@ -169,20 +201,44 @@ function drawChart(results) {
     $('#NewsDataChart').show(); //Chart starts hidden when unpopulated
 }
 
+// Draw key for graph in DOM
+function drawLegend() {
+    $('#GraphLegend').empty();
+    $.each(searchTerms, function(a, b) {
+        $('#GraphLegend').append('<span style="background-color: #' + b.color + '; border: 1px #000 solid">&nbsp&nbsp&nbsp&nbsp</span>&nbsp' + b.keyword + '&nbsp');
+    });
+
+}
+
+
+//////////  Helper functions ////////// 
 function randomColor(keyword) {
-    var randColor = '#' + (0x1000000 + (Math.random()) * 0xffffff).toString(16).substr(1, 6);
+    var index = Math.floor(Math.random() * colourValues.length);
+    var randColor = colourValues[index];
+    if (index > -1) {
+        colourValues.splice(index, 1);
+    }
+
+    //var randColor = '#' + (0x1000000 + (Math.random()) * 0xaaaaaa).toString(16).substr(1, 6);
     searchTerms.push({
         keyword: keyword,
         color: randColor
     });
     return randColor;
-
 }
 
-function drawLegend() {
-    $('#GraphLegend').empty();
-    $.each(searchTerms, function(a, b) {
-        $('#GraphLegend').append('<span style="background-color:' + b.color + '; border: 1px #ccc solid">&nbsp&nbsp&nbsp&nbsp</span>&nbsp' + b.keyword + '&nbsp');
-    });
-    
+function findWithAttr(array, attr, value) {
+    for (var i = 0; i < array.length; i += 1) {
+        if (array[i][attr] === value) {
+            return i;
+        }
+    }
+    return -1;
 }
+
+// Converts JSON date notation to mm/dd/yy string
+function getDateString(jsonDate) {
+    var date = new Date(parseInt(jsonDate.substr(6)));
+    return (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear();
+}
+

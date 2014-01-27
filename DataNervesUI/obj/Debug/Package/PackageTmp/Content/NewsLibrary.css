@@ -64,8 +64,8 @@ body.loading .modal {
     display: inline;
 }
 
-/* Custom buttons */
 
+/* Inputs */
 input[type=button].disabledButton {
     color: #bbb;
     background-color: #d3dce0;
@@ -76,7 +76,10 @@ input[type=button].disabledButton:hover {
     color: #bbb;
 }
 
-/* Inputs */
+.DatePicker.disabled{
+    color: #bbb;
+}
+
 input[type=text] {
     color: #676767;
 }

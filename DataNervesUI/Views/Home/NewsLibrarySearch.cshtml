@@ -6,16 +6,16 @@
     ViewBag.Title = "News Frequency Search";
 }
 @section featured {
-        <div class="content-wrapper">
+        
+}
+
+<div id="NewsSearchForm">
+    <div class="content-wrapper">
             <hgroup class="title">
                 <h1>@ViewBag.Title</h1>
                 <h2>@ViewBag.Message</h2>
             </hgroup>
         </div>
-}
-
-
-<div id="NewsSearchForm">
     <p class="descriptionText">
         This tool enables you to analyze the popularity of topics in American news coverage.
         You can use it to gather data on major trends in news reporting and visualize them in seconds.
@@ -57,44 +57,43 @@
             </td>
         </tr>
     </table>
-    
-    
-
     <div id="SpecialSearchRadioGroup">
         <span>Search type:</span><br/>
         <input type="radio" name="specialSearches" id="Monthly" checked/> Monthly <br/>
         <input type="radio" name="specialSearches" id="Annual"/> Annual <br/>
         <input type="radio" name="specialSearches" id="None" /> None <br/>
     </div>
+</div>
     
-    <div id="NewsDataChartWrapper">
-        <canvas id="NewsDataChart" height="450" width="600" style="display:none" ></canvas>
-    </div>
+
+
+ 
+<div id="NewsDataChartWrapper">
+    <canvas id="NewsDataChart" height="350" width="500" style="display:none" ></canvas>
+    <div id="GraphLegend"></div>
+</div>
     
+<div id="NewsDataTableWrapper">  
     <table id="NewsDataTable" style="display:none">
         <tr class="newsTableHead">
             <td>
-                Search terms
+                Search Term
             </td>
             <td>
-                Date from
+                Date From
             </td>
             <td>
-                Date to
+                Date To
             </td>
             <td>
-                Number of articles
+                Article Count
             </td>
         </tr>
         <tbody id="NewsDataTableContent">
         </tbody>
     </table>
     <meta name = "viewport" content = "initial-scale = 1, user-scalable = no">
-    <div id="GraphLegend"></div>
-
-</div>
-
-
+</div> 
 
 
 

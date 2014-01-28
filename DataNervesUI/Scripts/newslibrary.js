@@ -159,7 +159,7 @@ function drawChart(results) {
 
 
     //Trim resultsLabels if they are too many
-    var goalLength = 36;
+    var goalLength = 12;
     if (resultsLabels.length > goalLength) {
         var b = new Array();
         var n2 = resultsLabels.length - 2;

@@ -152,13 +152,14 @@ function drawChart(results) {
             strokeColor: color,
             pointColor: color,
             pointStrokeColor: "#fff",
-            data: resultsCount
+            data: resultsCount,
+            title: searchTerm
         });
     });
 
 
     //Trim resultsLabels if they are too many
-    var goalLength = 32;
+    var goalLength = 36;
     if (resultsLabels.length > goalLength) {
         var b = new Array();
         var n2 = resultsLabels.length - 2;
@@ -205,7 +206,7 @@ function drawChart(results) {
 function drawLegend() {
     $('#GraphLegend').empty();
     $.each(searchTerms, function(a, b) {
-        $('#GraphLegend').append('<span style="background-color: #' + b.color + '; border: 1px #000 solid">&nbsp&nbsp&nbsp&nbsp</span>&nbsp' + b.keyword + '&nbsp');
+        $('#GraphLegend').append('<span style="background-color: #' + b.color + ';">&nbsp&nbsp&nbsp&nbsp</span>&nbsp' + b.keyword.replace(/ /g, '&nbsp') + '&nbsp&nbsp ');
     });
 
 }

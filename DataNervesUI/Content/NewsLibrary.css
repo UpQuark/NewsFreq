@@ -45,7 +45,7 @@
 /* Data display */
 #NewsDataChartWrapper {
     float: left;
-    min-width: 300px;
+    max-width: 500px;
     margin-top: 8px;
 }
 
@@ -60,6 +60,8 @@
 #GraphLegend {
     position: relative;
     left: 25px;
+    font-size: 0.8em;
+    line-height: 20px
 }
 
 /* Loading icons */

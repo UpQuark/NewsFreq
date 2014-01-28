@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <publishData>
-  <publishProfile publishUrl="ftp://184.173.161.69/" deleteExistingFiles="True" ftpAnonymousLogin="False" ftpPassiveMode="True" msdeploySite="" msdeploySiteID="" msdeployRemoteSitePhysicalPath="" msdeployAllowUntrustedCertificate="False" msdeploySkipExtraFilesOnServer="True" msdeployMarkAsApp="False" profileName="DataNerves" publishMethod="FTP" replaceMatchingFiles="False" userName="DownQuark" savePWD="True" userPWD="AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAcJoStYGkJUGWAJzEY4EfegAAAAACAAAAAAADZgAAwAAAABAAAAC8lQi6Xm+ftZdjRtbJUDeFAAAAAASAAACgAAAAEAAAAFawIvV5tJAGvs0nyUAUcc8YAAAAViz3igEbtNa5LNN19fohTfvzdiwpC++0FAAAAIh0nTg4QQyRodJd9sK6do6L60pJ" SelectedForPublish="True">
+  <publishProfile publishUrl="ftp://184.173.161.69/" deleteExistingFiles="True" ftpAnonymousLogin="False" ftpPassiveMode="False" msdeploySite="" msdeploySiteID="" msdeployRemoteSitePhysicalPath="" msdeployAllowUntrustedCertificate="False" msdeploySkipExtraFilesOnServer="True" msdeployMarkAsApp="False" profileName="DataNerves" publishMethod="FTP" replaceMatchingFiles="False" userName="DownQuark" savePWD="True" userPWD="AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAcJoStYGkJUGWAJzEY4EfegAAAAACAAAAAAADZgAAwAAAABAAAAC8lQi6Xm+ftZdjRtbJUDeFAAAAAASAAACgAAAAEAAAAFawIvV5tJAGvs0nyUAUcc8YAAAAViz3igEbtNa5LNN19fohTfvzdiwpC++0FAAAAIh0nTg4QQyRodJd9sK6do6L60pJ" SelectedForPublish="True">
     <file relUrl="Scripts/jquery.mtz.monthpicker.js" publishTime="12/20/2013 11:38:46" />
     <file relUrl="Scripts/jquery-1.7.1.js" publishTime="11/19/2013 14:34:34" />
     <file relUrl="Content/themes/base/minified/jquery.ui.slider.min.css" publishTime="11/19/2013 14:34:34" />
@@ -32,6 +32,7 @@
     <file relUrl="Scripts/jquery-1.7.1.min.js" publishTime="11/19/2013 14:34:34" />
     <file relUrl="Images/orderedList4.png" publishTime="11/19/2013 14:34:34" />
     <file relUrl="Images/orderedList7.png" publishTime="11/19/2013 14:34:34" />
+    <file relUrl="Content/themes/base/minified/jquery.ui.resizable.min.css" publishTime="11/19/2013 14:34:33" />
     <file relUrl="Content/themes/base/images/ui-bg_glass_55_fbf9ee_1x400.png" publishTime="11/19/2013 14:34:33" />
     <file relUrl="Content/themes/base/minified/jquery.ui.accordion.min.css" publishTime="11/19/2013 14:34:33" />
     <file relUrl="Content/themes/base/jquery-ui.css" publishTime="11/19/2013 14:34:33" />
@@ -41,7 +42,6 @@
     <file relUrl="favicon.ico" publishTime="01/13/2014 15:45:33" />
     <file relUrl="bin/System.Web.WebPages.xml" publishTime="05/30/2012 02:00:26" />
     <file relUrl="Scripts/knockout-2.1.0.debug.js" publishTime="11/19/2013 14:34:34" />
-    <file relUrl="bin/DotNetOpenAuth.OpenId.dll" publishTime="11/19/2013 14:34:34" />
     <file relUrl="Images/orderedList1.png" publishTime="11/19/2013 14:34:34" />
     <file relUrl="Content/themes/base/images/ui-icons_2e83ff_256x240.png" publishTime="11/19/2013 14:34:33" />
     <file relUrl="Content/themes/base/minified/jquery.ui.tabs.min.css" publishTime="11/19/2013 14:34:34" />
@@ -67,21 +67,21 @@
     <file relUrl="Content/themes/base/minified/images/ui-icons_cd0a0a_256x240.png" publishTime="11/19/2013 14:34:33" />
     <file relUrl="bin/System.Web.Mvc.dll" publishTime="07/10/2012 13:02:42" />
     <file relUrl="bin/System.Web.Optimization.dll" publishTime="11/19/2013 14:34:35" />
-    <file relUrl="Scripts/jquery.validate.unobtrusive.js" publishTime="11/19/2013 14:34:34" />
     <file relUrl="bin/DotNetOpenAuth.OAuth.dll" publishTime="11/19/2013 14:34:34" />
     <file relUrl="Scripts/jquery.validate.unobtrusive.min.js" publishTime="11/19/2013 14:34:34" />
     <file relUrl="Images/orderedList5.png" publishTime="11/19/2013 14:34:34" />
     <file relUrl="Content/themes/base/minified/images/ui-bg_glass_75_e6e6e6_1x400.png" publishTime="11/19/2013 14:34:33" />
     <file relUrl="Views/_ViewStart.cshtml" publishTime="11/19/2013 14:34:34" />
     <file relUrl="Content/themes/base/jquery.ui.autocomplete.css" publishTime="11/19/2013 14:34:33" />
+    <file relUrl="bin/DotNetOpenAuth.OAuth.Consumer.dll" publishTime="11/19/2013 14:34:34" />
     <file relUrl="Content/themes/base/minified/images/ui-bg_glass_95_fef1ec_1x400.png" publishTime="11/19/2013 14:34:33" />
-    <file relUrl="Views/Home/NewsLibrarySearch.cshtml" publishTime="01/16/2014 13:53:02" />
+    <file relUrl="Views/Home/NewsLibrarySearch.cshtml" publishTime="01/27/2014 14:11:40" />
     <file relUrl="Content/themes/base/images/ui-bg_glass_75_e6e6e6_1x400.png" publishTime="11/19/2013 14:34:33" />
     <file relUrl="Content/themes/base/minified/jquery.ui.dialog.min.css" publishTime="11/19/2013 14:34:33" />
     <file relUrl="Images/accent.png" publishTime="11/19/2013 14:34:34" />
     <file relUrl="Scripts/jquery.validate-vsdoc.js" publishTime="11/19/2013 14:34:34" />
     <file relUrl="Content/themes/base/jquery.ui.theme.css" publishTime="11/19/2013 14:34:33" />
-    <file relUrl="Scripts/newslibrary.js" publishTime="01/17/2014 14:32:43" />
+    <file relUrl="Scripts/newslibrary.js" publishTime="01/27/2014 14:20:12" />
     <file relUrl="Content/themes/base/images/ui-icons_454545_256x240.png" publishTime="11/19/2013 14:34:33" />
     <file relUrl="Content/themes/base/minified/images/ui-bg_glass_75_dadada_1x400.png" publishTime="11/19/2013 14:34:33" />
     <file relUrl="Content/themes/base/minified/images/ui-bg_flat_75_ffffff_40x100.png" publishTime="11/19/2013 14:34:33" />
@@ -108,15 +108,14 @@
     <file relUrl="Areas/NewsLibrary/Views/Web.config" publishTime="01/12/2014 17:35:12" />
     <file relUrl="Content/themes/base/images/ui-bg_flat_0_aaaaaa_40x100.png" publishTime="11/19/2013 14:34:33" />
     <file relUrl="Content/themes/base/minified/images/ui-icons_454545_256x240.png" publishTime="11/19/2013 14:34:33" />
-    <file relUrl="Content/themes/base/minified/jquery.ui.resizable.min.css" publishTime="11/19/2013 14:34:33" />
+    <file relUrl="bin/DotNetOpenAuth.OpenId.dll" publishTime="11/19/2013 14:34:34" />
     <file relUrl="Content/themes/base/minified/jquery.ui.core.min.css" publishTime="11/19/2013 14:34:33" />
     <file relUrl="Content/themes/base/images/ui-bg_flat_75_ffffff_40x100.png" publishTime="11/19/2013 14:34:33" />
-    <file relUrl="Content/NewsLibrary.css" publishTime="01/17/2014 12:02:51" />
-    <file relUrl="Content/themes/base/minified/jquery.ui.selectable.min.css" publishTime="11/19/2013 14:34:34" />
-    <file relUrl="Content/Site.css" publishTime="01/17/2014 12:28:52" />
-    <file relUrl="bin/Microsoft.Web.WebPages.OAuth.xml" publishTime="05/31/2012 02:00:36" />
-    <file relUrl="bin/System.Web.WebPages.Razor.dll" publishTime="07/10/2012 13:03:34" />
     <file relUrl="Content/themes/base/jquery.ui.slider.css" publishTime="11/19/2013 14:34:33" />
+    <file relUrl="Content/themes/base/minified/jquery.ui.selectable.min.css" publishTime="11/19/2013 14:34:34" />
+    <file relUrl="Content/Site.css" publishTime="01/27/2014 13:07:42" />
+    <file relUrl="Scripts/jquery.validate.unobtrusive.js" publishTime="11/19/2013 14:34:34" />
+    <file relUrl="bin/System.Web.WebPages.Razor.dll" publishTime="07/10/2012 13:03:34" />
     <file relUrl="bin/NewsLibrarySearch.dll" publishTime="01/12/2014 17:35:09" />
     <file relUrl="Areas/Census/Views/Web.config" publishTime="01/12/2014 17:35:12" />
     <file relUrl="Content/themes/base/jquery.ui.button.css" publishTime="11/19/2013 14:34:33" />
@@ -134,10 +133,11 @@
     <file relUrl="bin/System.Net.Http.WebRequest.dll" publishTime="07/10/2012 13:03:12" />
     <file relUrl="Images/orderedList6.png" publishTime="11/19/2013 14:34:34" />
     <file relUrl="bin/System.Web.Helpers.dll" publishTime="07/10/2012 13:03:34" />
+    <file relUrl="bin/Microsoft.Web.WebPages.OAuth.xml" publishTime="05/31/2012 02:00:36" />
     <file relUrl="bin/Microsoft.Web.WebPages.OAuth.dll" publishTime="07/10/2012 13:03:34" />
     <file relUrl="Content/themes/base/minified/images/ui-bg_flat_0_aaaaaa_40x100.png" publishTime="11/19/2013 14:34:33" />
     <file relUrl="Scripts/jquery.validate.min.js" publishTime="11/19/2013 14:34:34" />
-    <file relUrl="bin/DotNetOpenAuth.OAuth.Consumer.dll" publishTime="11/19/2013 14:34:34" />
+    <file relUrl="Content/NewsLibrary.css" publishTime="01/27/2014 14:14:42" />
     <file relUrl="bin/WebMatrix.Data.xml" publishTime="03/08/2012 09:20:12" />
     <file relUrl="Content/themes/base/minified/jquery.ui.button.min.css" publishTime="11/19/2013 14:34:33" />
     <file relUrl="Scripts/jquery.unobtrusive-ajax.min.js" publishTime="11/19/2013 14:34:34" />

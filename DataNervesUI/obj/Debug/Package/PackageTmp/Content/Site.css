@@ -95,14 +95,14 @@ h5, h6 {
 ----------------------------------------------------------*/
 .content-wrapper {
     margin: 0 auto;
-    max-width: 1050px;
+    max-width: 1150px;
 }
 
 #body {
     background-color: #efeeef;
     clear: both;
     padding-bottom: 35px;
-    padding-left: 4px;
+    padding-left: 8px;
     min-width: 660px;
 }
 

@@ -20,7 +20,7 @@ Results.prototype.clear = function () {
 var searchTerms = new Array;
 var resultsData = new Results();
 var colourValues = [
-        "FF0000", "00FF00", "0000FF", "FFFF00", "FF00FF", "00FFFF", "000000",
+        "b3d7e0", "4564a5", "45a2a5", 
         "800000", "008000", "000080", "808000", "800080", "008080", "808080",
         "C00000", "00C000", "0000C0", "C0C000", "C000C0", "00C0C0", "C0C0C0",
         "400000", "004000", "000040", "404000", "400040", "004040", "404040",
@@ -44,7 +44,7 @@ function clearResults() {
 
     //Reset color values to default
     colourValues = [
-        "FF0000", "00FF00", "0000FF", "FFFF00", "FF00FF", "00FFFF", "000000",
+        "b3d7e0", "4564a5", "45a2a5", 
         "800000", "008000", "000080", "808000", "800080", "008080", "808080",
         "C00000", "00C000", "0000C0", "C0C000", "C000C0", "00C0C0", "C0C0C0",
         "400000", "004000", "000040", "404000", "400040", "004040", "404040",
@@ -158,7 +158,7 @@ function drawChart(results) {
 
 
     //Trim resultsLabels if they are too many
-    var goalLength = 36;
+    var goalLength = 32;
     if (resultsLabels.length > goalLength) {
         var b = new Array();
         var n2 = resultsLabels.length - 2;
@@ -210,21 +210,19 @@ function drawLegend() {
 
 }
 
-
 //////////  Helper functions ////////// 
 function randomColor(keyword) {
-    var index = Math.floor(Math.random() * colourValues.length);
-    var randColor = colourValues[index];
-    if (index > -1) {
-        colourValues.splice(index, 1);
-    }
-
-    //var randColor = '#' + (0x1000000 + (Math.random()) * 0xaaaaaa).toString(16).substr(1, 6);
+    //var index = Math.floor(Math.random() * colourValues.length);
+    var color = colourValues[0];
+    //if (index > -1) {
+        colourValues.splice(0, 1);
+    //}
+    
     searchTerms.push({
         keyword: keyword,
-        color: randColor
+        color: color
     });
-    return randColor;
+    return color;
 }
 
 function findWithAttr(array, attr, value) {

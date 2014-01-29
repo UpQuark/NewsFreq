@@ -104,10 +104,6 @@ function newsSearch() {
         $('.DatePicker').prop('disabled', 'disabled').addClass('disabled');
     }
 
-
-        
-    
-
     // Create params
     var params = {
         DateFrom: $('#DateFrom').val(),
@@ -117,11 +113,6 @@ function newsSearch() {
         SearchTarget: ''
     };
 
-    //if (!validateInput(params)) {
-    //    $('#ErrorLabel').text('Please fill out all fields');
-    //    return;
-    //}
-    
     // Send query to API
     $.ajax({
         url: 'api/NewsLibrary',
@@ -129,26 +120,13 @@ function newsSearch() {
         data: { query: params, searchType: specialSearchType },
         dataType: "json",
         success: function (data) {
-            if (specialSearchType != 'None') {
                 resultsData.addVariable($.parseJSON(data));
                 drawTable(resultsData);
-            } else {
-                resultsData.addVariable($.parseJSON(data));
-                drawTable(resultsData);
-            }
         }
     });
 }
 
 ///////// Internal methods /////////
-function validateInput(params) {
-    if ((params.DateFrom === null || params.DateFrom === '' || params.DateTo === null || params.DateTo === '') ||
-        (params.SearchString === null || params.SearchString === '')) {
-        return false;
-    }
-    return true;
-}
-
 
 // Draw table and chart in DOM from results array
 function drawTable(results) {

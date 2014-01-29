@@ -17,8 +17,10 @@ Results.prototype.clear = function () {
 ////////////////////////////////////////////////////////////////
 
 
-var searchTerms = new Array; //Store pairs of search terms with color to graph as
+var searchTerms = new Array(); //Store pairs of search terms with color to graph as
 var resultsData = new Results();
+var ajaxRequests = new Array();
+
 var colourValues = [
         "b3d7e0", "4564a5", "45a2a5", 
         "800000", "008000", "000080", "808000", "800080", "008080", "808080",
@@ -46,6 +48,9 @@ function clearResults() {
     $('.DatePicker').removeAttr('disabled').removeClass('disabled');
     $('#GraphLegend').empty();
     searchTerms = [];
+    $.each(ajaxRequests, function (a, b) {
+        b.abort();
+    });
 
     //Reset color values to default
     colourValues = [
@@ -65,10 +70,8 @@ function clearResults() {
 ///////// Publicly exposed methods /////////
 // Send search to the API backend using UI criteria. 
 function newsSearch() {
-
     //Validate
     var valid = true;
-    
     if ($('#DateFrom').val() == '' || $('#DateFrom').val() == null) {
         $('#DateFrom').addClass('invalid');
         valid = false;
@@ -114,16 +117,18 @@ function newsSearch() {
     };
 
     // Send query to API
-    $.ajax({
+    var request = $.ajax({
         url: 'api/NewsLibrary',
         type: "POST",
         data: { query: params, searchType: specialSearchType },
         dataType: "json",
         success: function (data) {
-                resultsData.addVariable($.parseJSON(data));
-                drawTable(resultsData);
+            
+            resultsData.addVariable($.parseJSON(data));
+            drawTable(resultsData);
         }
     });
+    ajaxRequests.push(request);
 }
 
 ///////// Internal methods /////////

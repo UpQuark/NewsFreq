@@ -162,8 +162,6 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Areas\Census\CensusAreaRegistration.cs" />
-    <Compile Include="Areas\NewsLibrary\NewsLibraryAreaRegistration.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\NewsLibraryController.cs" />
     <Compile Include="Global.asax.cs">
@@ -281,12 +279,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Census\Controllers\" />
-    <Folder Include="Areas\Census\Models\" />
-    <Folder Include="Areas\Census\Views\Shared\" />
-    <Folder Include="Areas\NewsLibrary\Controllers\" />
-    <Folder Include="Areas\NewsLibrary\Models\" />
-    <Folder Include="Areas\NewsLibrary\Views\Shared\" />
+    <Folder Include="Areas\" />
     <Folder Include="Filters\" />
   </ItemGroup>
   <ItemGroup>
@@ -297,12 +290,6 @@
       <Project>{1B295501-ACBB-44EE-B99B-7D03F44643E4}</Project>
       <Name>NewsLibrarySearch</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Areas\Census\Views\Web.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Areas\NewsLibrary\Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\NewsLibrarySearch.cshtml" />

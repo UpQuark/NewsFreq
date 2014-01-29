@@ -69,7 +69,9 @@ namespace DataNervesUI.Controllers
 
                 case "None":
                     query.SendQuery();
-                    return new JavaScriptSerializer().Serialize(query);
+                    queries = new List<NlQuery>();
+                    queries.Add(query);
+                    return new JavaScriptSerializer().Serialize(queries);
             }
             return new JavaScriptSerializer().Serialize(query);
         }

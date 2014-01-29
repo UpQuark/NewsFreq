@@ -69,10 +69,10 @@
         </table>
     </div>
     <div id="SpecialSearchRadioGroup">
-        <span>Search type: </span><span class="question">?</span><br/>
+        <span>Search type: </span><span class="question"><strong>?</strong></span><br/>
         <input type="radio" name="specialSearches" id="Monthly" checked/> Monthly <br/>
         <input type="radio" name="specialSearches" id="Annual"/> Annual <br/>
-        <input type="radio" name="specialSearches" id="None" /> Inclusive <br/>
+        <!--<input type="radio" name="specialSearches" id="None" /> Inclusive <br/>-->
     </div>
 </div>
     
@@ -129,7 +129,7 @@
 
         $(document).ready(function () {
             $("span.question").hover(function () {
-                $(this).append('<div class="tooltip"><p>Monthly searches retrieve one data point for each month in the date range. Annual searches retrieve one point per year. Inclusive searches retrieve the total number of articles for the entire date range. <strong>Single data points cannot be graphed.</strong></p></div>');
+                $(this).append('<div class="tooltip"><p>Monthly searches retrieve one data point for each month in the date range. Annual searches retrieve one point per year. <strong>Single data points cannot be graphed.</strong></p></div>');
             }, function () {
                 $("div.tooltip").remove();
             });

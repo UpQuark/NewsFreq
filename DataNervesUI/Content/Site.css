@@ -244,7 +244,7 @@ textarea {
         border: 1px solid #7ac0da;
     }
 
-    input[type="button"]
+    input[type=button], input[type=submit]
     {
         background-color: #d3dce0;
         border: 1px solid #cccccc;
@@ -259,7 +259,7 @@ textarea {
         
     }
     
-    input[type="button"]:hover {
+    input[type="button"]:hover, input[type=submit]:hover {
         background-color: #b3d7e0;
         color: #555555;
     }

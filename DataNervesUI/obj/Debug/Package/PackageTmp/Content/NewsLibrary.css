@@ -93,6 +93,16 @@ input[type=button].disabledButton:hover {
     color: #bbb;
 }
 
+.ui-datepicker {
+    font-size: 0.85em;
+    border-radius: 0px;
+}
+
+.ui-datepicker-header {
+    border-radius: 0px;
+    background: #cccccc;
+}
+
 input[type=text] {
     color: #676767;
 }

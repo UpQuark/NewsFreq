@@ -17,7 +17,7 @@ Results.prototype.clear = function () {
 ////////////////////////////////////////////////////////////////
 
 
-var searchTerms = new Array;
+var searchTerms = new Array; //Store pairs of search terms with color to graph as
 var resultsData = new Results();
 var colourValues = [
         "b3d7e0", "4564a5", "45a2a5", 
@@ -27,16 +27,21 @@ var colourValues = [
         "200000", "002000", "000020", "202000", "200020", "002020", "202020",
         "600000", "006000", "000060", "606000", "600060", "006060", "606060",
         "A00000", "00A000", "0000A0", "A0A000", "A000A0", "00A0A0", "A0A0A0",
-        "E00000", "00E000", "0000E0", "E0E000", "E000E0", "00E0E0", "E0E0E0",
+        "E00000", "00E000", "0000E0", "E0E000", "E000E0", "00E0E0", "E0E0E0"
     ];
 
 // Clear results and hide displays
 function clearResults() {
     resultsData.clear();
+    $('#ErrorLabel').text('');
     $('#NewsDataChart').hide();
     $('#NewsDataTable').hide();
 
-    $("#SearchButton").prop('value', 'New search');
+    $('#DateFrom').removeClass('invalid');
+    $('#DateTo').removeClass('invalid');
+    $('#SearchTerms').removeClass('invalid');
+
+    $("#SearchButton").prop('value', 'Search');
     $('input[name=specialSearches]').removeAttr('disabled');
     $('.DatePicker').removeAttr('disabled').removeClass('disabled');
     $('#GraphLegend').empty();
@@ -51,15 +56,39 @@ function clearResults() {
         "200000", "002000", "000020", "202000", "200020", "002020", "202020",
         "600000", "006000", "000060", "606000", "600060", "006060", "606060",
         "A00000", "00A000", "0000A0", "A0A000", "A000A0", "00A0A0", "A0A0A0",
-        "E00000", "00E000", "0000E0", "E0E000", "E000E0", "00E0E0", "E0E0E0",
+        "E00000", "00E000", "0000E0", "E0E000", "E000E0", "00E0E0", "E0E0E0"
     ];
 }
 
 
-// Send search to the API backend using UI criteria.
-function newsSearch() {
-    var specialSearchType = 'None'; // Defaults to normal searches
 
+///////// Publicly exposed methods /////////
+// Send search to the API backend using UI criteria. 
+function newsSearch() {
+
+    //Validate
+    var valid = true;
+    
+    if ($('#DateFrom').val() == '' || $('#DateFrom').val() == null) {
+        $('#DateFrom').addClass('invalid');
+        valid = false;
+    } else { $('#DateFrom').removeClass('invalid'); }
+
+    if ($('#DateTo').val() == '' || $('#DateTo').val() == null) {
+        $('#DateTo').addClass('invalid');
+        valid = false;
+    } else { $('#DateTo').removeClass('invalid'); }
+
+    if ($('#SearchTerms').val() == '' || $('#SearchTerms').val() == null) {
+        $('#SearchTerms').addClass('invalid');
+        valid = false;
+    } else { $('#SearchTerms').removeClass('invalid'); }
+
+    if (!valid) {
+        return;
+    }
+
+    var specialSearchType = 'None'; // Defaults to normal searches
     // Check special search types
     if ($('#Monthly').is(':checked')) { 
         specialSearchType = "Monthly";
@@ -75,6 +104,10 @@ function newsSearch() {
         $('.DatePicker').prop('disabled', 'disabled').addClass('disabled');
     }
 
+
+        
+    
+
     // Create params
     var params = {
         DateFrom: $('#DateFrom').val(),
@@ -83,6 +116,11 @@ function newsSearch() {
         SearchString: $('#SearchTerms').val(),
         SearchTarget: ''
     };
+
+    //if (!validateInput(params)) {
+    //    $('#ErrorLabel').text('Please fill out all fields');
+    //    return;
+    //}
     
     // Send query to API
     $.ajax({
@@ -101,6 +139,16 @@ function newsSearch() {
         }
     });
 }
+
+///////// Internal methods /////////
+function validateInput(params) {
+    if ((params.DateFrom === null || params.DateFrom === '' || params.DateTo === null || params.DateTo === '') ||
+        (params.SearchString === null || params.SearchString === '')) {
+        return false;
+    }
+    return true;
+}
+
 
 // Draw table and chart in DOM from results array
 function drawTable(results) {

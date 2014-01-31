@@ -86,7 +86,7 @@ input.invalid {
 input[type=button].disabledButton, input[type=submit].disabledButton {
     color: #bbb;
     background-color: #d3dce0;
-    
+    cursor: default;
 }
 
 input[type=button].disabledButton:hover, input[type=submit].disabledButton:hover {

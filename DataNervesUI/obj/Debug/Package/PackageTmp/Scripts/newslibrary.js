@@ -2,7 +2,7 @@
  * NewsLibrary client-side request formation from UI and handling of existing data
  */
 
-///////// Results data structure, for future expansion /////////
+/* Extensible results data structure */
 function Results() {
     this.data = new Array();
 }
@@ -14,12 +14,12 @@ Results.prototype.addVariable = function(variable) {
 Results.prototype.clear = function () {
     this.data = [];
 };
-////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////
 
-
-var searchTerms = new Array(); //Store pairs of search terms with color to graph as
 var resultsData = new Results();
-var ajaxRequests = new Array();
+
+var searchTerms = new Array();  // Store pairs of search terms with color to graph a
+var ajaxRequests = new Array(); // Store abortable queries
 
 var colourValues = [
         "b3d7e0", "4564a5", "45a2a5", 
@@ -32,45 +32,13 @@ var colourValues = [
         "E00000", "00E000", "0000E0", "E0E000", "E000E0", "00E0E0", "E0E0E0"
     ];
 
-// Clear results and hide displays
-function clearResults() {
-    resultsData.clear();
-    $('#ErrorLabel').text('');
-    $('#NewsDataChart').hide();
-    $('#NewsDataTable').hide();
 
-    $('#DateFrom').removeClass('invalid');
-    $('#DateTo').removeClass('invalid');
-    $('#SearchTerms').removeClass('invalid');
+/* 
+ *  Publicly exposed methods 
+ */
 
-    $("#SearchButton").prop('value', 'Search');
-    $('input[name=specialSearches]').removeAttr('disabled');
-    $('.DatePicker').removeAttr('disabled').removeClass('disabled');
-    $('#GraphLegend').empty();
-    searchTerms = [];
-    $.each(ajaxRequests, function (a, b) {
-        b.abort();
-    });
-
-    //Reset color values to default
-    colourValues = [
-        "b3d7e0", "4564a5", "45a2a5", 
-        "800000", "008000", "000080", "808000", "800080", "008080", "808080",
-        "C00000", "00C000", "0000C0", "C0C000", "C000C0", "00C0C0", "C0C0C0",
-        "400000", "004000", "000040", "404000", "400040", "004040", "404040",
-        "200000", "002000", "000020", "202000", "200020", "002020", "202020",
-        "600000", "006000", "000060", "606000", "600060", "006060", "606060",
-        "A00000", "00A000", "0000A0", "A0A000", "A000A0", "00A0A0", "A0A0A0",
-        "E00000", "00E000", "0000E0", "E0E000", "E000E0", "00E0E0", "E0E0E0"
-    ];
-}
-
-
-
-///////// Publicly exposed methods /////////
 // Send search to the API backend using UI criteria. 
 function newsSearch() {
-    //Validate
     var valid = true;
     if ($('#DateFrom').val() == '' || $('#DateFrom').val() == null) {
         $('#DateFrom').addClass('invalid');
@@ -87,13 +55,14 @@ function newsSearch() {
         valid = false;
     } else { $('#SearchTerms').removeClass('invalid'); }
 
-    if (!valid) {
+    // Kill function if validation fails
+    if (!valid) { 
         return;
     }
 
-    var specialSearchType = 'None'; // Defaults to normal searches
+    var specialSearchType = 'None'; 
     // Check special search types
-    if ($('#Monthly').is(':checked')) { 
+    if ($('#Monthly').is(':checked')) {
         specialSearchType = "Monthly";
     }
     if ($('#Annual').is(':checked')) {
@@ -101,10 +70,11 @@ function newsSearch() {
     }
 
     // Alter UI for in-progress search
-    if(specialSearchType != 'None') {
+    if (specialSearchType != 'None') {
         $("#SearchButton").prop('value', 'Add variable');
         $('input[name=specialSearches]').attr('disabled', 'disabled');
         $('.DatePicker').prop('disabled', 'disabled').addClass('disabled');
+        $('#ClearButton').prop('disabled', '').removeClass('disabledButton');
     }
 
     // Create params
@@ -123,17 +93,64 @@ function newsSearch() {
         data: { query: params, searchType: specialSearchType },
         dataType: "json",
         success: function (data) {
-            
+
             resultsData.addVariable($.parseJSON(data));
-            drawTable(resultsData);
+            drawVisuals(resultsData);
         }
     });
     ajaxRequests.push(request);
 }
 
-///////// Internal methods /////////
 
-// Draw table and chart in DOM from results array
+// Clear all search data and reset UI
+function clearResults() {
+    resultsData.clear();
+    
+    $('#ErrorLabel').text('');
+    $('#NewsDataChart').hide();
+    $('#NewsDataTable').hide();
+    $('#GraphLegend').empty();
+    
+    $('#DateFrom').removeClass('invalid');
+    $('#DateTo').removeClass('invalid');
+    $('#SearchTerms').removeClass('invalid');
+
+    $("#SearchButton").prop('value', 'Search');
+    $('input[name=specialSearches]').removeAttr('disabled');
+    $('.DatePicker').removeAttr('disabled').removeClass('disabled');
+    $('#ClearButton').prop('disabled', 'disabled').addClass('disabledButton');
+    
+    searchTerms = [];
+    
+    $.each(ajaxRequests, function (a, b) {
+        b.abort();
+    });
+
+    //Reset color values to default literal
+    colourValues = [
+        "b3d7e0", "4564a5", "45a2a5", 
+        "800000", "008000", "000080", "808000", "800080", "008080", "808080",
+        "C00000", "00C000", "0000C0", "C0C000", "C000C0", "00C0C0", "C0C0C0",
+        "400000", "004000", "000040", "404000", "400040", "004040", "404040",
+        "200000", "002000", "000020", "202000", "200020", "002020", "202020",
+        "600000", "006000", "000060", "606000", "600060", "006060", "606060",
+        "A00000", "00A000", "0000A0", "A0A000", "A000A0", "00A0A0", "A0A0A0",
+        "E00000", "00E000", "0000E0", "E0E000", "E000E0", "00E0E0", "E0E0E0"
+    ];
+}
+
+
+/*
+ *  Internal methods 
+ */
+
+// Wraps data visualization drawing. Easier to expand with data field expansion.
+function drawVisuals(results) {
+    drawTable(results);
+    drawChart(results);
+}
+
+// Draw table from results array,
 function drawTable(results) {
     var tblBody = "";
     $.each(results.data, function (a, b) {
@@ -148,13 +165,11 @@ function drawTable(results) {
     });
     $("#NewsDataTableContent").html(tblBody);
     $('#NewsDataTable').show(); //Table starts hidden when unpopulated
-    drawChart(results);
 }
 
-// Draw chart from resultsData, and draw corresponding legend
+// Draw chart from resultsData, draw corresponding legend
 function drawChart(results) {
     var searchTerm;
-    //searchTerms = [];
 
     var resultsLabels = new Array();
     $.each(results.data[0], function(r, v) {
@@ -174,7 +189,7 @@ function drawChart(results) {
         if (index != -1) {
             color = searchTerms[index].color;
         } else {
-            color = randomColor(searchTerm);
+            color = getColor(searchTerm);
         }
 
         data.push(
@@ -188,35 +203,9 @@ function drawChart(results) {
         });
     });
 
-
-    //Trim resultsLabels if they are too many
+    //Trim resultsLabels to goalLength if length exceeds it
     var goalLength = 12;
-    if (resultsLabels.length > goalLength) {
-        var b = new Array();
-        var n2 = resultsLabels.length - 2;
-        var m2 = goalLength - 2;
-        b[0] = resultsLabels[0];
-        var j = 0;
-        var k = 0;
-        while (j < n2) {
-            var diff = (k + 1) * n2 - (j + 1) * m2;
-            if (diff < n2 / 2) {
-                k += 1;
-                j += 1;
-                b[k] = resultsLabels[j];
-            }
-            else j += 1;
-           }
-        b[m2 + 1] = n2 + 1;
-
-        for (var i = 0; i < resultsLabels.length; i++ ) {
-            if (b.indexOf(resultsLabels[i]) == -1 ) {
-                resultsLabels[i] = '';
-            }
-        }
-
-            //resultsLabels = b;
-    }
+    resultsLabels = trimArray(resultsLabels, goalLength);
 
     var lineChartData = {
         labels: resultsLabels,
@@ -228,7 +217,7 @@ function drawChart(results) {
         pointDot: false
     };
 
-    var myLine = new Chart(document.getElementById("NewsDataChart").getContext("2d")).Line(lineChartData, lineChartOptions);
+    new Chart(document.getElementById("NewsDataChart").getContext("2d")).Line(lineChartData, lineChartOptions);
     drawLegend();
     $('#NewsDataChart').show(); //Chart starts hidden when unpopulated
 }
@@ -239,17 +228,17 @@ function drawLegend() {
     $.each(searchTerms, function(a, b) {
         $('#GraphLegend').append('<span style="background-color: #' + b.color + ';">&nbsp&nbsp&nbsp&nbsp</span>&nbsp' + b.keyword.replace(/ /g, '&nbsp') + '&nbsp&nbsp ');
     });
-
 }
 
-//////////  Helper functions ////////// 
-function randomColor(keyword) {
-    //var index = Math.floor(Math.random() * colourValues.length);
+
+/*
+ *  Helper functions 
+ */
+
+//Retrieve a color from the color array and remove that index
+function getColor(keyword) {
     var color = colourValues[0];
-    //if (index > -1) {
-        colourValues.splice(0, 1);
-    //}
-    
+    colourValues.splice(0, 1);
     searchTerms.push({
         keyword: keyword,
         color: color
@@ -257,6 +246,7 @@ function randomColor(keyword) {
     return color;
 }
 
+// Find index with attribute in array
 function findWithAttr(array, attr, value) {
     for (var i = 0; i < array.length; i += 1) {
         if (array[i][attr] === value) {
@@ -266,9 +256,37 @@ function findWithAttr(array, attr, value) {
     return -1;
 }
 
-// Converts JSON date notation to mm/dd/yy string
+// Convert JSON date notation to mm/dd/yy string
 function getDateString(jsonDate) {
     var date = new Date(parseInt(jsonDate.substr(6)));
     return (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear();
 }
 
+// Replaces elements of array with empty string at regular intervals until nonempty cells == goalLength
+function trimArray(array, goalLength) {
+    if (array.length > goalLength) {
+        var b = new Array();
+        var n2 = array.length - 2;
+        var m2 = goalLength - 2;
+        b[0] = array[0];
+        var j = 0;
+        var k = 0;
+        while (j < n2) {
+            var diff = (k + 1) * n2 - (j + 1) * m2;
+            if (diff < n2 / 2) {
+                k += 1;
+                j += 1;
+                b[k] = array[j];
+            }
+            else j += 1;
+        }
+        b[m2 + 1] = n2 + 1;
+
+        for (var i = 0; i < array.length; i++) {
+            if (b.indexOf(array[i]) == -1) {
+                array[i] = '';
+            }
+        }
+    }
+    return array;
+}

@@ -20,6 +20,7 @@ var resultsData = new Results();
 
 var searchTerms = new Array();  // Store pairs of search terms with color to graph a
 var ajaxRequests = new Array(); // Store abortable queries
+var specialSearchType = 'None'; 
 
 var colourValues = [
         "b3d7e0", "4564a5", "45a2a5", 
@@ -60,7 +61,6 @@ function newsSearch() {
         return;
     }
 
-    var specialSearchType = 'None'; 
     // Check special search types
     if ($('#Monthly').is(':checked')) {
         specialSearchType = "Monthly";
@@ -107,9 +107,10 @@ function clearResults() {
     resultsData.clear();
     
     $('#ErrorLabel').text('');
-    $('#NewsDataChart').hide();
+    $('#NewsDataGraph').hide();
     $('#NewsDataTable').hide();
-    $('#GraphLegend').empty();
+    $('#NewsDataGraphLegend').empty();
+    $('#NewsDataGraphLabel').hide();
     
     $('#DateFrom').removeClass('invalid');
     $('#DateTo').removeClass('invalid');
@@ -217,16 +218,24 @@ function drawChart(results) {
         pointDot: false
     };
 
-    new Chart(document.getElementById("NewsDataChart").getContext("2d")).Line(lineChartData, lineChartOptions);
+    new Chart(document.getElementById("NewsDataGraph").getContext("2d")).Line(lineChartData, lineChartOptions);
     drawLegend();
-    $('#NewsDataChart').show(); //Chart starts hidden when unpopulated
+    $('#NewsDataGraph').show(); //Chart starts hidden when unpopulated
+    var labelText = 'Articles Per {1} Featuring Keyword';
+    if (specialSearchType == 'Monthly') {
+        labelText = labelText.replace('{1}', 'Month');
+    }
+    else if (specialSearchType == 'Annual') {
+        labelText = labelText.replace('{1}', 'Year');
+    }
+    $('#NewsDataGraphLabel').text(labelText).show();
 }
 
 // Draw key for graph in DOM
 function drawLegend() {
-    $('#GraphLegend').empty();
+    $('#NewsDataGraphLegend').empty();
     $.each(searchTerms, function(a, b) {
-        $('#GraphLegend').append('<span style="background-color: #' + b.color + ';">&nbsp&nbsp&nbsp&nbsp</span>&nbsp' + b.keyword.replace(/ /g, '&nbsp') + '&nbsp&nbsp ');
+        $('#NewsDataGraphLegend').append('<span style="background-color: #' + b.color + ';">&nbsp&nbsp&nbsp&nbsp</span>&nbsp' + b.keyword.replace(/ /g, '&nbsp') + '&nbsp&nbsp ');
     });
 }
 

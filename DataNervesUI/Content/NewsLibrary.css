@@ -1,15 +1,4 @@
-﻿/* News form elements */ 
-.descriptionText {
-    font-size: 1em;
-    position: relative;
-    max-width: 410px;
-}
-
-.disclaimer {
-    font-size: 0.8em;
-    max-width: 410px;
-}
-
+﻿/* Search form elements */ 
 #NewsSearchForm {
     position: relative;
     min-height: 360px;
@@ -20,7 +9,19 @@
     position: absolute; top: 233px; left: 250px;
 }
 
-/* Data table */ 
+.descriptionText {
+    font-size: 1em;
+    position: relative;
+    max-width: 410px;
+}
+
+.disclaimerText {
+    font-size: 0.8em;
+    max-width: 410px;
+}
+
+
+/* News Data table */ 
 #NewsDataTableWrapper {
     min-width: 410px;
     position: relative;
@@ -42,22 +43,33 @@
     font-size: 0.9em;
 }
 
-/* Data display */
-#NewsDataChartWrapper {
+/* Graph Elements */
+#NewsDataGraphWrapper {
     float: left;
     max-width: 500px;
+    min-height: 350px;
     margin-top: 8px;
+    position: relative;
 }
 
-#NewsDataChart
+#NewsDataGraph
 {
     display: none;
+}
+
+#NewsDataGraphLabel 
+{
+    font-weight: bold;
+    font-size: 0.9em;
+    display: none;
+    position: absolute;
+    left: 180px;
+    top: -5px;
 }
     
 
 /* Legend */ 
-
-#GraphLegend {
+#NewsDataGraphLegend {
     position: relative;
     left: 25px;
     font-size: 0.8em;
@@ -112,7 +124,6 @@ input[type=text] {
 }
 
 /* Tooltip */
-
 span.question {
   cursor: pointer;
   display: inline-block;

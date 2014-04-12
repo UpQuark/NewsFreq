@@ -7,7 +7,7 @@
 }
 
 <div id="NewsSearchForm">
-    <div class="content-wrapper">
+    <div class="master-content-wrapper">
         <hgroup class="title">
             <h1>@ViewBag.Title</h1>
             <h2>@ViewBag.Message</h2>
@@ -19,9 +19,6 @@
             You can use it to gather data on major trends in news reporting and visualize them in seconds.
             Try searching issues that interest you to see how the volume of coverage changes over time and how it compares to other topics.<br/>
         </p>
-        <p class="disclaimerText">
-            This application is a work in progress and will change over time. Feedback, comments and bug reports are encouraged; please direct them <a href = "mailto:sam@datanerves.com">here</a>
-        </p>
     </div>
     <div id="NewsDataFormWrapper">
         <table id="NewsDataSearchForm">
@@ -30,7 +27,24 @@
                     <span>
                         Enter search term or terms. Boolean operators are supported
                     </span><br/>
-                    <input type="text" id="SearchTerms" placeholder="Search Terms"/>
+                    <input type="text" id="SearchTerms" placeholder="Keywords"/>
+                    <span>&nbsp; in &nbsp;</span>
+                    <select id="SearchTargets">
+                        <option value="">entire article</option>
+                        <option value="Lead">lede</option>
+                        <option value="Title">headline</option>
+                        <option value="Topics">index terms</option>
+                        <option value="Author">author</option>
+                        <option value="Section">section</option>
+                        <option value="Source">source</option>
+                    </select>
+                    <span class="question"><strong>?</strong></span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Enter news source:<br/></span>
+                    <input type="text" id="SearchSource" placeholder="News source"/>
                 </td>
             </tr>
             <tr>
@@ -39,26 +53,10 @@
                     <input type="text" id="DateFrom" class = "DatePicker" placeholder = "Start date"/>
                     <span>&nbsp; to &nbsp;</span>  
                     <input type="text" id="DateTo" class = "DatePicker" placeholder = "End date"/>
-                
                 </td>
             </tr>
             <tr>
                 <td>
-                    <!--
-                        <select>
-                            <span>In</span>
-                            <option value="">Whole article</option>
-                            <option value="Lead">Lede</option>
-                            <option value="Title">Headline</option>
-                            <option value="Topics">Index Terms</option>
-                            <option value="Author">Author</option>
-                            <option value="Section">Section</option>
-                            <option value="Edition">Edition</option>
-                            <option value="CapGraph">Caption</option>
-                            <option value="Page">Page</option>
-                            <option value="Source">Source</option>
-                        </select>
-                        -->
                     <span id="ErrorLabel"></span>
                     <input type="submit" value="Search" id="SearchButton" onclick="newsSearch()" />
                     <input type="button" value="Clear data" id="ClearButton" onclick="clearResults()" class = "disabledButton" disabled="disabled" />
@@ -69,12 +67,29 @@
             </tr>
         </table>
     </div>
-    <div id="SpecialSearchRadioGroup">
-        <span>Search type: </span><span class="question"><strong>?</strong></span><br/>
-        <input type="radio" name="specialSearches" id="Monthly" checked/> Monthly <br/>
-        <input type="radio" name="specialSearches" id="Annual"/> Annual <br/>
-        <!--<input type="radio" name="specialSearches" id="None" /> Inclusive <br/>-->
+    <div id="NewsFormRadioGroupWrapper">
+        <table>
+            <tr>
+                <td>
+                    <div id="SearchIncrementRadioGroup">
+                        <span>Search increment: </span><span class="question"><strong>?</strong></span><br/>
+                        <input type="radio" name="searchIncrement" id="Monthly" checked/> Monthly <br/>
+                        <input type="radio" name="searchIncrement" id="Annual"/> Annual <br/>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>            
+                <div id="SearchWeightRadioGroup">
+                    <span>Search type: </span><span class="question"><strong>?</strong></span><br/>
+                    <input type="radio" name="searchWeight" id="Unweighted" checked/> Unweighted <br/>
+                    <input type="radio" name="searchWeight" id="Weighted"/> Weighted <br/>
+                </div>
+                </td>
+            </tr>
+        </table>
     </div>
+    
 </div>
  
 <div id="NewsDataGraphWrapper">

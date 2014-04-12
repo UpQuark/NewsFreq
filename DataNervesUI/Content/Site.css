@@ -1,4 +1,7 @@
-﻿html {
+﻿/* Basic elements
+----------------------------------------------------------*/
+/* Basic tags */
+html {
     background-color: #e2e2e2;
     margin: 0;
     padding: 0;
@@ -36,28 +39,6 @@ nav, section {
     display: block;
 }
 
-mark {
-    background-color: #545454;
-    padding-left: 5px;
-    padding-right: 5px;
-}
-
-.float-left {
-    float: left;
-}
-
-.float-right {
-    float: right;
-}
-
-.clear-fix:after {
-    content: ".";
-    clear: both;
-    display: block;
-    height: 0;
-    visibility: hidden;
-}
-
 h1, h2, h3,
 h4, h5, h6 {
     color: #2b2b2b;
@@ -77,23 +58,28 @@ h3 {
     font-size: 1.2em;
 }
 
-h4 {
-    font-size: 1.1em;
+/* Basic classes */
+.float-left {
+    float: left;
 }
 
-h5, h6 {
-    font-size: 1em;
+.float-right {
+    float: right;
 }
 
-    h5 a:link, h5 a:visited, h5 a:active {
-        padding: 0;
-        text-decoration: none;
-    }
+.clear-fix:after {
+    content: ".";
+    clear: both;
+    display: block;
+    height: 0;
+    visibility: hidden;
+}
 
 
-/* main layout
+/* Main layout elements
 ----------------------------------------------------------*/
-.content-wrapper {
+
+.master-content-wrapper {
     margin: 0 auto;
     max-width: 1150px;
 }
@@ -107,7 +93,7 @@ h5, h6 {
 }
 
   
-header .content-wrapper {
+header .master-content-wrapper {
     padding-top: 20px; 
 }
 
@@ -119,11 +105,13 @@ footer {
 }
 
 
-/* site title
+/* Header contents
 ----------------------------------------------------------*/
+
+/* Site title */
 .site-title {
     color: #fefefe;
-    font-family: Rockwell, Consolas, "Courier New", Courier, monospace;
+    font-family: "Century Gothic", Verdana, Helvetica, Sans-Serif;
     font-size: 2.3em;
     margin: 0;
 }
@@ -135,9 +123,7 @@ footer {
     text-decoration: none;
 }
 
-
-/* menu
-----------------------------------------------------------*/
+/* Navigation menu */
 ul#menu {
     font-size: 1.3em;
     font-weight: 600;
@@ -164,31 +150,8 @@ ul#menu {
         }
 
 
-/* page elements
+/* Page elements
 ----------------------------------------------------------*/
-/* featured */
-.featured {
-    background-color: #fff;
-}
-
-    .featured .content-wrapper {
-        background-color: #7c7c7c;
-        background-image: -ms-linear-gradient(left, #7c7c7c 0%, #959595 100%);
-        background-image: -o-linear-gradient(left, #7c7c7c 0%, #959595 100%);
-        background-image: -webkit-gradient(linear, left top, right top, color-stop(0, #7c7c7c), color-stop(1, #959595));
-        background-image: -webkit-linear-gradient(left, #7c7c7c 0%, #959595 100%);
-        background-image: linear-gradient(left, #7c7c7c 0%, #959595 100%);
-        color: #3e5667;
-        padding: 20px 40px 30px 40px;
-    }
-
-        .featured hgroup.title h1, .featured hgroup.title h2 {
-            color: #fff;
-        }
-
-        .featured p {
-            font-size: 1.1em;
-        }
 
 /* page titles */
 hgroup.title {
@@ -204,27 +167,6 @@ hgroup.title h2 {
     margin-left: 3px;
 }
 
-/* features */
-section.feature {
-    width: 300px;
-    float: left;
-    padding: 10px;
-}
-
-/* contact */
-.contact h3 {
-    font-size: 1.2em;
-}
-
-.contact p {
-    margin: 5px 0 0 10px;
-}
-
-.contact iframe {
-    border: 1px solid #333;
-    margin: 5px 0 0 10px;
-}
-
 /* forms */
 input, textarea {
     border: 1px solid #e2e2e2;
@@ -235,6 +177,14 @@ input, textarea {
     padding: 5px;
 }
 
+select {
+    border: 1px solid #e2e2e2;
+    background: #fff;
+    color: #333;
+    font-size: 1.2em;
+    margin: 5px 0 6px 0;
+    padding: 5px;
+}
 textarea {
     font-family: inherit;
     width: 500px;
@@ -263,14 +213,8 @@ textarea {
         background-color: #b3d7e0;
         color: #555555;
     }
-    
-.DatePicker {
-    width: 80px;
-}
-
-
-/* tables
-----------------------------------------------------------*/
+   
+/* Tables */
 table {
     border-collapse: collapse;
     border-spacing: 0;
@@ -286,4 +230,3 @@ td {
 tr.pager td {
     padding: 0 0.25em 0 0;
 }
-

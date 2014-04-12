@@ -20,7 +20,8 @@ var resultsData = new Results();
 
 var searchTerms = new Array();  // Store pairs of search terms with color to graph a
 var ajaxRequests = new Array(); // Store abortable queries
-var specialSearchType = 'None'; 
+var specialSearchType = 'None';
+var weighted = false;
 
 var colourValues = [
         "b3d7e0", "4564a5", "45a2a5", 
@@ -40,6 +41,8 @@ var colourValues = [
 
 // Send search to the API backend using UI criteria. 
 function newsSearch() {
+    
+    // User input validation
     var valid = true;
     if ($('#DateFrom').val() == '' || $('#DateFrom').val() == null) {
         $('#DateFrom').addClass('invalid');
@@ -61,13 +64,16 @@ function newsSearch() {
         return;
     }
 
-    // Check special search types
+    // Check search time increment
     if ($('#Monthly').is(':checked')) {
         specialSearchType = "Monthly";
     }
     if ($('#Annual').is(':checked')) {
         specialSearchType = "Annual";
     }
+
+    // Check search display type
+    weighted = true;
 
     // Alter UI for in-progress search
     if (specialSearchType != 'None') {
@@ -83,22 +89,44 @@ function newsSearch() {
         DateTo: $('#DateTo').val(),
         DateString: $('#DateFrom').val() + ' to ' + $('#DateTo').val(),
         SearchString: $('#SearchTerms').val(),
-        SearchTarget: ''
+        SearchTarget: $('#SearchTargets').val(),
+        SearchSource: $('#SearchSource').val()
+    };
+
+    // Create params
+    var weightParams = {
+        DateFrom: $('#DateFrom').val(),
+        DateTo: $('#DateTo').val(),
+        DateString: $('#DateFrom').val() + ' to ' + $('#DateTo').val(),
+        SearchString: $('#SearchTerms').val(),
+        SearchTarget: '',
+        SearchSource: $('#SearchSource').val()
     };
 
     // Send query to API
-    var request = $.ajax({
+    var keywordCountRequest = $.ajax({
         url: 'api/NewsLibrary',
         type: "POST",
         data: { query: params, searchType: specialSearchType },
         dataType: "json",
         success: function (data) {
-
             resultsData.addVariable($.parseJSON(data));
-            drawVisuals(resultsData);
+            if (weighted) {
+                var weightCounts = $.ajax({
+                    url: 'api/NewsLibrary',
+                    type: "POST",
+                    data: { query: weightParams, searchType: specialSearchType },
+                    dataType: "json",
+                    success: function (response) {
+                        drawVisuals(resultsData, response);
+                    }
+                });
+            } else {
+                drawVisuals(resultsData);
+            }
         }
     });
-    ajaxRequests.push(request);
+    ajaxRequests.push(keywordCountRequest);
 }
 
 
@@ -123,11 +151,12 @@ function clearResults() {
     
     searchTerms = [];
     
+    // Abort all requests in progress
     $.each(ajaxRequests, function (a, b) {
         b.abort();
     });
 
-    //Reset color values to default literal
+    // Reset color values to default literal
     colourValues = [
         "b3d7e0", "4564a5", "45a2a5", 
         "800000", "008000", "000080", "808000", "800080", "008080", "808080",

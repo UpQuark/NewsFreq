@@ -38,6 +38,8 @@ namespace DataNervesUI.Controllers
                                                     var monthQuery = new NlQuery
                                                                         {
                                                                             SearchString = query.SearchString,
+                                                                            SearchTarget = query.SearchTarget,
+                                                                            SearchSource = query.SearchSource,
                                                                             DateFrom = dateFrom.AddMonths(i),
                                                                             DateTo = dateFrom.AddMonths(i+1).AddDays(-1)
                                                                         };
@@ -58,6 +60,8 @@ namespace DataNervesUI.Controllers
                                                     var yearQuery = new NlQuery
                                                                         {
                                                                             SearchString = query.SearchString,
+                                                                            SearchTarget = query.SearchTarget,
+                                                                            SearchSource = query.SearchSource,
                                                                             DateFrom = dateFrom.AddYears(i),
                                                                             DateTo = dateFrom.AddYears(i+1).AddDays(-1)
                                                                         };
@@ -75,6 +79,8 @@ namespace DataNervesUI.Controllers
             }
             return new JavaScriptSerializer().Serialize(query);
         }
+
+        #region Private helpers
 
         /// <summary>
         /// Calculates the number of months between two dates, inclusively with first and last
@@ -96,7 +102,7 @@ namespace DataNervesUI.Controllers
             return monthsBetween;
         }
 
-        private int YearsBetween (DateTime startDate, DateTime endDate)
+        private int YearsBetween(DateTime startDate, DateTime endDate)
         {
             int yearsBetween = 0;
             if (startDate.Year != endDate.Year)
@@ -110,4 +116,7 @@ namespace DataNervesUI.Controllers
             return yearsBetween;
         }
     }
+
+        #endregion
+
 }

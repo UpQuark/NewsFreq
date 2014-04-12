@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewsLibrarySearch", "NlSearchLib\NewsLibrarySearch.csproj", "{1B295501-ACBB-44EE-B99B-7D03F44643E4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CensusDataGrab", "CensusDataGrab\CensusDataGrab.csproj", "{CEADB613-D517-496A-9A54-3862C1B5A5FD}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataNervesUI", "DataNervesUI\DataNervesUI.csproj", "{E532E55C-8AB1-42F4-92DE-AF80229EC474}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataNervesUI.Test", "DataNervesUI.Test\DataNervesUI.Test.csproj", "{63513E72-4BED-49E3-96FA-C62EB61DF5F6}"
@@ -39,16 +37,6 @@ Global
 		{1B295501-ACBB-44EE-B99B-7D03F44643E4}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{1B295501-ACBB-44EE-B99B-7D03F44643E4}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{1B295501-ACBB-44EE-B99B-7D03F44643E4}.Release|x86.ActiveCfg = Release|Any CPU
-		{CEADB613-D517-496A-9A54-3862C1B5A5FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CEADB613-D517-496A-9A54-3862C1B5A5FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CEADB613-D517-496A-9A54-3862C1B5A5FD}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{CEADB613-D517-496A-9A54-3862C1B5A5FD}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{CEADB613-D517-496A-9A54-3862C1B5A5FD}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{CEADB613-D517-496A-9A54-3862C1B5A5FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CEADB613-D517-496A-9A54-3862C1B5A5FD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CEADB613-D517-496A-9A54-3862C1B5A5FD}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{CEADB613-D517-496A-9A54-3862C1B5A5FD}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{CEADB613-D517-496A-9A54-3862C1B5A5FD}.Release|x86.ActiveCfg = Release|Any CPU
 		{E532E55C-8AB1-42F4-92DE-AF80229EC474}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E532E55C-8AB1-42F4-92DE-AF80229EC474}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E532E55C-8AB1-42F4-92DE-AF80229EC474}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU

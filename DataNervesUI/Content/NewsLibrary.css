@@ -1,12 +1,13 @@
-﻿/* Search form elements */ 
+﻿/* Search form elements
+----------------------------------------------------------*/
 #NewsSearchForm {
     position: relative;
     min-height: 360px;
     float: left;
 }
 
-#SpecialSearchRadioGroup {
-    position: absolute; top: 233px; left: 250px;
+#SearchIncrementRadioGroup {
+    
 }
 
 .descriptionText {
@@ -20,8 +21,13 @@
     max-width: 410px;
 }
 
+/* Radio group */
+#NewsFormRadioGroupWrapper {
+    position: absolute; top: 233px; left: 250px;
+}
 
-/* News Data table */ 
+/* Data table elements
+----------------------------------------------------------*/
 #NewsDataTableWrapper {
     min-width: 410px;
     position: relative;
@@ -43,7 +49,8 @@
     font-size: 0.9em;
 }
 
-/* Graph Elements */
+/* Graph elements
+----------------------------------------------------------*/
 #NewsDataGraphWrapper {
     float: left;
     max-width: 500px;
@@ -76,19 +83,8 @@
     line-height: 20px
 }
 
-/* Loading icons */
-.modal {
-    display:    none;
-}
-
-body.loading {
-    overflow: hidden;   
-}
-
-body.loading .modal {
-    display: inline;
-}
-
+/* Input elements
+----------------------------------------------------------*/
 
 /* Inputs */
 input.invalid {
@@ -103,6 +99,12 @@ input[type=button].disabledButton, input[type=submit].disabledButton {
 
 input[type=button].disabledButton:hover, input[type=submit].disabledButton:hover {
     color: #bbb;
+}
+
+
+/* Datepickers */
+.DatePicker {
+    width: 80px;
 }
 
 .DatePicker.disabled{
@@ -123,7 +125,20 @@ input[type=text] {
     color: #676767;
 }
 
-/* Tooltip */
+/* Loading icons */
+.modal {
+    display:    none;
+}
+
+body.loading {
+    overflow: hidden;   
+}
+
+body.loading .modal {
+    display: inline;
+}
+
+/* Tooltips */
 span.question {
   cursor: pointer;
   display: inline-block;

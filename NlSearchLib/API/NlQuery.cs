@@ -49,6 +49,7 @@ namespace NewsLibrarySearch.API
         }
         public String SearchString { get; set; }
         public String SearchTarget { get; set; }
+        public String SearchSource { get; set; }
 
         // Count recieved from response
         public int Count
@@ -78,29 +79,29 @@ namespace NewsLibrarySearch.API
         }
 
         // Search constructor, sends query from passed search criteria
-        public NlQuery(DateTime dateFrom, DateTime dateTo, String searchString, String searchTarget)
+        public NlQuery(DateTime dateFrom, DateTime dateTo, String searchString, String searchTarget, String searchSource)
         {
             DateFrom = dateFrom;
             DateTo = dateTo;
             SearchString = searchString;
             SearchTarget = searchTarget;
+            SearchSource = searchSource;
             DateString = DateString;
             CreatedDate = DateTime.Now;
             Count = Send();
-            
         }
 
         // Copy constructor
-        public NlQuery(DateTime dateFrom, DateTime dateTo, String searchString, String searchTarget, int count)
+        public NlQuery(DateTime dateFrom, DateTime dateTo, String searchString, String searchTarget, String searchSource, int count)
         {
             DateFrom = dateFrom;
             DateTo = dateTo;
             SearchString = searchString;
             SearchTarget = searchTarget;
+            SearchSource = searchSource;
             DateString = DateString;
             CreatedDate = DateTime.Now;
             Count = count;
-            
         }
 
         // Copy constructor
@@ -111,6 +112,7 @@ namespace NewsLibrarySearch.API
             DateString = DateString;
             SearchString = query.SearchString;
             SearchTarget = query.SearchTarget;
+            SearchSource = query.SearchSource;
             Count = query.Count;
             CreatedDate = DateTime.Now;
         }
@@ -122,7 +124,7 @@ namespace NewsLibrarySearch.API
         // Send search Data to retrieve count.
         public void SendQuery()
         {
-            DateString = DateString;
+            DateString = DateString; // Create date string
             Count = Send();
         }
 
@@ -136,7 +138,6 @@ namespace NewsLibrarySearch.API
         /// <returns>Returns number of results found for the given search criteria</returns>
         protected int Send()
         {
-
             HttpWebResponse response;
             var searchResultCount = 0;
             if (SendSearchRequest(out response))
@@ -191,19 +192,24 @@ namespace NewsLibrarySearch.API
         {
             return new Uri
                 (
-                NlUriBase
-                + NlUriStem
-                + "&p_text_base-0="
-                + SearchString
-                + "&p_field_base-0="
-                + "&p_bool_base-1=AND&p_text_base-1=&p_field_base-1=&p_bool_base-2=AND&p_text_base-2="
-                + "&p_field_base-2="
-                //+ SearchTarget
-                + "&p_text_YMD_date-0=" + DateString.Replace(@"/", "%2F") 
-                + "&p_field_YMD_date-0=" 
-                + "YMD_date"
-                + "&p_params_YMD_date-0=" + "date%3AB%2C"
-                + "&p_field_YMD_date-3=YMD_date&p_params_YMD_date-3=date%3AB%2CE&Search.x=18&Search.y=18&Search=Search"
+                    NlUriBase
+                    + NlUriStem
+                    + "&p_text_base-0=" + SearchString
+                    + "&p_field_base-0="
+                    + "&p_bool_base-1=" + "AND"
+                    + "&p_text_base-1=" + SearchSource
+                    + "&p_field_base-1=" + "Source"
+                    + "&p_bool_base-2="
+                    + "AND&p_text_base-2="
+                    + "&p_field_base-2=" + SearchTarget
+                    + "&p_text_YMD_date-0=" + DateString.Replace(@"/", "%2F") 
+                    + "&p_field_YMD_date-0=" + "YMD_date"
+                    + "&p_params_YMD_date-0=" + "date%3AB%2C"
+                    + "&p_field_YMD_date-3=" + "YMD_date"
+                    + "&p_params_YMD_date-3=" + "date%3AB%2CE"
+                    + "&Search.x=" + "18" 
+                    + "&Search.y=" + "18"
+                    + "&Search=" + "Search"
                 );
         }
 

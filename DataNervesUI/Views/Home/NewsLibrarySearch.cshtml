@@ -6,13 +6,11 @@
     ViewBag.Title = "News Frequency Search";
 }
 
-<div id="NewsSearchForm">
-    <div class="master-content-wrapper">
-        <hgroup class="title">
-            <h1>@ViewBag.Title</h1>
-            <h2>@ViewBag.Message</h2>
-        </hgroup>
-    </div>
+<div class="master-content-wrapper">
+    <h1>@ViewBag.Title</h1>
+    <h2>@ViewBag.Message</h2>
+</div>
+<div id="NewsDataFormWrapper"  class="block-content-wrapper">
     <div>
         <p class="descriptionText">
             This tool enables you to analyze the popularity of topics in American news coverage.
@@ -20,7 +18,7 @@
             Try searching issues that interest you to see how the volume of coverage changes over time and how it compares to other topics.<br/>
         </p>
     </div>
-    <div id="NewsDataFormWrapper">
+    <div id="NewsDataInputWrapper">
         <table id="NewsDataSearchForm">
             <tr>
                 <td>
@@ -38,7 +36,6 @@
                         <option value="Section">section</option>
                         <option value="Source">source</option>
                     </select>
-                    <span class="question"><strong>?</strong></span>
                 </td>
             </tr>
             <tr>
@@ -80,7 +77,7 @@
             </tr>
             <tr>
                 <td>            
-                    <div id="SearchWeightRadioGroup">
+                    <div id="SearchWeightRadioGroup" style="display:none">
                         <span>Search type: </span><span class="question"><strong>?</strong></span><br/>
                         <input type="radio" name="searchWeight" id="Unweighted" checked/> Unweighted <br/>
                         <input type="radio" name="searchWeight" id="Weighted"/> Weighted <br/>
@@ -89,24 +86,21 @@
             </tr>
         </table>
     </div>
-    
 </div>
  
-<div id="NewsDataGraphWrapper">
-    <canvas id="NewsDataGraph" height="350" width="500"></canvas>
+<div id="NewsDataGraphWrapper" >
+    <canvas id="NewsDataGraph" height="350" width="480"></canvas>
     <div id="NewsDataGraphLegend"></div>
     <div id="NewsDataGraphLabel"></div>
 </div>
     
-<div id="NewsDataTableWrapper">  
+<div id="NewsDataTableWrapper" class="block-content-wrapper">  
     <table id="NewsDataTable">
         <tbody id="NewsDataTableContent">
         </tbody>
     </table>
     <meta name = "viewport" content = "initial-scale = 1, user-scalable = no">
 </div> 
-
-
 
 @section Scripts{
     <script type="text/javascript">

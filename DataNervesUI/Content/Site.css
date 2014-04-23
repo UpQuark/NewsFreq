@@ -52,12 +52,17 @@ h1 {
 
 h2 {
     font-size: 1.75em;
+    margin: 0;
 }
 
 h3 {
     font-size: 1.2em;
 }
 
+p {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
 /* Basic classes */
 .float-left {
     float: left;
@@ -81,7 +86,7 @@ h3 {
 
 .master-content-wrapper {
     margin: 0 auto;
-    max-width: 1150px;
+    max-width: 1100px;
 }
 
 #body {
@@ -93,7 +98,7 @@ h3 {
 }
 
   
-header .master-content-wrapper {
+header {
     padding-top: 20px; 
 }
 
@@ -114,6 +119,7 @@ footer {
     font-family: "Century Gothic", Verdana, Helvetica, Sans-Serif;
     font-size: 2.3em;
     margin: 0;
+    margin-left: 2px;
 }
 
 .site-title a, .site-title a:hover, .site-title a:active {

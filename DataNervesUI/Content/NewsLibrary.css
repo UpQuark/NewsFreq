@@ -1,9 +1,19 @@
-﻿/* Search form elements
+﻿/* Shared elements
 ----------------------------------------------------------*/
-#NewsSearchForm {
+
+.block-content-wrapper {
+    width: 405px;
+    float: left;
+    position: relative;
+    display: block;
+}
+
+
+/* Search form elements
+----------------------------------------------------------*/
+#NewsSearchFormWrapper {
     position: relative;
     min-height: 360px;
-    float: left;
 }
 
 #SearchIncrementRadioGroup {
@@ -23,15 +33,15 @@
 
 /* Radio group */
 #NewsFormRadioGroupWrapper {
-    position: absolute; top: 233px; left: 250px;
+    position: absolute; 
+    top: 192px; 
+    left: 210px;
 }
 
 /* Data table elements
 ----------------------------------------------------------*/
 #NewsDataTableWrapper {
     min-width: 410px;
-    position: relative;
-    float: left;
 }
 
 #NewsDataTable .newsTableHead
@@ -54,8 +64,9 @@
 #NewsDataGraphWrapper {
     float: left;
     max-width: 500px;
-    min-height: 350px;
-    margin-top: 8px;
+    min-height: 430px;
+    margin-top: 5px;
+    margin-bottom: 11px;
     position: relative;
 }
 
@@ -83,6 +94,16 @@
     line-height: 20px
 }
 
+.NewsDataGraphLegendCell{
+    padding: 1px;
+    margin: 2px;
+}
+
+.NewsDataGraphLegendCell:hover{
+    border: 1px #800000 solid;
+    margin: 1px;
+}
+
 /* Input elements
 ----------------------------------------------------------*/
 
@@ -104,7 +125,7 @@ input[type=button].disabledButton:hover, input[type=submit].disabledButton:hover
 
 /* Datepickers */
 .DatePicker {
-    width: 80px;
+    width: 86px;
 }
 
 .DatePicker.disabled{

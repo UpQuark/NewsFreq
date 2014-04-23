@@ -3,6 +3,7 @@
  */
 
 /* Extensible results data structure */
+//////////////////////////////////////////////////
 function Results() {
     this.data = new Array();
 }
@@ -14,7 +15,8 @@ Results.prototype.addVariable = function(variable) {
 Results.prototype.clear = function () {
     this.data = [];
 };
-//////////////////////////////////////////////////
+
+
 var resultsData = new Results();
 var searchKeywordColors = new Array();  // Store pairs of search terms with color to graph a
 var ajaxRequests = new Array(); // Store abortable queries
@@ -32,10 +34,8 @@ var colourValues = [
 ];
 
 
-/* 
- *  Publicly exposed methods 
- */
-
+/* Publicly exposed methods */
+//////////////////////////////////////////////////
 function newsSearch() {
     // Kill function if validation fails
     if (!validateUserInput()) { 
@@ -112,7 +112,6 @@ function newsSearch() {
     ajaxRequests.push(keywordCountRequest);
 }
 
-
 // Clear all search data and reset UI
 function clearResults() {
     resultsData.clear();
@@ -153,9 +152,8 @@ function clearResults() {
 }
 
 
-/*
- *  Internal methods 
- */
+/*  Internal methods  */
+//////////////////////////////////////////////////
 
 // Validate user input from DOM
 function validateUserInput() {
@@ -222,6 +220,11 @@ function drawTable(results, weight) {
 
 // Draw chart from resultsData, draw corresponding legend
 function drawChart(results, weight) {
+    if (results.data.length == 0) {
+        clearResults();
+        return;
+    }
+
     if (weight != null) {
 
     }
@@ -283,7 +286,7 @@ function drawChart(results, weight) {
 
     // Create chart on canvas
     new Chart(document.getElementById("NewsDataGraph").getContext("2d")).Line(lineChartData, lineChartOptions);
-    drawLegend();
+    drawLegend(results, weight);
     $('#NewsDataGraph').show(); //Chart starts hidden when unpopulated
     var labelText = 'Articles Per {1} Featuring Keyword';
     if (searchIncrement == 'Monthly') {
@@ -296,18 +299,40 @@ function drawChart(results, weight) {
 }
 
 // Draw key for graph in DOM
-function drawLegend() {
+function drawLegend(results, weight) {
     $('#NewsDataGraphLegend').empty();
     $.each(searchKeywordColors, function (a, b) {
-        $('#NewsDataGraphLegend').append('<span style="background-color: #' + b.color + ';">&nbsp&nbsp&nbsp&nbsp</span>&nbsp' + b.keyword.replace(/ /g, '&nbsp') + ':&nbsp' + b.source + '&nbsp&nbsp ');
+        var source = "";
+        if (b.source != null) { source = b.source; }
+        $('#NewsDataGraphLegend').append(
+            '<span class="NewsDataGraphLegendCell" data-source="'
+            + source
+            + '" data-keyword="'
+            + b.keyword
+            + '"><span style="background-color: #'
+            + b.color
+            + ';">&nbsp&nbsp&nbsp&nbsp&nbsp</span>'
+            + b.keyword.replace(/ /g, '&nbsp')
+            + ':&nbsp'
+            + source
+            + '&nbsp&nbsp </span>'
+        );
+        $('.NewsDataGraphLegendCell').click(function () { removeVariable($(this).data('keyword'))});
     });
+    function removeVariable(keyword) {
+        searchKeywordColors.splice(findWithAttr(searchKeywordColors, 'keyword', keyword), 1);
+        $.each(results.data, function(a, b) {
+            while (findWithAttr(b, 'SearchString', keyword) != -1) {
+                b.splice(findWithAttr(b, 'SearchString', keyword), 1);
+            }
+        });
+        drawChart(results, weight);
+    }
 }
 
 
-/*
- *  Helper functions 
- */
-
+/* Helper functions */
+//////////////////////////////////////////////////
 //Retrieve a color from the color array and remove that index
 function getColor(keyword, source) {
     var color = colourValues[0];

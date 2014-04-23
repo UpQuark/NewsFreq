@@ -296,9 +296,6 @@
     <Content Include="Views\Home\NewsLibrarySearch.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Home\Chart.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Scripts\component.json" />
   </ItemGroup>
   <PropertyGroup>

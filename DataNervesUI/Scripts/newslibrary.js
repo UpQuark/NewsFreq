@@ -15,16 +15,13 @@ Results.prototype.clear = function () {
     this.data = [];
 };
 //////////////////////////////////////////////////
-
 var resultsData = new Results();
-
-var searchTerms = new Array();  // Store pairs of search terms with color to graph a
+var searchKeywordColors = new Array();  // Store pairs of search terms with color to graph a
 var ajaxRequests = new Array(); // Store abortable queries
-var specialSearchType = 'None';
-var weighted = false;
-
+var searchIncrement = 'None';
+var searchWeighted = false;
 var colourValues = [
-        "b3d7e0", "4564a5", "45a2a5", 
+        "b3d7e0", "4564a5", "45a2a5",
         "800000", "008000", "000080", "808000", "800080", "008080", "808080",
         "C00000", "00C000", "0000C0", "C0C000", "C000C0", "00C0C0", "C0C0C0",
         "400000", "004000", "000040", "404000", "400040", "004040", "404040",
@@ -32,56 +29,40 @@ var colourValues = [
         "600000", "006000", "000060", "606000", "600060", "006060", "606060",
         "A00000", "00A000", "0000A0", "A0A000", "A000A0", "00A0A0", "A0A0A0",
         "E00000", "00E000", "0000E0", "E0E000", "E000E0", "00E0E0", "E0E0E0"
-    ];
+];
 
 
 /* 
  *  Publicly exposed methods 
  */
 
-// Send search to the API backend using UI criteria. 
 function newsSearch() {
-    
-    // User input validation
-    var valid = true;
-    if ($('#DateFrom').val() == '' || $('#DateFrom').val() == null) {
-        $('#DateFrom').addClass('invalid');
-        valid = false;
-    } else { $('#DateFrom').removeClass('invalid'); }
-
-    if ($('#DateTo').val() == '' || $('#DateTo').val() == null) {
-        $('#DateTo').addClass('invalid');
-        valid = false;
-    } else { $('#DateTo').removeClass('invalid'); }
-
-    if ($('#SearchTerms').val() == '' || $('#SearchTerms').val() == null) {
-        $('#SearchTerms').addClass('invalid');
-        valid = false;
-    } else { $('#SearchTerms').removeClass('invalid'); }
-
     // Kill function if validation fails
-    if (!valid) { 
+    if (!validateUserInput()) { 
         return;
     }
 
     // Check search time increment
     if ($('#Monthly').is(':checked')) {
-        specialSearchType = "Monthly";
+        searchIncrement = "Monthly";
     }
     if ($('#Annual').is(':checked')) {
-        specialSearchType = "Annual";
+        searchIncrement = "Annual";
     }
 
     // Check search display type
-    weighted = true;
+    if ($('#Weghted').is(':checked')) {
+        searchWeighted = true;
+    }
+    if ($('#Unweighted').is(':checked')) {
+        searchWeighted = false;
+    }
 
     // Alter UI for in-progress search
-    if (specialSearchType != 'None') {
-        $("#SearchButton").prop('value', 'Add variable');
-        $('input[name=specialSearches]').attr('disabled', 'disabled');
-        $('.DatePicker').prop('disabled', 'disabled').addClass('disabled');
-        $('#ClearButton').prop('disabled', '').removeClass('disabledButton');
-    }
+    $("#SearchButton").prop('value', 'Add variable');
+    $('input[name=specialSearches]').attr('disabled', 'disabled');
+    $('.DatePicker').prop('disabled', 'disabled').addClass('disabled');
+    $('#ClearButton').prop('disabled', '').removeClass('disabledButton');
 
     // Create params
     var params = {
@@ -93,32 +74,34 @@ function newsSearch() {
         SearchSource: $('#SearchSource').val()
     };
 
-    // Create params
-    var weightParams = {
-        DateFrom: $('#DateFrom').val(),
-        DateTo: $('#DateTo').val(),
-        DateString: $('#DateFrom').val() + ' to ' + $('#DateTo').val(),
-        SearchString: $('#SearchTerms').val(),
-        SearchTarget: '',
-        SearchSource: $('#SearchSource').val()
-    };
+    // Create weighting request params
+    if (searchWeighted) {
+        var weightParams = {
+            DateFrom: $('#DateFrom').val(),
+            DateTo: $('#DateTo').val(),
+            DateString: $('#DateFrom').val() + ' to ' + $('#DateTo').val(),
+            SearchString: $('#SearchTerms').val(),
+            SearchTarget: '',
+            SearchSource: $('#SearchSource').val()
+        };
+    }
 
     // Send query to API
     var keywordCountRequest = $.ajax({
         url: 'api/NewsLibrary',
         type: "POST",
-        data: { query: params, searchType: specialSearchType },
+        data: { query: params, searchType: searchIncrement },
         dataType: "json",
         success: function (data) {
             resultsData.addVariable($.parseJSON(data));
-            if (weighted) {
+            if (searchWeighted) {
                 var weightCounts = $.ajax({
                     url: 'api/NewsLibrary',
                     type: "POST",
-                    data: { query: weightParams, searchType: specialSearchType },
+                    data: { query: weightParams, searchType: searchIncrement },
                     dataType: "json",
                     success: function (response) {
-                        drawVisuals(resultsData, response);
+                        drawVisuals(resultsData, weightData);
                     }
                 });
             } else {
@@ -149,7 +132,7 @@ function clearResults() {
     $('.DatePicker').removeAttr('disabled').removeClass('disabled');
     $('#ClearButton').prop('disabled', 'disabled').addClass('disabledButton');
     
-    searchTerms = [];
+    searchKeywordColors = [];
     
     // Abort all requests in progress
     $.each(ajaxRequests, function (a, b) {
@@ -174,19 +157,59 @@ function clearResults() {
  *  Internal methods 
  */
 
+// Validate user input from DOM
+function validateUserInput() {
+    var valid = true;
+
+    var dateFrom = $('#DateFrom').val();
+    var dateTo = $('#DateTo').val();
+
+    if (dateFrom == ''
+        || dateFrom == null
+        || (isNaN(Date.parse(dateFrom)))) {
+
+        $('#DateFrom').addClass('invalid');
+        valid = false;
+    } else { $('#DateFrom').removeClass('invalid'); }
+
+    if (dateTo == ''
+        || dateTo == null
+        || (isNaN(Date.parse(dateTo)))) {
+        $('#DateTo').addClass('invalid');
+        valid = false;
+    } else { $('#DateTo').removeClass('invalid'); }
+
+    if ($('#SearchTerms').val() == '' || $('#SearchTerms').val() == null) {
+        $('#SearchTerms').addClass('invalid');
+        valid = false;
+    } else { $('#SearchTerms').removeClass('invalid'); }
+
+    if (valid) {
+        return true
+    }
+    return false;
+}
+
 // Wraps data visualization drawing. Easier to expand with data field expansion.
-function drawVisuals(results) {
-    drawTable(results);
-    drawChart(results);
+function drawVisuals(results, weight) {
+    if (typeof weight === "undefined") {
+        weight = null;
+    }
+    drawTable(results, weight);
+    drawChart(results, weight);
 }
 
 // Draw table from results array,
-function drawTable(results) {
-    var tblBody = "";
+function drawTable(results, weight) {
+    if (weight != null) {
+
+    }
+    var tblBody = '<tr class="newsTableHead"><td>Keyword</td><td>Source</td><td>From</td><td>To</td><td>Instances</td></tr>';
     $.each(results.data, function (a, b) {
         $.each(b, function(r, v) {
             var tblRow = "";
             tblRow += "<td>" + v.SearchString + "</td>";
+            tblRow += v.SearchSource !== null ?  "<td>" + v.SearchSource + "</td>" : "<td></td>";
             tblRow += "<td>" + getDateString(v.DateFrom) + "</td>";
             tblRow += "<td>" + getDateString(v.DateTo) + "</td>";
             tblRow += "<td>" + v.Count.toString() + "</td>";
@@ -194,67 +217,79 @@ function drawTable(results) {
         });
     });
     $("#NewsDataTableContent").html(tblBody);
-    $('#NewsDataTable').show(); //Table starts hidden when unpopulated
+    $('#NewsDataTable').show(); // Table starts hidden when unpopulated
 }
 
 // Draw chart from resultsData, draw corresponding legend
-function drawChart(results) {
-    var searchTerm;
+function drawChart(results, weight) {
+    if (weight != null) {
 
-    var resultsLabels = new Array();
+    }
+
+    var searchString;
+    var searchSource;
+
+    // Drop all dateFrom strings into results labels array
+    var chartLabels = new Array();
     $.each(results.data[0], function(r, v) {
-        resultsLabels.push(getDateString(v.DateFrom));
+        chartLabels.push(getDateString(v.DateFrom));
     });
 
-    var data = new Array();
+    var chartQuantData = new Array();
+
+    // Process all the results data into the data array
     $.each(results.data, function (a, b) {
         var resultsCount = new Array();
         $.each(b, function (r, v) {
             resultsCount.push(v.Count);
-            searchTerm = v.SearchString;
+            searchString = v.SearchString;
+            searchSource = v.SearchSource;
         });
 
-        var color;
-        var index = findWithAttr(searchTerms, 'keyword', searchTerm);
+        //Check if keyword already exists in searchKeywordColors and is already associated with a color, else make a new one
+        var index = findWithAttr(searchKeywordColors, 'keyword', searchString);
         if (index != -1) {
-            color = searchTerms[index].color;
+            var color = searchKeywordColors[index].color;
         } else {
-            color = getColor(searchTerm);
+            var color = getColor(searchString, searchSource);
         }
 
-        data.push(
+        // Add point data to data set
+        chartQuantData.push(
         {
             fillColor: "rgba(220,220,220,0.0)",
             strokeColor: color,
             pointColor: color,
             pointStrokeColor: "#fff",
             data: resultsCount,
-            title: searchTerm
+            title: searchString
         });
     });
 
-    //Trim resultsLabels to goalLength if length exceeds it
-    var goalLength = 12;
-    resultsLabels = trimArray(resultsLabels, goalLength);
+    // Trim chartLabels to goalLength if length exceeds it
+    var goalLength = 24;
+    chartLabels = trimArray(chartLabels, goalLength);
 
     var lineChartData = {
-        labels: resultsLabels,
-        datasets: data
+        labels: chartLabels,
+        datasets: chartQuantData
     };
 
     var lineChartOptions = {
-        bezierCurve: false,
-        pointDot: false
+        bezierCurve: true,
+        pointDot: false,
+        scaleFontSize: 10
     };
 
+    // Create chart on canvas
     new Chart(document.getElementById("NewsDataGraph").getContext("2d")).Line(lineChartData, lineChartOptions);
     drawLegend();
     $('#NewsDataGraph').show(); //Chart starts hidden when unpopulated
     var labelText = 'Articles Per {1} Featuring Keyword';
-    if (specialSearchType == 'Monthly') {
+    if (searchIncrement == 'Monthly') {
         labelText = labelText.replace('{1}', 'Month');
     }
-    else if (specialSearchType == 'Annual') {
+    else if (searchIncrement == 'Annual') {
         labelText = labelText.replace('{1}', 'Year');
     }
     $('#NewsDataGraphLabel').text(labelText).show();
@@ -263,8 +298,8 @@ function drawChart(results) {
 // Draw key for graph in DOM
 function drawLegend() {
     $('#NewsDataGraphLegend').empty();
-    $.each(searchTerms, function(a, b) {
-        $('#NewsDataGraphLegend').append('<span style="background-color: #' + b.color + ';">&nbsp&nbsp&nbsp&nbsp</span>&nbsp' + b.keyword.replace(/ /g, '&nbsp') + '&nbsp&nbsp ');
+    $.each(searchKeywordColors, function (a, b) {
+        $('#NewsDataGraphLegend').append('<span style="background-color: #' + b.color + ';">&nbsp&nbsp&nbsp&nbsp</span>&nbsp' + b.keyword.replace(/ /g, '&nbsp') + ':&nbsp' + b.source + '&nbsp&nbsp ');
     });
 }
 
@@ -274,12 +309,13 @@ function drawLegend() {
  */
 
 //Retrieve a color from the color array and remove that index
-function getColor(keyword) {
+function getColor(keyword, source) {
     var color = colourValues[0];
     colourValues.splice(0, 1);
-    searchTerms.push({
+    searchKeywordColors.push({
         keyword: keyword,
-        color: color
+        color: color,
+        source: source
     });
     return color;
 }

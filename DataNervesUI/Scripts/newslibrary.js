@@ -303,7 +303,11 @@ function drawLegend(results, weight) {
     $('#NewsDataGraphLegend').empty();
     $.each(searchKeywordColors, function (a, b) {
         var source = "";
-        if (b.source != null) { source = b.source; }
+        var sourcePrefix = "";
+        if (b.source != null) {
+            source = b.source;
+            sourcePrefix = ":&nbsp";
+        }
         $('#NewsDataGraphLegend').append(
             '<span class="NewsDataGraphLegendCell" data-source="'
             + source
@@ -311,9 +315,9 @@ function drawLegend(results, weight) {
             + b.keyword
             + '"><span style="background-color: #'
             + b.color
-            + ';">&nbsp&nbsp&nbsp&nbsp&nbsp</span>'
+            + ';">&nbsp&nbsp&nbsp&nbsp&nbsp</span>&nbsp'
             + b.keyword.replace(/ /g, '&nbsp')
-            + ':&nbsp'
+            + sourcePrefix
             + source
             + '&nbsp&nbsp </span>'
         );

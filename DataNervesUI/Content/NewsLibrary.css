@@ -64,7 +64,7 @@
 #NewsDataGraphWrapper {
     float: left;
     max-width: 500px;
-    min-height: 430px;
+    height: 390px;
     margin-top: 5px;
     margin-bottom: 11px;
     position: relative;

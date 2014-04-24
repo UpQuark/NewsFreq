@@ -36,11 +36,49 @@ var colourValues = [
 
 /* Publicly exposed methods */
 //////////////////////////////////////////////////
+
+function initializeUi() {
+    // Initialize datepicker and tooltips
+    $(".DatePicker").datepicker({ changeYear: true });
+    $("span.question").hover(function () {
+        $(this).append('<div class="tooltip"><p>Monthly searches retrieve one data point for each month in the date range. Annual searches retrieve one point per year. <strong>Single data points cannot be graphed.</strong></p></div>');
+    }, function () {
+        $("div.tooltip").remove();
+    });
+    
+    // Set the body to 'loading' when an ajax request is in progress
+    var $body = $("body");
+    $(document).on({
+        ajaxStart: function () {
+            if (!$('#None').is(':checked')) {
+                $body.addClass("loading");
+            }
+        },
+        ajaxStop: function () {
+            $body.removeClass("loading");
+        }
+    });
+    
+    // Add selection of source/parent to UI
+    $('#SourceTypeRadioGroup > input[type=radio]').click(function() {
+        if ($('#SourceRadio').is(':checked')) {
+            $('#SearchSource').show();
+            $('#ParentCompany').hide();
+        }
+        if ($('#ParentRadio').is(':checked')) {
+            $('#ParentCompany').show();
+            $('#SearchSource').hide();
+        }
+    });
+}
+
+// Execute a new search to backend
 function newsSearch() {
     // Kill function if validation fails
     if (!validateUserInput()) { 
         return;
     }
+
 
     // Check search time increment
     if ($('#Monthly').is(':checked')) {
@@ -100,7 +138,7 @@ function newsSearch() {
                     type: "POST",
                     data: { query: weightParams, searchType: searchIncrement },
                     dataType: "json",
-                    success: function (response) {
+                    success: function (weightData) {
                         drawVisuals(resultsData, weightData);
                     }
                 });
@@ -183,7 +221,7 @@ function validateUserInput() {
     } else { $('#SearchTerms').removeClass('invalid'); }
 
     if (valid) {
-        return true
+        return true;
     }
     return false;
 }
@@ -270,7 +308,7 @@ function drawChart(results, weight) {
     });
 
     // Trim chartLabels to goalLength if length exceeds it
-    var goalLength = 24;
+    var goalLength = 30;
     chartLabels = trimArray(chartLabels, goalLength);
 
     var lineChartData = {
@@ -365,7 +403,7 @@ function getDateString(jsonDate) {
     return (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear();
 }
 
-// Replaces elements of array with empty string at regular intervals until nonempty cells == goalLength
+// Replaces elements of array with empty string at regular intervals until # of nonempty cells == goalLength
 function trimArray(array, goalLength) {
     if (array.length > goalLength) {
         var b = new Array();

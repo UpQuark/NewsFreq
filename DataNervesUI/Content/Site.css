@@ -190,6 +190,8 @@ select {
     font-size: 1.2em;
     margin: 5px 0 6px 0;
     padding: 5px;
+    width: 133px;
+    height: 29px;
 }
 textarea {
     font-family: inherit;

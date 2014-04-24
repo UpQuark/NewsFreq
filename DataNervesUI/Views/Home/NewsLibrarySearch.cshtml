@@ -40,8 +40,22 @@
             </tr>
             <tr>
                 <td>
-                    <span>Enter news source:<br/></span>
-                    <input type="text" id="SearchSource" placeholder="News source"/>
+                    <div id="NewsDataInputSourceWrapper">
+                        <span>Search by:<br/></span>
+                        <div id="SourceTypeRadioGroup">
+                            <input type="radio" name="sourceType" id="SourceRadio" checked/><label for="SourceRadio"> Source publication </label><br/>
+                            <input type="radio" name="sourceType" id="ParentRadio"/><label for="ParentRadio"> Parent company</label><br/>
+                        </div>
+                        <input type="text" id="SearchSource" placeholder="News source (optional)"/>
+                        <select id="ParentCompany" style="display:none">
+                            <option value="">Comcast</option>
+                            <option value="">Disney</option>
+                            <option value="">NewsCorp / 21st Century Fox</option>
+                            <option value="">Time Warner</option>
+                            <option value="">Viacom</option>
+                            <option value="">CBS</option>
+                        </select>
+                    </div>
                 </td>
             </tr>
             <tr>
@@ -70,8 +84,8 @@
                 <td>
                     <div id="SearchIncrementRadioGroup">
                         <span>Search increment: </span><span class="question"><strong>?</strong></span><br/>
-                        <input type="radio" name="searchIncrement" id="Monthly" checked/> Monthly <br/>
-                        <input type="radio" name="searchIncrement" id="Annual"/> Annual <br/>
+                        <input type="radio" name="searchIncrement" id="Monthly" checked/><label for="Monthly"> Monthly</label><br/>
+                        <input type="radio" name="searchIncrement" id="Annual"/><label for="Annual"> Annual</label> <br/>
                     </div>
                 </td>
             </tr>
@@ -79,8 +93,8 @@
                 <td>            
                     <div id="SearchWeightRadioGroup" style="display:none">
                         <span>Search type: </span><span class="question"><strong>?</strong></span><br/>
-                        <input type="radio" name="searchWeight" id="Unweighted" checked/> Unweighted <br/>
-                        <input type="radio" name="searchWeight" id="Weighted"/> Weighted <br/>
+                        <input type="radio" name="searchWeight" id="Unweighted" checked/><label for="Unweighted"> Unweighted</label><br/>
+                        <input type="radio" name="searchWeight" id="Weighted"/> <label for="Weighted"> Weighted</label><br/>
                     </div>
                 </td>
             </tr>
@@ -105,28 +119,7 @@
 @section Scripts{
     <script type="text/javascript">
         $(document).ready(function () {
-            $(".DatePicker").datepicker({ changeYear: true });
-        });
-
-        $body = $("body");
-
-        $(document).on({
-            ajaxStart: function () {
-                if (!$('#None').is(':checked')) {
-                    $body.addClass("loading");
-                }
-            },
-            ajaxStop: function () {
-                $body.removeClass("loading");
-            }
-        });
-
-        $(document).ready(function () {
-            $("span.question").hover(function () {
-                $(this).append('<div class="tooltip"><p>Monthly searches retrieve one data point for each month in the date range. Annual searches retrieve one point per year. <strong>Single data points cannot be graphed.</strong></p></div>');
-            }, function () {
-                $("div.tooltip").remove();
-            });
+            initializeUi();
         });
     </script>
 }

@@ -195,13 +195,10 @@ namespace NewsLibrarySearch.API
                     NlUriBase
                     + NlUriStem
                     + "&p_text_base-0=" + SearchString
-                    + "&p_field_base-0="
+                    + "&p_field_base-0=" + SearchTarget
                     + "&p_bool_base-1=" + "AND"
                     + "&p_text_base-1=" + SearchSource
                     + "&p_field_base-1=" + "Source"
-                    + "&p_bool_base-2="
-                    + "AND&p_text_base-2="
-                    + "&p_field_base-2=" + SearchTarget
                     + "&p_text_YMD_date-0=" + DateString.Replace(@"/", "%2F") 
                     + "&p_field_YMD_date-0=" + "YMD_date"
                     + "&p_params_YMD_date-0=" + "date%3AB%2C"

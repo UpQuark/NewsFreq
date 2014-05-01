@@ -315,7 +315,7 @@ function drawChart(results, weight) {
         });
 
         //Check if keyword already exists in searchKeywordColors and is already associated with a color, else make a new one
-        var index = findWithAttr(searchKeywordColors, 'keyword', searchString);
+        var index = findElemByKeywordSource(searchKeywordColors, searchString, searchSource);
         if (index != -1) {
             var color = searchKeywordColors[index].color;
         } else {
@@ -345,6 +345,8 @@ function drawChart(results, weight) {
 
     var lineChartOptions;
 
+
+    //TODO: condense these into single block with amendment
     if (searchWeighted == false) {
         lineChartOptions = {
             bezierCurve: true,
@@ -390,7 +392,7 @@ function drawLegend(results, weight) {
         }
         $('#NewsDataGraphLegend').append(
             '<span class="NewsDataGraphLegendCell" data-source="'
-            + source
+            + source.replace(/ /g, '&nbsp')
             + '" data-keyword="'
             + b.keyword
             + '"><span style="background-color: #'
@@ -401,8 +403,9 @@ function drawLegend(results, weight) {
             + source
             + '&nbsp&nbsp </span>'
         );
-        $('.NewsDataGraphLegendCell').click(function () { removeVariable($(this).data('keyword'))});
+        $('.NewsDataGraphLegendCell').click(function () { removeVariable($(this).data('keyword')); });
     });
+    
     function removeVariable(keyword) {
         searchKeywordColors.splice(findWithAttr(searchKeywordColors, 'keyword', keyword), 1);
         $.each(results.data, function(a, b) {
@@ -433,6 +436,15 @@ function getColor(keyword, source) {
 function findWithAttr(array, attr, value) {
     for (var i = 0; i < array.length; i += 1) {
         if (array[i][attr] === value) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+function findElemByKeywordSource(results, keyword, source) {
+    for (var i = 0; i < results.length; i += 1) {
+        if (results[i]['keyword'] === keyword && results[i]['source'] === source) {
             return i;
         }
     }

@@ -18,6 +18,7 @@ Results.prototype.clear = function () {
 
 
 var resultsData = new Results();
+var weightData = new Results();
 var searchKeywordColors = new Array();  // Store pairs of search terms with color to graph a
 var ajaxRequests = new Array(); // Store abortable queries
 var searchIncrement = 'None';
@@ -32,6 +33,8 @@ var colourValues = [
         "A00000", "00A000", "0000A0", "A0A000", "A000A0", "00A0A0", "A0A0A0",
         "E00000", "00E000", "0000E0", "E0E000", "E000E0", "00E0E0", "E0E0E0"
 ];
+
+
 
 
 /* Publicly exposed methods */
@@ -89,7 +92,7 @@ function newsSearch() {
     }
 
     // Check search display type
-    if ($('#Weghted').is(':checked')) {
+    if ($('#Weighted').is(':checked')) {
         searchWeighted = true;
     }
     if ($('#Unweighted').is(':checked')) {
@@ -98,9 +101,12 @@ function newsSearch() {
 
     // Alter UI for in-progress search
     $("#SearchButton").prop('value', 'Add variable');
-    $('input[name=specialSearches]').attr('disabled', 'disabled');
+    $('input[name=searchIncrement]').attr('disabled', 'disabled');
+    $('input[name=searchWeight]').attr('disabled', 'disabled');
+    $('input[name=sourceType]').attr('disabled', 'disabled');
     $('.DatePicker').prop('disabled', 'disabled').addClass('disabled');
     $('#ClearButton').prop('disabled', '').removeClass('disabledButton');
+    
 
     // Create params
     var params = {
@@ -118,8 +124,8 @@ function newsSearch() {
             DateFrom: $('#DateFrom').val(),
             DateTo: $('#DateTo').val(),
             DateString: $('#DateFrom').val() + ' to ' + $('#DateTo').val(),
-            SearchString: $('#SearchTerms').val(),
-            SearchTarget: '',
+            SearchString: '',
+            SearchTarget: $('#SearchTargets').val(),
             SearchSource: $('#SearchSource').val()
         };
     }
@@ -138,7 +144,8 @@ function newsSearch() {
                     type: "POST",
                     data: { query: weightParams, searchType: searchIncrement },
                     dataType: "json",
-                    success: function (weightData) {
+                    success: function (weight) {
+                        weightData.addVariable($.parseJSON(weight));
                         drawVisuals(resultsData, weightData);
                     }
                 });
@@ -165,7 +172,9 @@ function clearResults() {
     $('#SearchTerms').removeClass('invalid');
 
     $("#SearchButton").prop('value', 'Search');
-    $('input[name=specialSearches]').removeAttr('disabled');
+    $('input[name=searchIncrement]').removeAttr('disabled');
+    $('input[name=searchWeight]').removeAttr('disabled');
+    $('input[name=sourceType]').removeAttr('disabled');
     $('.DatePicker').removeAttr('disabled').removeClass('disabled');
     $('#ClearButton').prop('disabled', 'disabled').addClass('disabledButton');
     
@@ -231,8 +240,26 @@ function drawVisuals(results, weight) {
     if (typeof weight === "undefined") {
         weight = null;
     }
-    drawTable(results, weight);
-    drawChart(results, weight);
+
+    var weightedResults = new Results();
+
+    if (weight != null) {
+        $.each(results.data, function (i, item) {
+            weightedResults.data[i] = new Array();
+            $.each(item, function (k, element) {
+                var weightedResult = $.extend(true, {}, element);
+                weightedResult.Count = element.Count / weight.data[i][k].Count;
+                weightedResult.Count = weightedResult.Count * 100;
+                weightedResult.Count = Math.round(weightedResult.Count * 100) / 100;
+                weightedResults.data[i][k] = weightedResult;
+            });
+        });
+    } else {
+        weightedResults = results;
+    }
+
+    drawTable(weightedResults);
+    drawChart(weightedResults);
 }
 
 // Draw table from results array,
@@ -316,11 +343,26 @@ function drawChart(results, weight) {
         datasets: chartQuantData
     };
 
-    var lineChartOptions = {
-        bezierCurve: true,
-        pointDot: false,
-        scaleFontSize: 10
-    };
+    var lineChartOptions;
+
+    if (searchWeighted == false) {
+        lineChartOptions = {
+            bezierCurve: true,
+            pointDot: false,
+            scaleFontSize: 10,
+        };
+    }
+
+    if (searchWeighted == true) {
+        lineChartOptions = {
+            bezierCurve: true,
+            pointDot: false,
+            scaleFontSize: 10,
+            scaleLabel: "<%=value+'%'%>",
+        };
+    }
+
+    
 
     // Create chart on canvas
     new Chart(document.getElementById("NewsDataGraph").getContext("2d")).Line(lineChartData, lineChartOptions);

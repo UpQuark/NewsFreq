@@ -34,8 +34,12 @@
 /* Radio group */
 #NewsFormRadioGroupWrapper {
     position: absolute; 
-    top: 192px; 
+    top: 183px; 
     left: 210px;
+}
+
+.newsDataRadioGroup {
+    
 }
 
 /* Data table elements

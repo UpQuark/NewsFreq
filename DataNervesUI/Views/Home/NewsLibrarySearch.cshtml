@@ -39,10 +39,11 @@
                 </td>
             </tr>
             <tr>
+                
                 <td>
                     <div id="NewsDataInputSourceWrapper">
                         <span>Search by:<br/></span>
-                        <div id="SourceTypeRadioGroup">
+                        <div id="SourceTypeRadioGroup" class="newsDataRadioGroup">
                             <input type="radio" name="sourceType" id="SourceRadio" checked/><label for="SourceRadio"> Source publication </label><br/>
                             <input type="radio" name="sourceType" id="ParentRadio"/><label for="ParentRadio"> Parent company</label><br/>
                         </div>
@@ -82,7 +83,7 @@
         <table>
             <tr>
                 <td>
-                    <div id="SearchIncrementRadioGroup">
+                    <div id="SearchIncrementRadioGroup" class="newsDataRadioGroup">
                         <span>Search increment: </span><span class="question"><strong>?</strong></span><br/>
                         <input type="radio" name="searchIncrement" id="Monthly" checked/><label for="Monthly"> Monthly</label><br/>
                         <input type="radio" name="searchIncrement" id="Annual"/><label for="Annual"> Annual</label> <br/>
@@ -91,8 +92,8 @@
             </tr>
             <tr>
                 <td>            
-                    <div id="SearchWeightRadioGroup" style="display:none">
-                        <span>Search type: </span><span class="question"><strong>?</strong></span><br/>
+                    <div id="SearchWeightRadioGroup" class="newsDataRadioGroup">
+                        <span>Search type: </span><br/>
                         <input type="radio" name="searchWeight" id="Unweighted" checked/><label for="Unweighted"> Unweighted</label><br/>
                         <input type="radio" name="searchWeight" id="Weighted"/> <label for="Weighted"> Weighted</label><br/>
                     </div>

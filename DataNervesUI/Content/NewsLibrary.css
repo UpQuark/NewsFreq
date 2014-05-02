@@ -35,7 +35,8 @@
 #NewsFormRadioGroupWrapper {
     position: absolute; 
     top: 183px; 
-    left: 210px;
+    left: 200px;
+    font-size: 0.90em;
 }
 
 .newsDataRadioGroup {

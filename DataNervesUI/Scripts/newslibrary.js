@@ -16,6 +16,12 @@ Results.prototype.clear = function () {
     this.data = [];
 };
 
+Results.prototype.isEmpty = function() {
+    if (this.data.length == 1 && this.data[0].length == 0) {
+        return true;
+    }
+    return false;
+};
 
 var resultsData = new Results();
 var weightData = new Results();
@@ -240,6 +246,11 @@ function drawVisuals(results, weight) {
     if (typeof weight === "undefined") {
         weight = null;
     }
+    
+    if (results.isEmpty()) {
+        clearResults();
+        return;
+    }
 
     var weightedResults = new Results();
 
@@ -335,7 +346,7 @@ function drawChart(results, weight) {
     });
 
     // Trim chartLabels to goalLength if length exceeds it
-    var goalLength = 30;
+    var goalLength = 36;
     chartLabels = trimArray(chartLabels, goalLength);
 
     var lineChartData = {
@@ -413,7 +424,7 @@ function drawLegend(results, weight) {
                 b.splice(findWithAttr(b, 'SearchString', keyword), 1);
             }
         });
-        drawChart(results, weight);
+        drawVisuals(results, weight);
     }
 }
 

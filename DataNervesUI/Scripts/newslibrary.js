@@ -25,6 +25,7 @@ Results.prototype.isEmpty = function() {
 
 var resultsData = new Results();
 var weightData = new Results();
+
 var searchKeywordColors = new Array();  // Store pairs of search terms with color to graph a
 var ajaxRequests = new Array(); // Store abortable queries
 var searchIncrement = 'None';
@@ -143,7 +144,6 @@ function newsSearch() {
         data: { query: params, searchType: searchIncrement },
         dataType: "json",
         success: function (data) {
-            resultsData.addVariable($.parseJSON(data));
             if (searchWeighted) {
                 var weightCounts = $.ajax({
                     url: 'api/NewsLibrary',
@@ -151,6 +151,7 @@ function newsSearch() {
                     data: { query: weightParams, searchType: searchIncrement },
                     dataType: "json",
                     success: function (weight) {
+                        resultsData.addVariable($.parseJSON(data));
                         weightData.addVariable($.parseJSON(weight));
                         drawVisuals(resultsData, weightData);
                     }

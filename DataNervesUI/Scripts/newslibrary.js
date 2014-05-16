@@ -2,6 +2,21 @@
  * NewsLibrary client-side request formation from UI and handling of existing data
  */
 
+//QueryString jquery plugin. Put somewhere else
+(function ($) {
+    $.QueryString = (function (a) {
+        if (a == "") return {};
+        var b = {};
+        for (var i = 0; i < a.length; ++i) {
+            var p = a[i].split('=');
+            if (p.length != 2) continue;
+            b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
+        }
+        return b;
+    })(window.location.search.substr(1).split('&'))
+})(jQuery);
+
+
 /* Extensible results data structure */
 //////////////////////////////////////////////////
 function Results() {
@@ -82,29 +97,32 @@ function initializeUi() {
     });
 }
 
+// Get request handler
+function getQueryString() {
+    if ($.QueryString != null) {
+        return {
+            weight: Boolean($.QueryString['weight']),
+            searchIncrement: $.QueryString['searchIncrement'],
+            params: {
+                DateFrom: $.QueryString['dateFrom'],
+                DateTo: $.QueryString['dateTo'],
+                DateString: $.QueryString['dateFrom'] + ' to ' + $.QueryString['dateTo'],
+                SearchString: $.QueryString['searchString'],
+                SearchTarget: $.QueryString['searchTarget'],
+                SearchSource: $.QueryString['searchSource']
+            }
+        };
+    }
+}
+
 // Execute a new search to backend
-function newsSearch() {
+function newsSearch(queryStringExists) {
     // Kill function if validation fails
-    if (!validateUserInput()) { 
+    if (!queryStringExists && !validateUserInput()) { 
         return;
     }
 
-
-    // Check search time increment
-    if ($('#Monthly').is(':checked')) {
-        searchIncrement = "Monthly";
-    }
-    if ($('#Annual').is(':checked')) {
-        searchIncrement = "Annual";
-    }
-
-    // Check search display type
-    if ($('#Weighted').is(':checked')) {
-        searchWeighted = true;
-    }
-    if ($('#Unweighted').is(':checked')) {
-        searchWeighted = false;
-    }
+    var params;
 
     // Alter UI for in-progress search
     $("#SearchButton").prop('value', 'Add variable');
@@ -113,28 +131,56 @@ function newsSearch() {
     $('input[name=sourceType]').attr('disabled', 'disabled');
     $('.DatePicker').prop('disabled', 'disabled').addClass('disabled');
     $('#ClearButton').prop('disabled', '').removeClass('disabledButton');
-    
 
-    // Create params
-    var params = {
-        DateFrom: $('#DateFrom').val(),
-        DateTo: $('#DateTo').val(),
-        DateString: $('#DateFrom').val() + ' to ' + $('#DateTo').val(),
-        SearchString: $('#SearchTerms').val(),
-        SearchTarget: $('#SearchTargets').val(),
-        SearchSource: $('#SearchSource').val()
-    };
+    if (queryStringExists) {
+        var queryStringData = getQueryString();
+        params = queryStringData.params;
+        searchWeighted = queryStringData.weight;
+        searchIncrement = queryStringData.searchIncrement;
+    } else {
+        // Check search time increment
+        if ($('#Monthly').is(':checked')) {
+            searchIncrement = "Monthly";
+        }
+        if ($('#Annual').is(':checked')) {
+            searchIncrement = "Annual";
+        }
 
-    // Create weighting request params
-    if (searchWeighted) {
-        var weightParams = {
+        // Check search display type
+        if ($('#Weighted').is(':checked')) {
+            searchWeighted = true;
+        }
+        if ($('#Unweighted').is(':checked')) {
+            searchWeighted = false;
+        }
+        
+        // Create params
+        params = {
             DateFrom: $('#DateFrom').val(),
             DateTo: $('#DateTo').val(),
             DateString: $('#DateFrom').val() + ' to ' + $('#DateTo').val(),
-            SearchString: '',
+            SearchString: $('#SearchTerms').val(),
             SearchTarget: $('#SearchTargets').val(),
             SearchSource: $('#SearchSource').val()
         };
+    }
+
+    // Create weighting request params
+    if (searchWeighted) {
+        var weightParams;
+        if (queryStringExists) {
+            weightParams = getQueryString();
+            weightParams.SearchString = '';
+        } else {
+            weightParams = {
+                DateFrom: $('#DateFrom').val(),
+                DateTo: $('#DateTo').val(),
+                DateString: $('#DateFrom').val() + ' to ' + $('#DateTo').val(),
+                SearchString: '',
+                SearchTarget: $('#SearchTargets').val(),
+                SearchSource: $('#SearchSource').val()
+            };
+        }
     }
 
     // Send query to API
@@ -157,6 +203,7 @@ function newsSearch() {
                     }
                 });
             } else {
+                resultsData.addVariable($.parseJSON(data));
                 drawVisuals(resultsData);
             }
         }
@@ -248,7 +295,7 @@ function drawVisuals(results, weight) {
         weight = null;
     }
     
-    if (results.isEmpty()) {
+    if (results.data.isEmpty()) {
         clearResults();
         return;
     }

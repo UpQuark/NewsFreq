@@ -295,7 +295,7 @@ function drawVisuals(results, weight) {
         weight = null;
     }
     
-    if (results.data.isEmpty()) {
+    if (results.isEmpty()) {
         clearResults();
         return;
     }

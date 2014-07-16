@@ -39,34 +39,34 @@
     font-size: 0.90em;
 }
 
-.newsDataRadioGroup {
+.NewsFreqRadioGroup {
     
 }
 
 /* Data table elements
 ----------------------------------------------------------*/
-#NewsDataTableWrapper {
+#NewsFreqTableWrapper {
     min-width: 410px;
 }
 
-#NewsDataTable .newsTableHead
+#NewsFreqTable .newsTableHead
 {
     font-weight: bold;
 }
 
-#NewsDataTable tr:nth-child(even) {
+#NewsFreqTable tr:nth-child(even) {
     background-color: #b3d7e0;
     
 }
 
-#NewsDataTable {
+#NewsFreqTable {
     display: none;
     font-size: 0.9em;
 }
 
 /* Graph elements
 ----------------------------------------------------------*/
-#NewsDataGraphWrapper {
+#NewsFreqGraphWrapper {
     float: left;
     max-width: 500px;
     height: 390px;
@@ -75,12 +75,12 @@
     position: relative;
 }
 
-#NewsDataGraph
+#NewsFreqGraph
 {
     display: none;
 }
 
-#NewsDataGraphLabel 
+#NewsFreqGraphLabel 
 {
     font-weight: bold;
     font-size: 0.9em;
@@ -92,19 +92,19 @@
     
 
 /* Legend */ 
-#NewsDataGraphLegend {
+#NewsFreqGraphLegend {
     position: relative;
     left: 25px;
     font-size: 0.8em;
     line-height: 20px
 }
 
-.NewsDataGraphLegendCell{
+.NewsFreqGraphLegendCell{
     padding: 1px;
     margin: 2px;
 }
 
-.NewsDataGraphLegendCell:hover{
+.NewsFreqGraphLegendCell:hover{
     border: 1px #800000 solid;
     margin: 1px;
 }

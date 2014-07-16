@@ -1,6 +1,6 @@
 ﻿@using System.Web.Mvc
 @using System.Web.Mvc.Html
-@model DataNervesUI.Models.NewsDataModel
+@model DataNervesUI.Models.NewsFreqModel
 
 @{
     ViewBag.Title = "News Frequency Search";
@@ -10,7 +10,7 @@
     <h1>@ViewBag.Title</h1>
     <h2>@ViewBag.Message</h2>
 </div>
-<div id="NewsDataFormWrapper"  class="block-content-wrapper">
+<div id="NewsFreqFormWrapper"  class="block-content-wrapper">
     <div>
         <p class="descriptionText">
             This tool enables you to analyze the popularity of topics in American news coverage.
@@ -18,8 +18,8 @@
             Try searching issues that interest you to see how the volume of coverage changes over time and how it compares to other topics.<br/>
         </p>
     </div>
-    <div id="NewsDataInputWrapper">
-        <table id="NewsDataSearchForm">
+    <div id="NewsFreqInputWrapper">
+        <table id="NewsFreqSearchForm">
             <tr>
                 <td>
                     <span>
@@ -41,9 +41,9 @@
             <tr>
                 
                 <td>
-                    <div id="NewsDataInputSourceWrapper">
+                    <div id="NewsFreqInputSourceWrapper">
                         <span>Search by:<br/></span>
-                        <div id="SourceTypeRadioGroup" class="newsDataRadioGroup" style="display:none">
+                        <div id="SourceTypeRadioGroup" class="NewsFreqRadioGroup" style="display:none">
                             <input type="radio" name="sourceType" id="SourceRadio" checked/><label for="SourceRadio"> Source publication </label><br/>
                             <input type="radio" name="sourceType" id="ParentRadio"/><label for="ParentRadio"> Parent company</label><br/>
                         </div>
@@ -70,8 +70,8 @@
             <tr>
                 <td>
                     <span id="ErrorLabel"></span>
-                    <input type="submit" value="Search" id="SearchButton" onclick="newsSearch(false)" />
-                    <input type="button" value="Clear data" id="ClearButton" onclick="clearResults()" class = "disabledButton" disabled="disabled" />
+                    <input type="submit" value="Search" id="SearchButton"/>
+                    <input type="button" value="Clear data" id="ClearButton" class = "disabledButton" disabled="disabled" />
                     <div class="modal">
                         <img src="http://i.imgur.com/RZPE8Wh.gif"/>
                     </div>
@@ -83,7 +83,7 @@
         <table>
             <tr>
                 <td>
-                    <div id="SearchIncrementRadioGroup" class="newsDataRadioGroup">
+                    <div id="SearchIncrementRadioGroup" class="NewsFreqRadioGroup">
                         <span>Search increment: </span><span class="question"><strong>?</strong></span><br/>
                         <input type="radio" name="searchIncrement" id="Monthly" checked/><label for="Monthly"> Monthly</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <input type="radio" name="searchIncrement" id="Annual"/><label for="Annual"> Annual</label> <br/>
@@ -92,7 +92,7 @@
             </tr>
             <tr>
                 <td>   
-                    <div id="SearchWeightRadioGroup" class="newsDataRadioGroup">
+                    <div id="SearchWeightRadioGroup" class="NewsFreqRadioGroup">
                         <span>Search type: </span><br/>
                         <input type="radio" name="searchWeight" id="Unweighted" checked/><label for="Unweighted"> Unweighted</label>&nbsp;
                         <input type="radio" name="searchWeight" id="Weighted"/> <label for="Weighted"> Weighted</label><br/>
@@ -103,15 +103,15 @@
     </div>
 </div>
  
-<div id="NewsDataGraphWrapper" >
-    <canvas id="NewsDataGraph" height="350" width="480"></canvas>
-    <div id="NewsDataGraphLegend"></div>
-    <div id="NewsDataGraphLabel"></div>
+<div id="NewsFreqGraphWrapper" >
+    <canvas id="NewsFreqGraph" height="350" width="480"></canvas>
+    <div id="NewsFreqGraphLegend"></div>
+    <div id="NewsFreqGraphLabel"></div>
 </div>
     
-<div id="NewsDataTableWrapper" class="block-content-wrapper">  
-    <table id="NewsDataTable">
-        <tbody id="NewsDataTableContent">
+<div id="NewsFreqTableWrapper" class="block-content-wrapper">  
+    <table id="NewsFreqTable">
+        <tbody id="NewsFreqTableContent">
         </tbody>
     </table>
     <meta name = "viewport" content = "initial-scale = 1, user-scalable = no">
@@ -120,10 +120,14 @@
 @section Scripts{
     <script type="text/javascript">
         $(document).ready(function () {
-            initializeUi();
-            if ($.QueryString['searchString'] != null) {
-                newsSearch(true);
-            }
+            var newsFreq = new NewsFreq();
+
+            $('#SearchButton').click(function() {
+                newsFreq.form.search(false);
+            });
+            $('#ClearButton').click(function() {
+                newsFreq.form.clear();
+            });
         });
     </script>
 }

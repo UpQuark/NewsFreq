@@ -9,7 +9,7 @@ namespace DataNervesUI.Controllers
     {
         public ActionResult NewsLibrarySearch()
         {
-            var newsModel = new NewsDataModel()
+            var newsModel = new NewsFreqModel()
                                 {
                                     Queries = new List<NlQuery>()
                                 };
@@ -17,13 +17,6 @@ namespace DataNervesUI.Controllers
         }
 
         public ActionResult Contact()
-        {
-            ViewBag.Message = "";
-
-            return View();
-        }
-
-        public ActionResult Chart()
         {
             ViewBag.Message = "";
 

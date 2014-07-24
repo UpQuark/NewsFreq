@@ -1,10 +1,4 @@
-﻿/*
- * NewsLibrary client-side request formation from UI and handling of existing data
- */
-
-
-
-/* NewsFreq class */
+﻿/* NewsFreq class */
 ///////////////////////////////////////////////////////////////////////////////
 function NewsFreq() {
     
@@ -16,7 +10,8 @@ function NewsFreq() {
             searchIncrement: 'None',
             searchWeighted: false
         },
-        searchKeywordColors: new Array(),
+        searchKeywordColors: [],
+        ajaxRequests: [],
         colourValues: [                   // Collection of colors to use in graphing
             "b3d7e0", "4564a5", "45a2a5",
             "800000", "008000", "000080", "808000", "800080", "008080", "808080",
@@ -26,17 +21,48 @@ function NewsFreq() {
             "600000", "006000", "000060", "606000", "600060", "006060", "606060",
             "A00000", "00A000", "0000A0", "A0A000", "A000A0", "00A0A0", "A0A0A0",
             "E00000", "00E000", "0000E0", "E0E000", "E000E0", "00E0E0", "E0E0E0"
-        ]
+        ],
     };
     
-    this.table = new this.Table(this.newsFreqSearchData);
-    this.graph = new this.Graph(this.newsFreqSearchData, this.table);
-    this.form = new this.Form(this.newsFreqSearchData, this.table, this.graph);
+    this.table = new this.Table(this, this.newsFreqSearchData);
+    this.graph = new this.Graph(this, this.newsFreqSearchData, this.table);
+    this.form = new this.Form(this, this.newsFreqSearchData, this.table, this.graph);
 }
 
+NewsFreq.prototype.clear = function() {
+    this.newsFreqSearchData.resultsData.clear();
+    this.newsFreqSearchData.weightData.clear();
 
+    var ajaxRequests = this.ajaxRequests;
+    this.newsFreqSearchData.searchKeywordColors = [];
 
-/* Results data structure */
+    // Abort all requests in progress
+    if (ajaxRequests) {
+        $.each(ajaxRequests, function (a, b) {
+            b.abort();
+        });
+    }
+    
+
+    // Reset color values to default literal
+    this.colourValues = [
+        "b3d7e0", "4564a5", "45a2a5",
+        "800000", "008000", "000080", "808000", "800080", "008080", "808080",
+        "C00000", "00C000", "0000C0", "C0C000", "C000C0", "00C0C0", "C0C0C0",
+        "400000", "004000", "000040", "404000", "400040", "004040", "404040",
+        "200000", "002000", "000020", "202000", "200020", "002020", "202020",
+        "600000", "006000", "000060", "606000", "600060", "006060", "606060",
+        "A00000", "00A000", "0000A0", "A0A000", "A000A0", "00A0A0", "A0A0A0",
+        "E00000", "00E000", "0000E0", "E0E000", "E000E0", "00E0E0", "E0E0E0"
+    ];
+
+    this.form.clear();
+    this.graph.clear();
+    this.table.clear();
+    
+};
+
+/* Results class */
 ///////////////////////////////////////////////////////////////////////////////
 NewsFreq.prototype.Results = function () { this.data = new Array(); };
 
@@ -56,20 +82,17 @@ NewsFreq.prototype.Results.prototype.isEmpty = function () {
 
 
 
-/* Form data structure */
+/* Form class */
 ///////////////////////////////////////////////////////////////////////////////
 
 // Constructor
-NewsFreq.prototype.Form = function (searchData, table, graph) {
-    //this.searchData = searchData;
+NewsFreq.prototype.Form = function (newsFreq, searchData, table, graph) {
+    this.searchData = searchData;
     this.status = "enabled";
-    this.resultsData = searchData.resultsData;
-    this.weightData = searchData.weightData;
-    this.searchSettings = searchData.searchSettings;
     this.table = table;
     this.graph = graph;
     this.ajaxRequests = new Array();
-
+    this.newsFreq = newsFreq;
 
 
     // Initialize datepicker and tooltips
@@ -264,19 +287,20 @@ NewsFreq.prototype.Form.prototype.search = function () {
 
     // Create request params
     var params = this.getQueryString() != null ? this.getParams(false, true) : this.getParams(false, false);
-    this.searchSettings = this.getSearchSettings();
+    this.searchData.searchSettings = this.getSearchSettings();
 
     // Create weighted request params
     if (this.searchWeighted) {
         var weightParams = this.getQueryString() != null ? this.getParams(true, true) : this.getParams(true, false);
     }
     
-    var searchWeighted = this.searchSettings.searchWeighted;
-    var searchIncrement = this.searchSettings.searchIncrement;
-    var resultsData = this.resultsData;
-    var weightData = this.weightData;
+    var searchWeighted = this.searchData.searchSettings.searchWeighted;
+    var searchIncrement = this.searchData.searchSettings.searchIncrement;
+    var resultsData = this.searchData.resultsData;
+    var weightData = this.searchData.weightData;
     var table = this.table;
     var graph = this.graph;
+    var ajaxRequests = this.ajaxRequests;
 
     // Send query to API
     var keywordCountRequest = $.ajax({
@@ -302,31 +326,41 @@ NewsFreq.prototype.Form.prototype.search = function () {
                         weightData.addVariable($.parseJSON(weight));
                     }
                 });
+                ajaxRequests.push(weightCounts);
             } else {
                 resultsData.addVariable($.parseJSON(data));
+                
             }
             table.Draw();
             graph.Draw();
         }
     });
-    this.ajaxRequests.push(keywordCountRequest);
-    //this.ajaxRequests.push(weightCounts);
+    ajaxRequests.push(keywordCountRequest);
 };
 
 // Clear all entered parameters, reset all fields
 NewsFreq.prototype.Form.prototype.clear = function() {
-
+    $('#DateFrom').removeClass('invalid');
+    $('#DateTo').removeClass('invalid');
+    $('#SearchTerms').removeClass('invalid');
+    $("#SearchButton").prop('value', 'Search');
+    $('input[name=searchIncrement]').removeAttr('disabled');
+    $('input[name=searchWeight]').removeAttr('disabled');
+    $('input[name=sourceType]').removeAttr('disabled');
+    $('.DatePicker').removeAttr('disabled').removeClass('disabled');
+    $('#ClearButton').prop('disabled', 'disabled').addClass('disabledButton');
 };
 
 
 
 /* Table data structure */
 ///////////////////////////////////////////////////////////////////////////////
-NewsFreq.prototype.Table = function (searchData) {
+NewsFreq.prototype.Table = function (newsFreq, searchData) {
     this.resultsData = searchData.resultsData;
     this.weightData = searchData.weightData;
     this.searchSettings = searchData.searchSettings;
     this.searchData = searchData;
+    this.newsFreq = newsFreq;
 };
 
 NewsFreq.prototype.Table.prototype.Draw = function() {
@@ -353,6 +387,10 @@ NewsFreq.prototype.Table.prototype.Draw = function() {
     
 };
 
+NewsFreq.prototype.Table.prototype.clear = function() {
+    $('#NewsFreqTable').hide();
+};
+
 function getDateString(jsonDate) {
     var date = new Date(parseInt(jsonDate.substr(6)));
     return (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear();
@@ -360,18 +398,19 @@ function getDateString(jsonDate) {
 
 /* Graph data structure */
 ///////////////////////////////////////////////////////////////////////////////
-NewsFreq.prototype.Graph = function (searchData, table) {
+NewsFreq.prototype.Graph = function (newsFreq, searchData, table) {
     this.resultsData = searchData.resultsData;
     this.weightData = searchData.weightData;
     this.searchSettings = searchData.searchSettings;
     this.searchData = searchData;
     this.table = table;
+    this.newsFreq = newsFreq;
 };
 
 NewsFreq.prototype.Graph.prototype.Draw = function () {
     var resultsData = this.resultsData;
-    if (resultsData.data.length == 0) {
-        //clearResults();
+    if (resultsData.data[0].length == 0) {
+        this.newsFreq.clear();
         return;
     }
 
@@ -417,7 +456,7 @@ NewsFreq.prototype.Graph.prototype.Draw = function () {
                 fillColor: "rgba(220,220,220,0.0)",
                 strokeColor: color,
                 pointColor: color,
-                pointStrokeColor: "#fff",
+                pointStrokeColor: color,
                 data: resultsCount,
                 title: searchString
             });
@@ -475,7 +514,7 @@ NewsFreq.prototype.Graph.prototype.Draw = function () {
             color: color,
             source: source
         });
-        return color;
+        return "#" + color;
     };
 
     // Find index with attribute in array
@@ -538,6 +577,13 @@ NewsFreq.prototype.Graph.prototype.Draw = function () {
 
 };
 
+NewsFreq.prototype.Graph.prototype.clear = function() {
+    $('#ErrorLabel').text('');
+    $('#NewsFreqGraph').hide();
+    $('#NewsFreqGraphLegend').empty();
+    $('#NewsFreqGraphLabel').hide();
+};
+
 
 
 // QueryString jquery plugin. Put somewhere else
@@ -553,61 +599,6 @@ NewsFreq.prototype.Graph.prototype.Draw = function () {
         return b;
     })(window.location.search.substr(1).split('&'));
 })(jQuery);
-
-
-
-
-
-
-
-
-
-
-
-/* Publicly exposed methods */
-//////////////////////////////////////////////////
-
-// Clear all search data and reset UI
-NewsFreq.prototype.clearResults = function () {
-    resultsData.clear();
-
-    $('#ErrorLabel').text('');
-    $('#NewsFreqGraph').hide();
-    $('#NewsFreqTable').hide();
-    $('#NewsFreqGraphLegend').empty();
-    $('#NewsFreqGraphLabel').hide();
-
-    $('#DateFrom').removeClass('invalid');
-    $('#DateTo').removeClass('invalid');
-    $('#SearchTerms').removeClass('invalid');
-
-    $("#SearchButton").prop('value', 'Search');
-    $('input[name=searchIncrement]').removeAttr('disabled');
-    $('input[name=searchWeight]').removeAttr('disabled');
-    $('input[name=sourceType]').removeAttr('disabled');
-    $('.DatePicker').removeAttr('disabled').removeClass('disabled');
-    $('#ClearButton').prop('disabled', 'disabled').addClass('disabledButton');
-
-    this.searchKeywordColors = [];
-
-    // Abort all requests in progress
-    $.each(ajaxRequests, function(a, b) {
-        b.abort();
-    });
-
-    // Reset color values to default literal
-    this.colourValues = [
-        "b3d7e0", "4564a5", "45a2a5",
-        "800000", "008000", "000080", "808000", "800080", "008080", "808080",
-        "C00000", "00C000", "0000C0", "C0C000", "C000C0", "00C0C0", "C0C0C0",
-        "400000", "004000", "000040", "404000", "400040", "004040", "404040",
-        "200000", "002000", "000020", "202000", "200020", "002020", "202020",
-        "600000", "006000", "000060", "606000", "600060", "006060", "606060",
-        "A00000", "00A000", "0000A0", "A0A000", "A000A0", "00A0A0", "A0A0A0",
-        "E00000", "00E000", "0000E0", "E0E000", "E000E0", "00E0E0", "E0E0E0"
-    ];
-};
-
 
 // Replaces elements of array with empty string at regular intervals until # of nonempty cells == goalLength
 trimArray = function (array, goalLength) {

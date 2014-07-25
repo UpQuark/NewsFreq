@@ -323,11 +323,7 @@ NewsFreq.prototype.Form.prototype.search = function () {
                     success: function (weight) {
                         resultsData.addVariable($.parseJSON(data));
                         weightData.addVariable($.parseJSON(weight));
-
-                        if (searchWeighted) {
                             $.each(resultsData.data, function (i, item) {
-                                //weightData.data[i] = new Array();
-                                //var weightDataArray = weightData;
                                 $.each(item, function (k, element) {
                                     var weightedResult = $.extend(true, {}, element);
                                     weightedResult.Count = element.Count / weightData.data[i][k].Count;
@@ -336,10 +332,6 @@ NewsFreq.prototype.Form.prototype.search = function () {
                                     weightData.data[i][k] = weightedResult;
                                 });
                             });
-                            
-                        } else {
-                            weightData = resultsData;
-                        }
                         table.Draw();
                         graph.Draw();
                     }
@@ -347,6 +339,7 @@ NewsFreq.prototype.Form.prototype.search = function () {
                 ajaxRequests.push(weightCounts);
             } else {
                 resultsData.addVariable($.parseJSON(data));
+                weightData.data = resultsData.data.slice(0);
                 table.Draw();
                 graph.Draw();
             }

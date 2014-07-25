@@ -12,7 +12,7 @@ function NewsFreq() {
         },
         searchKeywordColors: [],
         ajaxRequests: [],
-        colourValues: [                   // Collection of colors to use in graphing
+        colorValues: [                   // Collection of colors to use in graphing
             "b3d7e0", "4564a5", "45a2a5",
             "800000", "008000", "000080", "808000", "800080", "008080", "808080",
             "C00000", "00C000", "0000C0", "C0C000", "C000C0", "00C0C0", "C0C0C0",
@@ -42,10 +42,9 @@ NewsFreq.prototype.clear = function() {
             b.abort();
         });
     }
-    
 
     // Reset color values to default literal
-    this.colourValues = [
+    this.newsFreqSearchData.colorValues = [
         "b3d7e0", "4564a5", "45a2a5",
         "800000", "008000", "000080", "808000", "800080", "008080", "808080",
         "C00000", "00C000", "0000C0", "C0C000", "C000C0", "00C0C0", "C0C0C0",
@@ -285,15 +284,7 @@ NewsFreq.prototype.Form.prototype.search = function () {
     // Disable UI for in progress search
     this.disable();
 
-    // Create request params
-    var params = this.getQueryString() != null ? this.getParams(false, true) : this.getParams(false, false);
     this.searchData.searchSettings = this.getSearchSettings();
-
-    // Create weighted request params
-    if (this.searchWeighted) {
-        var weightParams = this.getQueryString() != null ? this.getParams(true, true) : this.getParams(true, false);
-    }
-    
     var searchWeighted = this.searchData.searchSettings.searchWeighted;
     var searchIncrement = this.searchData.searchSettings.searchIncrement;
     var resultsData = this.searchData.resultsData;
@@ -301,6 +292,14 @@ NewsFreq.prototype.Form.prototype.search = function () {
     var table = this.table;
     var graph = this.graph;
     var ajaxRequests = this.ajaxRequests;
+
+    // Create request params
+    var params = this.getQueryString() != null ? this.getParams(false, true) : this.getParams(false, false);
+
+    // Create weighted request params
+    if (searchWeighted) {
+        var weightParams = this.getQueryString() != null ? this.getParams(true, true) : this.getParams(true, false);
+    }
 
     // Send query to API
     var keywordCountRequest = $.ajax({
@@ -324,15 +323,33 @@ NewsFreq.prototype.Form.prototype.search = function () {
                     success: function (weight) {
                         resultsData.addVariable($.parseJSON(data));
                         weightData.addVariable($.parseJSON(weight));
+
+                        if (searchWeighted) {
+                            $.each(resultsData.data, function (i, item) {
+                                //weightData.data[i] = new Array();
+                                //var weightDataArray = weightData;
+                                $.each(item, function (k, element) {
+                                    var weightedResult = $.extend(true, {}, element);
+                                    weightedResult.Count = element.Count / weightData.data[i][k].Count;
+                                    weightedResult.Count = weightedResult.Count * 100;
+                                    weightedResult.Count = Math.round(weightedResult.Count * 100) / 100;
+                                    weightData.data[i][k] = weightedResult;
+                                });
+                            });
+                            
+                        } else {
+                            weightData = resultsData;
+                        }
+                        table.Draw();
+                        graph.Draw();
                     }
                 });
                 ajaxRequests.push(weightCounts);
             } else {
                 resultsData.addVariable($.parseJSON(data));
-                
+                table.Draw();
+                graph.Draw();
             }
-            table.Draw();
-            graph.Draw();
         }
     });
     ajaxRequests.push(keywordCountRequest);
@@ -358,17 +375,13 @@ NewsFreq.prototype.Form.prototype.clear = function() {
 NewsFreq.prototype.Table = function (newsFreq, searchData) {
     this.resultsData = searchData.resultsData;
     this.weightData = searchData.weightData;
-    this.searchSettings = searchData.searchSettings;
     this.searchData = searchData;
     this.newsFreq = newsFreq;
 };
 
-NewsFreq.prototype.Table.prototype.Draw = function() {
-    if (!this.searchSettings.searchWeighted) {
-        //Do weighted shit
-    }
-
-    var resultsData = this.resultsData;
+NewsFreq.prototype.Table.prototype.Draw = function () {
+    var searchWeighted = this.searchData.searchSettings.searchWeighted
+    var resultsData = this.weightData;
 
     var tblBody = '<tr class="newsTableHead"><td>Keyword</td><td>Source</td><td>From</td><td>To</td><td>Instances</td></tr>';
     $.each(resultsData.data, function(name, results) {
@@ -378,7 +391,11 @@ NewsFreq.prototype.Table.prototype.Draw = function() {
             tblRow += resultsContents.SearchSource !== null ? "<td>" + resultsContents.SearchSource + "</td>" : "<td></td>";
             tblRow += "<td>" + getDateString(resultsContents.DateFrom) + "</td>";
             tblRow += "<td>" + getDateString(resultsContents.DateTo) + "</td>";
-            tblRow += "<td>" + resultsContents.Count.toString() + "</td>";
+            tblRow += "<td>" + resultsContents.Count.toString();
+            if (searchWeighted) {
+                tblRow += "%";
+            } 
+            tblRow += "</td>";
             tblBody += "<tr>" + tblRow + "</tr>";
         });
     });
@@ -408,8 +425,8 @@ NewsFreq.prototype.Graph = function (newsFreq, searchData, table) {
 };
 
 NewsFreq.prototype.Graph.prototype.Draw = function () {
-    var resultsData = this.resultsData;
-    if (resultsData.data[0].length == 0) {
+    var resultsData = this.weightData;;
+    if (resultsData.data.length == 0) {
         this.newsFreq.clear();
         return;
     }
@@ -507,8 +524,8 @@ NewsFreq.prototype.Graph.prototype.Draw = function () {
     //////////////////////////////////////////////////
     //Retrieve a color from the color array and remove that index
     function getColor (keyword, source) {
-        var color = searchData.colourValues[0];
-        searchData.colourValues.splice(0, 1);
+        var color = searchData.colorValues[0];
+        searchData.colorValues.splice(0, 1);
         searchKeywordColors.push({
             keyword: keyword,
             color: color,
@@ -577,7 +594,8 @@ NewsFreq.prototype.Graph.prototype.Draw = function () {
 
 };
 
-NewsFreq.prototype.Graph.prototype.clear = function() {
+NewsFreq.prototype.Graph.prototype.clear = function () {
+    //this.searchData = this.newsFreq.newsFreqSearchData;
     $('#ErrorLabel').text('');
     $('#NewsFreqGraph').hide();
     $('#NewsFreqGraphLegend').empty();

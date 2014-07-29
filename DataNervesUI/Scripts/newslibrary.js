@@ -524,7 +524,7 @@ NewsFreq.prototype.Graph.prototype.Draw = function () {
             color: color,
             source: source
         });
-        return  + color;
+        return color;
     };
 
     // Find index with attribute in array

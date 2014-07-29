@@ -517,14 +517,14 @@ NewsFreq.prototype.Graph.prototype.Draw = function () {
     //////////////////////////////////////////////////
     //Retrieve a color from the color array and remove that index
     function getColor (keyword, source) {
-        var color = searchData.colorValues[0];
+        var color = "#" + searchData.colorValues[0];
         searchData.colorValues.splice(0, 1);
         searchKeywordColors.push({
             keyword: keyword,
             color: color,
             source: source
         });
-        return "#" + color;
+        return  + color;
     };
 
     // Find index with attribute in array

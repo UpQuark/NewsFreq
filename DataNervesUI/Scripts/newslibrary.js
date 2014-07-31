@@ -1,26 +1,23 @@
 ﻿/* NewsFreq class */
 ///////////////////////////////////////////////////////////////////////////////
 function NewsFreq() {
-    
     // Search data share
     this.newsFreqSearchData = {
-        resultsData: new this.Results(),
-        weightData: new this.Results(),
+        keywordCounts: new this.Results(),
+        totalCounts: new this.Results(),
+        weightedKeywordCounts: new this.Results(),
+        
         searchSettings: {
             searchIncrement: 'None',
             searchWeighted: false
         },
+        
         searchKeywordColors: [],
         ajaxRequests: [],
-        colorValues: [                   // Collection of colors to use in graphing
-            "b3d7e0", "4564a5", "45a2a5",
+        colorValues: [               
+            "b3d7e0", "4564a5", "45a2a5", "400000", "004000", "000040", "404000",
             "800000", "008000", "000080", "808000", "800080", "008080", "808080",
-            "C00000", "00C000", "0000C0", "C0C000", "C000C0", "00C0C0", "C0C0C0",
-            "400000", "004000", "000040", "404000", "400040", "004040", "404040",
-            "200000", "002000", "000020", "202000", "200020", "002020", "202020",
-            "600000", "006000", "000060", "606000", "600060", "006060", "606060",
-            "A00000", "00A000", "0000A0", "A0A000", "A000A0", "00A0A0", "A0A0A0",
-            "E00000", "00E000", "0000E0", "E0E000", "E000E0", "00E0E0", "E0E0E0"
+            "C00000", "00C000", "0000C0", "C0C000", "C000C0", "00C0C0", "C0C0C0"
         ],
     };
     
@@ -30,8 +27,8 @@ function NewsFreq() {
 }
 
 NewsFreq.prototype.clear = function() {
-    this.newsFreqSearchData.resultsData.clear();
-    this.newsFreqSearchData.weightData.clear();
+    this.newsFreqSearchData.keywordCounts.clear();
+    this.newsFreqSearchData.totalCounts.clear();
 
     var ajaxRequests = this.newsFreqSearchData.ajaxRequests;
     this.newsFreqSearchData.searchKeywordColors = [];
@@ -45,14 +42,9 @@ NewsFreq.prototype.clear = function() {
 
     // Reset color values to default literal
     this.newsFreqSearchData.colorValues = [
-        "b3d7e0", "4564a5", "45a2a5",
+        "b3d7e0", "4564a5", "45a2a5", "400000", "004000", "000040", "404000",
         "800000", "008000", "000080", "808000", "800080", "008080", "808080",
-        "C00000", "00C000", "0000C0", "C0C000", "C000C0", "00C0C0", "C0C0C0",
-        "400000", "004000", "000040", "404000", "400040", "004040", "404040",
-        "200000", "002000", "000020", "202000", "200020", "002020", "202020",
-        "600000", "006000", "000060", "606000", "600060", "006060", "606060",
-        "A00000", "00A000", "0000A0", "A0A000", "A000A0", "00A0A0", "A0A0A0",
-        "E00000", "00E000", "0000E0", "E0E000", "E000E0", "00E0E0", "E0E0E0"
+        "C00000", "00C000", "0000C0", "C0C000", "C000C0", "00C0C0", "C0C0C0"
     ];
 
     this.form.clear();
@@ -63,13 +55,19 @@ NewsFreq.prototype.clear = function() {
 
 /* Results class */
 ///////////////////////////////////////////////////////////////////////////////
-NewsFreq.prototype.Results = function () { this.data = new Array(); };
+NewsFreq.prototype.Results = function() {
+     this.data = new Array();
+};
 
 // Add an additional variable array of data to results
-NewsFreq.prototype.Results.prototype.addVariable = function (variable) { this.data.push(variable); };
+NewsFreq.prototype.Results.prototype.addVariable = function(variable) {
+     this.data.push(variable);
+};
 
 // Erase all contents
-NewsFreq.prototype.Results.prototype.clear = function () { this.data = []; };
+NewsFreq.prototype.Results.prototype.clear = function() {
+     this.data = [];
+};
 
 // Is empty
 NewsFreq.prototype.Results.prototype.isEmpty = function () {
@@ -287,11 +285,12 @@ NewsFreq.prototype.Form.prototype.search = function () {
     this.searchData.searchSettings = this.getSearchSettings();
     var searchWeighted = this.searchData.searchSettings.searchWeighted;
     var searchIncrement = this.searchData.searchSettings.searchIncrement;
-    var resultsData = this.searchData.resultsData;
-    var weightData = this.searchData.weightData;
+    var keywordCounts = this.searchData.keywordCounts;
+    var totalCounts = this.searchData.totalCounts;
     var table = this.table;
     var graph = this.graph;
     var ajaxRequests = this.ajaxRequests;
+    var weightedKeywordCounts = this.searchData.weightedKeywordCounts;
 
     // Create request params
     var params = this.getQueryString() != null ? this.getParams(false, true) : this.getParams(false, false);
@@ -301,52 +300,61 @@ NewsFreq.prototype.Form.prototype.search = function () {
         var weightParams = this.getQueryString() != null ? this.getParams(true, true) : this.getParams(true, false);
     }
 
+
     // Send query to API
     var keywordCountRequest = $.ajax({
         url: 'api/NewsLibrary',
         type: "POST",
+        dataType: "json",
         data: {
             query: params,
             searchType: searchIncrement
         },
-        dataType: "json",
         success: function (data) {
-            if (searchWeighted) {
-                var weightCounts = $.ajax({
-                    url: 'api/NewsLibrary',
-                    type: "POST",
-                    data: {
-                        query: weightParams,
-                        searchType: searchIncrement
-                    },
-                    dataType: "json",
-                    success: function (weight) {
-                        resultsData.addVariable($.parseJSON(data));
-                        weightData.addVariable($.parseJSON(weight));
-                            $.each(resultsData.data, function (i, item) {
-                                $.each(item, function (k, element) {
-                                    var weightedResult = $.extend(true, {}, element);
-                                    weightedResult.Count = element.Count / weightData.data[i][k].Count;
-                                    weightedResult.Count = weightedResult.Count * 100;
-                                    weightedResult.Count = Math.round(weightedResult.Count * 100) / 100;
-                                    weightData.data[i][k] = weightedResult;
-                                });
-                            });
-                        table.Draw();
-                        graph.Draw();
-                    }
-                });
-                ajaxRequests.push(weightCounts);
-            } else {
-                resultsData.addVariable($.parseJSON(data));
-                weightData.data = resultsData.data.slice(0);
-                table.Draw();
-                graph.Draw();
-            }
+            keywordCounts.addVariable($.parseJSON(data));
         }
     });
-    ajaxRequests.push(keywordCountRequest);
+
+    if (searchWeighted){
+        var totalCountRequest = $.ajax({
+            url: 'api/NewsLibrary',
+            type: "POST",
+            dataType: "json",
+            data: {
+                query: weightParams,
+                searchType: searchIncrement
+            },
+            success: function (data) {
+                totalCounts.addVariable($.parseJSON(data));
+                $.each(keywordCounts.data, function (i, item) {
+                    weightedKeywordCounts.data[i] = [];
+                    $.each(item, function (k, element) {
+                        /* Trouble */
+                        var weightedResult = $.extend(true, {}, element);
+                        weightedResult.Count = element.Count / totalCounts.data[i][k].Count;
+                        weightedResult.Count = weightedResult.Count * 100;
+                        weightedResult.Count = Math.round(weightedResult.Count * 100) / 100;
+                        weightedKeywordCounts.data[i][k] = weightedResult;
+                    });
+                });
+            }
+        });
+
+        $.when(keywordCountRequest, totalCountRequest).then(function() {
+            table.Draw();
+            graph.Draw();
+        });
+    } else {
+        $.when(keywordCountRequest).then(function() {
+            table.Draw();
+            graph.Draw();
+        });
+    }
 };
+
+
+
+
 
 // Clear all entered parameters, reset all fields
 NewsFreq.prototype.Form.prototype.clear = function() {
@@ -366,18 +374,23 @@ NewsFreq.prototype.Form.prototype.clear = function() {
 /* Table data structure */
 ///////////////////////////////////////////////////////////////////////////////
 NewsFreq.prototype.Table = function (newsFreq, searchData) {
-    this.resultsData = searchData.resultsData;
-    this.weightData = searchData.weightData;
+    this.keywordCounts = searchData.keywordCounts;
+    this.totalCounts = searchData.totalCounts;
+    this.weightedKeywordCounts = searchData.weightedKeywordCounts;
     this.searchData = searchData;
     this.newsFreq = newsFreq;
 };
 
 NewsFreq.prototype.Table.prototype.Draw = function () {
-    var searchWeighted = this.searchData.searchSettings.searchWeighted
-    var resultsData = this.weightData;
+    var searchWeighted = this.searchData.searchSettings.searchWeighted;
+    var keywordCounts = this.keywordCounts;
+
+    if (searchWeighted) {
+        keywordCounts = this.weightedKeywordCounts;
+    }
 
     var tblBody = '<tr class="newsTableHead"><td>Keyword</td><td>Source</td><td>From</td><td>To</td><td>Instances</td></tr>';
-    $.each(resultsData.data, function(name, results) {
+    $.each(keywordCounts.data, function(name, results) {
         $.each(results, function (r, resultsContents) {
             var tblRow = "";
             tblRow += "<td>" + resultsContents.SearchString + "</td>";
@@ -401,16 +414,13 @@ NewsFreq.prototype.Table.prototype.clear = function() {
     $('#NewsFreqTable').hide();
 };
 
-function getDateString(jsonDate) {
-    var date = new Date(parseInt(jsonDate.substr(6)));
-    return (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear();
-};
+
 
 /* Graph data structure */
 ///////////////////////////////////////////////////////////////////////////////
 NewsFreq.prototype.Graph = function (newsFreq, searchData, table) {
-    this.resultsData = searchData.resultsData;
-    this.weightData = searchData.weightData;
+    this.keywordCounts = searchData.keywordCounts;
+    this.totalCounts = searchData.totalCounts;
     this.searchSettings = searchData.searchSettings;
     this.searchData = searchData;
     this.table = table;
@@ -418,10 +428,14 @@ NewsFreq.prototype.Graph = function (newsFreq, searchData, table) {
 };
 
 NewsFreq.prototype.Graph.prototype.Draw = function () {
-    var resultsData = this.weightData;;
-    if (resultsData.data.length == 0) {
+    var keywordCounts = this.keywordCounts;
+    if (keywordCounts.data.length == 0) {
         this.newsFreq.clear();
         return;
+    }
+    
+    if (this.searchData.searchSettings.searchWeighted) {
+        keywordCounts = this.searchData.weightedKeywordCounts;
     }
 
     var table = this.table;
@@ -437,14 +451,14 @@ NewsFreq.prototype.Graph.prototype.Draw = function () {
     var searchKeywordColors = this.searchData.searchKeywordColors;
     // Drop all dateFrom strings into results labels array
     var chartLabels = new Array();
-    $.each(resultsData.data[0], function (r, v) {
+    $.each(keywordCounts.data[0], function (r, v) {
         chartLabels.push(getDateString(v.DateFrom));
     });
 
     var chartQuantData = new Array();
 
     // Process all the results data into the data array
-    $.each(resultsData.data, function (a, b) {
+    $.each(keywordCounts.data, function (a, b) {
         var resultsCount = new Array();
         $.each(b, function (r, v) {
             resultsCount.push(v.Count);
@@ -503,7 +517,7 @@ NewsFreq.prototype.Graph.prototype.Draw = function () {
 
     // Create chart on canvas
     new Chart(document.getElementById("NewsFreqGraph").getContext("2d")).Line(lineChartData, lineChartOptions);
-    drawLegend(resultsData, searchData.weightData);
+    drawLegend(keywordCounts, searchData.totalCounts);
     $('#NewsFreqGraph').show(); //Chart starts hidden when unpopulated
     var labelText = 'Articles Per {1} Featuring Keyword';
     if (searchData.searchSettings.searchIncrement == 'Monthly') {
@@ -596,6 +610,10 @@ NewsFreq.prototype.Graph.prototype.clear = function () {
 };
 
 
+function getDateString(jsonDate) {
+    var date = new Date(parseInt(jsonDate.substr(6)));
+    return (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear();
+};
 
 // QueryString jquery plugin. Put somewhere else
 (function ($) {

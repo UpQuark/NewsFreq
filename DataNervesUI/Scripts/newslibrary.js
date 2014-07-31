@@ -553,7 +553,7 @@ NewsFreq.prototype.Graph.prototype.Draw = function () {
                     + source.replace(/ /g, '&nbsp')
                     + '" data-keyword="'
                     + b.keyword
-                    + '"><span style="background-color: #'
+                    + '"><span style="background-color:'
                     + b.color
                     + ';">&nbsp&nbsp&nbsp&nbsp&nbsp</span>&nbsp'
                     + b.keyword.replace(/ /g, '&nbsp')

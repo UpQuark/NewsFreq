@@ -33,7 +33,7 @@ NewsFreq.prototype.clear = function() {
     this.newsFreqSearchData.resultsData.clear();
     this.newsFreqSearchData.weightData.clear();
 
-    var ajaxRequests = this.ajaxRequests;
+    var ajaxRequests = this.newsFreqSearchData.ajaxRequests;
     this.newsFreqSearchData.searchKeywordColors = [];
 
     // Abort all requests in progress
@@ -42,7 +42,6 @@ NewsFreq.prototype.clear = function() {
             b.abort();
         });
     }
-    $('.loadingIcon').hide();
 
     // Reset color values to default literal
     this.newsFreqSearchData.colorValues = [
@@ -91,7 +90,7 @@ NewsFreq.prototype.Form = function (newsFreq, searchData, table, graph) {
     this.status = "enabled";
     this.table = table;
     this.graph = graph;
-    this.ajaxRequests = new Array();
+    this.ajaxRequests = searchData.ajaxRequests;
     this.newsFreq = newsFreq;
 
 

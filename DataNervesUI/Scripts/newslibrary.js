@@ -42,6 +42,7 @@ NewsFreq.prototype.clear = function() {
             b.abort();
         });
     }
+    $('.loadingIcon').hide();
 
     // Reset color values to default literal
     this.newsFreqSearchData.colorValues = [
@@ -107,11 +108,11 @@ NewsFreq.prototype.Form = function (newsFreq, searchData, table, graph) {
     $(document).on({
         ajaxStart: function () {
             if (!$('#None').is(':checked')) {
-                $body.addClass("loading");
+                $('.loadingIcon').show();
             }
         },
         ajaxStop: function () {
-            $body.removeClass("loading");
+            $('.loadingIcon').hide();
         }
     });
 

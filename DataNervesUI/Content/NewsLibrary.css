@@ -152,16 +152,8 @@ input[type=text] {
 }
 
 /* Loading icons */
-.modal {
-    display:    none;
-}
-
-body.loading {
-    overflow: hidden;   
-}
-
-body.loading .modal {
-    display: inline;
+.loadingIcon {
+    display: none;
 }
 
 /* Tooltips */

@@ -28,7 +28,7 @@
                     <input type="text" id="SearchTerms" placeholder="Keywords"/>
                     <span>&nbsp; in &nbsp;</span>
                     <select id="SearchTargets">
-                        <option value="Lead">lede</option>
+                        <option value="Lead">lead paragraph</option>
                         <option value="">entire article</option>
                         <option value="Title">headline</option>
                         <option value="Topics">index terms</option>
@@ -42,7 +42,8 @@
                 
                 <td>
                     <div id="NewsFreqInputSourceWrapper">
-                        <span>Search by:<br/></span>
+                        <span>Search by: </span>
+                         <span class="question" data-tooltiptext= "You can filter your search by news organization. Entering 'Fox News' or 'The Boston Globe' will search only articles from sources matching that name"><strong>?</strong></span><br/>
                         <div id="SourceTypeRadioGroup" class="NewsFreqRadioGroup" style="display:none">
                             <input type="radio" name="sourceType" id="SourceRadio" checked/><label for="SourceRadio"> Source publication </label><br/>
                             <input type="radio" name="sourceType" id="ParentRadio"/><label for="ParentRadio"> Parent company</label><br/>
@@ -84,7 +85,10 @@
             <tr>
                 <td>
                     <div id="SearchIncrementRadioGroup" class="NewsFreqRadioGroup">
-                        <span>Search increment: </span><span class="question"><strong>?</strong></span><br/>
+                        <span>Search increment: </span>
+                        <span class="question" data-tooltiptext= "Monthly searches retrieve one data point for each month in the date range. Annual searches retrieve one point per year. <strong>Single data points cannot be graphed.</strong>">
+                            <strong>?</strong>
+                        </span><br/>
                         <input type="radio" name="searchIncrement" id="Monthly" checked/><label for="Monthly"> Monthly</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <input type="radio" name="searchIncrement" id="Annual"/><label for="Annual"> Annual</label> <br/>
                     </div>
@@ -93,7 +97,10 @@
             <tr>
                 <td>   
                     <div id="SearchWeightRadioGroup" class="NewsFreqRadioGroup">
-                        <span>Search type: </span><br/>
+                        <span>Search type: </span>
+                        <span class="question" data-tooltiptext= "An unweighted search returns the <strong>total number</strong> of articles that include your keyword. A weighted search shows the <strong>percentage</strong> of all articles in which that keyword appears">
+                            <strong>?</strong>
+                        </span><br/>
                         <input type="radio" name="searchWeight" id="Unweighted" checked/><label for="Unweighted"> Unweighted</label>&nbsp;
                         <input type="radio" name="searchWeight" id="Weighted"/> <label for="Weighted"> Weighted</label><br/>
                     </div>

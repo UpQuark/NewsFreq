@@ -1,39 +1,56 @@
-﻿/* NewsFreq class */
-///////////////////////////////////////////////////////////////////////////////
+﻿/*
+ *-------------------------------------------------------------
+ * NewsFreq class
+ *-------------------------------------------------------------
+ */
+
+// Constructor
 function NewsFreq() {
-    // Search data share
     this.newsFreqSearchData = {
-        keywordCounts: new this.Results(),
-        totalCounts: new this.Results(),
-        weightedKeywordCounts: new this.Results(),
+        // Array of keywords frequency counts by time
+        keywordCounts: new this.Results(), 
+        // Array of total article counts by time
+        totalCounts: new this.Results(),   
+        // Array of keywords counts as a proportion of total counts by time
+        weightedKeywordCounts: new this.Results(), 
         
+        // Settings storage for search time increment and weighted flag
         searchSettings: {
             searchIncrement: 'None',
             searchWeighted: false
         },
         
+        // Stores pairs of keywords and graph colors for consistency across searches
         searchKeywordColors: [],
+        
+        // Stores references to running ajax requests for cancelling
         ajaxRequests: [],
+        
+        // Color list from which keywords are matched
         colorValues: [               
-            "b3d7e0", "4564a5", "45a2a5", "400000", "004000", "000040", "404000",
+            "b3d7e0", "4564a5", "45a2a5", "b00000", "00b000", "0000b0", "b0b000",
             "800000", "008000", "000080", "808000", "800080", "008080", "808080",
             "C00000", "00C000", "0000C0", "C0C000", "C000C0", "00C0C0", "C0C0C0"
         ],
     };
     
+    // Data structures encapsulating behavior of three main page elements
     this.table = new this.Table(this, this.newsFreqSearchData);
     this.graph = new this.Graph(this, this.newsFreqSearchData, this.table);
     this.form = new this.Form(this, this.newsFreqSearchData, this.table, this.graph);
 }
 
-NewsFreq.prototype.clear = function() {
+// Resets all visual elements to default state, empties all dependent data structures
+NewsFreq.prototype.clear = function () {
+    // Empty all data structures
     this.newsFreqSearchData.keywordCounts.clear();
     this.newsFreqSearchData.totalCounts.clear();
+    this.newsFreqSearchData.weightedKeywordCounts.clear();
 
-    var ajaxRequests = this.newsFreqSearchData.ajaxRequests;
     this.newsFreqSearchData.searchKeywordColors = [];
 
     // Abort all requests in progress
+    var ajaxRequests = this.newsFreqSearchData.ajaxRequests;
     if (ajaxRequests) {
         $.each(ajaxRequests, function (a, b) {
             b.abort();
@@ -42,11 +59,12 @@ NewsFreq.prototype.clear = function() {
 
     // Reset color values to default literal
     this.newsFreqSearchData.colorValues = [
-        "b3d7e0", "4564a5", "45a2a5", "400000", "004000", "000040", "404000",
+        "b3d7e0", "4564a5", "45a2a5", "b00000", "00b000", "0000b0", "b0b000",
         "800000", "008000", "000080", "808000", "800080", "008080", "808080",
         "C00000", "00C000", "0000C0", "C0C000", "C000C0", "00C0C0", "C0C0C0"
     ];
 
+    // Reset all page elements to default state
     this.form.clear();
     this.graph.clear();
     this.table.clear();
@@ -54,7 +72,7 @@ NewsFreq.prototype.clear = function() {
 };
 
 /* Results class */
-///////////////////////////////////////////////////////////////////////////////
+/*-------------------------------------------------------------*/
 NewsFreq.prototype.Results = function() {
      this.data = new Array();
 };
@@ -78,30 +96,36 @@ NewsFreq.prototype.Results.prototype.isEmpty = function () {
 };
 
 
-
-/* Form class */
-///////////////////////////////////////////////////////////////////////////////
+/*
+ *-------------------------------------------------------------
+ * Form class
+ *-------------------------------------------------------------
+ */
 
 // Constructor
 NewsFreq.prototype.Form = function (newsFreq, searchData, table, graph) {
     this.searchData = searchData;
-    this.status = "enabled";
     this.table = table;
     this.graph = graph;
-    this.ajaxRequests = searchData.ajaxRequests;
-    this.newsFreq = newsFreq;
+    this.status = "enabled";
 
-
-    // Initialize datepicker and tooltips
-    $(".DatePicker").datepicker({ changeYear: true });
+    // Initialize datepickers
+    $(".DatePicker").datepicker({
+        changeYear: true,
+        constrainInput: true,
+        yearRange: "1976:nn"
+    });
+    $("#DateFrom").datepicker("option", "defaultDate", "-1y");
+    
+    // Initialize helper tooltips
     $("span.question").hover(function () {
-        $(this).append('<div class="tooltip"><p>Monthly searches retrieve one data point for each month in the date range. Annual searches retrieve one point per year. <strong>Single data points cannot be graphed.</strong></p></div>');
+        var tooltipText = $(this).data("tooltiptext");
+        $(this).append('<div class="tooltip"><p>' + tooltipText + '</strong></p></div>');
     }, function () {
         $("div.tooltip").remove();
     });
 
     // Set the body to 'loading' when an ajax request is in progress
-    var $body = $("body");
     $(document).on({
         ajaxStart: function () {
             if (!$('#None').is(':checked')) {
@@ -289,7 +313,7 @@ NewsFreq.prototype.Form.prototype.search = function () {
     var totalCounts = this.searchData.totalCounts;
     var table = this.table;
     var graph = this.graph;
-    var ajaxRequests = this.ajaxRequests;
+    var ajaxRequests = this.searchData.ajaxRequests;
     var weightedKeywordCounts = this.searchData.weightedKeywordCounts;
 
     // Create request params
@@ -352,10 +376,6 @@ NewsFreq.prototype.Form.prototype.search = function () {
     }
 };
 
-
-
-
-
 // Clear all entered parameters, reset all fields
 NewsFreq.prototype.Form.prototype.clear = function() {
     $('#DateFrom').removeClass('invalid');
@@ -371,8 +391,11 @@ NewsFreq.prototype.Form.prototype.clear = function() {
 
 
 
-/* Table data structure */
-///////////////////////////////////////////////////////////////////////////////
+/*
+ *-------------------------------------------------------------
+ * Table class
+ *-------------------------------------------------------------
+ */
 NewsFreq.prototype.Table = function (newsFreq, searchData) {
     this.keywordCounts = searchData.keywordCounts;
     this.totalCounts = searchData.totalCounts;
@@ -416,8 +439,11 @@ NewsFreq.prototype.Table.prototype.clear = function() {
 
 
 
-/* Graph data structure */
-///////////////////////////////////////////////////////////////////////////////
+/*
+ *-------------------------------------------------------------
+ * Graph class
+ *-------------------------------------------------------------
+ */
 NewsFreq.prototype.Graph = function (newsFreq, searchData, table) {
     this.keywordCounts = searchData.keywordCounts;
     this.totalCounts = searchData.totalCounts;

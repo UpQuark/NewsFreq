@@ -109,6 +109,13 @@ NewsFreq.prototype.Form = function (newsFreq, searchData, table, graph) {
     this.graph = graph;
     this.status = "enabled";
 
+    $('#SearchButton').click(function () {
+        newsFreq.form.search(false);
+    });
+    $('#ClearButton').click(function () {
+        newsFreq.clear();
+    });
+
     // Initialize datepickers
     $(".DatePicker").datepicker({
         changeYear: true,

@@ -74,7 +74,7 @@ NewsFreq.prototype.clear = function () {
 /* Results class */
 /*-------------------------------------------------------------*/
 NewsFreq.prototype.Results = function() {
-     this.data = new Array();
+     this.data = [];
 };
 
 // Add an additional variable array of data to results
@@ -88,6 +88,7 @@ NewsFreq.prototype.Results.prototype.clear = function() {
 };
 
 // Is empty
+// TODO: potentially not the right logic
 NewsFreq.prototype.Results.prototype.isEmpty = function () {
     if (this.data.length == 1 && this.data[0].length == 0) {
         return true;
@@ -109,6 +110,7 @@ NewsFreq.prototype.Form = function (newsFreq, searchData, table, graph) {
     this.graph = graph;
     this.status = "enabled";
 
+    // Assign UI event handlers
     $('#SearchButton').click(function () {
         newsFreq.form.search(false);
     });
@@ -124,7 +126,7 @@ NewsFreq.prototype.Form = function (newsFreq, searchData, table, graph) {
     });
     $("#DateFrom").datepicker("option", "defaultDate", "-1y");
     
-    // Initialize helper tooltips
+    // Initialize helper tooltips deriving text from data element
     $("span.question").hover(function () {
         var tooltipText = $(this).data("tooltiptext");
         $(this).append('<div class="tooltip"><p>' + tooltipText + '</strong></p></div>');
@@ -132,7 +134,7 @@ NewsFreq.prototype.Form = function (newsFreq, searchData, table, graph) {
         $("div.tooltip").remove();
     });
 
-    // Set the body to 'loading' when an ajax request is in progress
+    // Add ajax handlers to show loading wheel when request in progress
     $(document).on({
         ajaxStart: function () {
             if (!$('#None').is(':checked')) {
@@ -178,9 +180,8 @@ NewsFreq.prototype.Form.prototype.enable = function () {
     $('#ClearButton').prop('disabled', 'disabled').addClass('disabledButton');
 };
 
-// Disable all form fields that should be impermeable during active searches
+// Disable all form fields that should be inactive during active searches
 NewsFreq.prototype.Form.prototype.disable = function () {
-    // Alter UI for in-progress search
     $("#SearchButton").prop('value', 'Add variable');
     $('input[name=searchIncrement]').attr('disabled', 'disabled');
     $('input[name=searchWeight]').attr('disabled', 'disabled');
@@ -193,28 +194,17 @@ NewsFreq.prototype.Form.prototype.disable = function () {
 // Get parameters from form field entries
 NewsFreq.prototype.Form.prototype.getParams = function (weighted, queryStringExists) {
     if (queryStringExists) {
-        // Not implemented
-        return null;
+        return getQueryString();
     } else {
-        if (!weighted) {
-            return {
-                DateFrom: $('#DateFrom').val(),
-                DateTo: $('#DateTo').val(),
-                DateString: $('#DateFrom').val() + ' to ' + $('#DateTo').val(),
-                SearchString: $('#SearchTerms').val(),
-                SearchTarget: $('#SearchTargets').val(),
-                SearchSource: $('#SearchSource').val()
-            };
-        } else {
-            return {
-                DateFrom: $('#DateFrom').val(),
-                DateTo: $('#DateTo').val(),
-                DateString: $('#DateFrom').val() + ' to ' + $('#DateTo').val(),
-                SearchString: '',
-                SearchTarget: $('#SearchTargets').val(),
-                SearchSource: $('#SearchSource').val()
-            };
-        }
+        var searchString = weighted ? "" : $('#SearchTerms').val();
+        return {
+            DateFrom: $('#DateFrom').val(),
+            DateTo: $('#DateTo').val(),
+            DateString: $('#DateFrom').val() + ' to ' + $('#DateTo').val(),
+            SearchString: searchString,
+            SearchTarget: $('#SearchTargets').val(),
+            SearchSource: $('#SearchSource').val()
+        };
     }
 };
 
@@ -252,19 +242,14 @@ NewsFreq.prototype.Form.prototype.validateUserInput = function () {
     var dateFrom = $('#DateFrom').val();
     var dateTo = $('#DateTo').val();
 
-    if (dateFrom == ''
-        || dateFrom == null
-        || (isNaN(Date.parse(dateFrom)))) {
-
+    if (dateFrom == '' || dateFrom == null || (isNaN(Date.parse(dateFrom)))) {
         $('#DateFrom').addClass('invalid');
         valid = false;
     } else {
         $('#DateFrom').removeClass('invalid');
     }
 
-    if (dateTo == ''
-        || dateTo == null
-        || (isNaN(Date.parse(dateTo)))) {
+    if (dateTo == '' || dateTo == null || (isNaN(Date.parse(dateTo)))) {
         $('#DateTo').addClass('invalid');
         valid = false;
     } else {
@@ -318,11 +303,12 @@ NewsFreq.prototype.Form.prototype.search = function () {
     var searchIncrement = this.searchData.searchSettings.searchIncrement;
     var keywordCounts = this.searchData.keywordCounts;
     var totalCounts = this.searchData.totalCounts;
+    var weightedKeywordCounts = this.searchData.weightedKeywordCounts;
     var table = this.table;
     var graph = this.graph;
     var ajaxRequests = this.searchData.ajaxRequests;
-    var weightedKeywordCounts = this.searchData.weightedKeywordCounts;
 
+    // TODO: Do these need != null part?
     // Create request params
     var params = this.getQueryString() != null ? this.getParams(false, true) : this.getParams(false, false);
 
@@ -330,7 +316,6 @@ NewsFreq.prototype.Form.prototype.search = function () {
     if (searchWeighted) {
         var weightParams = this.getQueryString() != null ? this.getParams(true, true) : this.getParams(true, false);
     }
-
 
     // Send query to API
     var keywordCountRequest = $.ajax({
@@ -419,6 +404,7 @@ NewsFreq.prototype.Table.prototype.Draw = function () {
         keywordCounts = this.weightedKeywordCounts;
     }
 
+    // Draw table
     var tblBody = '<tr class="newsTableHead"><td>Keyword</td><td>Source</td><td>From</td><td>To</td><td>Instances</td></tr>';
     $.each(keywordCounts.data, function(name, results) {
         $.each(results, function (r, resultsContents) {
@@ -550,7 +536,7 @@ NewsFreq.prototype.Graph.prototype.Draw = function () {
 
     // Create chart on canvas
     new Chart(document.getElementById("NewsFreqGraph").getContext("2d")).Line(lineChartData, lineChartOptions);
-    drawLegend(keywordCounts, searchData.totalCounts);
+    drawLegend(this.keywordCounts, searchData.totalCounts);
     $('#NewsFreqGraph').show(); //Chart starts hidden when unpopulated
     var labelText = 'Articles Per {1} Featuring Keyword';
     if (searchData.searchSettings.searchIncrement == 'Monthly') {
@@ -614,8 +600,9 @@ NewsFreq.prototype.Graph.prototype.Draw = function () {
         function removeVariable(keyword) {
             searchKeywordColors.splice(findWithAttr(searchKeywordColors, 'keyword', keyword), 1);
             $.each(results.data, function (a, b) {
-                while (findWithAttr(b, 'SearchString', keyword) != -1) {
-                    b.splice(findWithAttr(b, 'SearchString', keyword), 1);
+                if (keyword == b[0].SearchString) {
+                    results.data.splice(a, 1); // TODO Overflowing by shortening array during 'each'
+                    return false;
                 }
             });
             table.Draw();
@@ -643,12 +630,18 @@ NewsFreq.prototype.Graph.prototype.clear = function () {
 };
 
 
+
+/*
+ *-------------------------------------------------------------
+ * Helpers
+ *-------------------------------------------------------------
+ */
 function getDateString(jsonDate) {
     var date = new Date(parseInt(jsonDate.substr(6)));
     return (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear();
 };
 
-// QueryString jquery plugin. Put somewhere else
+// QueryString jquery plugin
 (function ($) {
     $.QueryString = (function(a) {
         if (a == "") return null;

@@ -594,8 +594,8 @@ NewsFreq.prototype.Graph.prototype.Draw = function () {
                     + source
                     + '&nbsp&nbsp </span>'
             );
-            $('.NewsFreqGraphLegendCell').click(function () { removeVariable($(this).data('keyword')); });
         });
+        $('.NewsFreqGraphLegendCell').click(function () { removeVariable($(this).data('keyword')); });
 
         function removeVariable(keyword) {
             searchKeywordColors.splice(findWithAttr(searchKeywordColors, 'keyword', keyword), 1);

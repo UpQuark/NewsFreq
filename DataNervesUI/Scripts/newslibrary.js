@@ -536,14 +536,20 @@ NewsFreq.prototype.Graph.prototype.Draw = function () {
 
     // Create chart on canvas
     new Chart(document.getElementById("NewsFreqGraph").getContext("2d")).Line(lineChartData, lineChartOptions);
-    drawLegend(this.keywordCounts, searchData.totalCounts);
+    
+    // Draw legend
+    drawLegend(this.keywordCounts, searchData.totalCounts, searchData.weightedKeywordCounts);
+    
     $('#NewsFreqGraph').show(); //Chart starts hidden when unpopulated
+    
     var labelText = 'Articles Per {1} Featuring Keyword';
+    
     if (searchData.searchSettings.searchIncrement == 'Monthly') {
         labelText = labelText.replace('{1}', 'Month');
     } else if (searchData.searchSettings.searchIncrement == 'Annual') {
         labelText = labelText.replace('{1}', 'Year');
     }
+    
     $('#NewsFreqGraphLabel').text(labelText).show();
     
     /* Helper functions */
@@ -572,7 +578,7 @@ NewsFreq.prototype.Graph.prototype.Draw = function () {
     };
     
 
-    function drawLegend (results, weight) {
+    function drawLegend (keywordCounts, totalCounts, weightedKeywordCounts) {
         $('#NewsFreqGraphLegend').empty();
         $.each(searchKeywordColors, function (a, b) {
             var source = "";
@@ -599,12 +605,27 @@ NewsFreq.prototype.Graph.prototype.Draw = function () {
 
         function removeVariable(keyword) {
             searchKeywordColors.splice(findWithAttr(searchKeywordColors, 'keyword', keyword), 1);
-            $.each(results.data, function (a, b) {
+            $.each(keywordCounts.data, function (a, b) {
                 if (keyword == b[0].SearchString) {
-                    results.data.splice(a, 1); // TODO Overflowing by shortening array during 'each'
+                    keywordCounts.data.splice(a, 1);
                     return false;
                 }
             });
+            if (searchData.searchSettings.searchWeighted) {
+                $.each(totalCounts.data, function (a, b) {
+                    if (keyword == b[0].SearchString) {
+                        totalCounts.data.splice(a, 1);
+                        return false;
+                    }
+                });
+                $.each(weightedKeywordCounts.data, function (a, b) {
+                    if (keyword == b[0].SearchString) {
+                        weightedKeywordCounts.data.splice(a, 1);
+                        return false;
+                    }
+                });
+            }
+            
             table.Draw();
             graph.Draw();
         }

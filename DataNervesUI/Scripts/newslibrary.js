@@ -356,7 +356,7 @@ NewsFreq.prototype.Form.prototype.search = function () {
             }
         });
 
-        $.when(keywordCountRequest, totalCountRequest).then(function() {
+        $.when(keywordCountRequest && totalCountRequest).then(function() {
             table.Draw();
             graph.Draw();
         });

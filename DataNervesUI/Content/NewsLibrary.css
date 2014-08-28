@@ -20,6 +20,11 @@
     
 }
 
+#SearchTargets {
+    width: 146px;
+    height: 30px;
+}
+
 .formHeaderSmall {
     font-weight: bold;
 }

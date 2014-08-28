@@ -629,15 +629,6 @@ NewsFreq.prototype.Graph.prototype.Draw = function () {
             table.Draw();
             graph.Draw();
         }
-        
-        function findWithAttr(array, attr, value) {
-            for (var i = 0; i < array.length; i += 1) {
-                if (array[i][attr] === value) {
-                    return i;
-                }
-            }
-            return -1;
-        };
     };
 
 };
@@ -660,6 +651,15 @@ NewsFreq.prototype.Graph.prototype.clear = function () {
 function getDateString(jsonDate) {
     var date = new Date(parseInt(jsonDate.substr(6)));
     return (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear();
+};
+
+function findWithAttr(array, attr, value) {
+    for (var i = 0; i < array.length; i += 1) {
+        if (array[i][attr] === value) {
+            return i;
+        }
+    }
+    return -1;
 };
 
 // QueryString jquery plugin

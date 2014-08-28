@@ -12,10 +12,24 @@
 </div>
 <div id="NewsFreqFormWrapper"  class="block-content-wrapper">
     <div>
+        <!--<input type="button" value="What can I search?" id="inspirationButton"/>
+        <input type="button" value="How does this work?" id="helpButton"/>-->
         <p class="descriptionText">
-            This tool enables you to analyze the popularity of topics in American news coverage.
-            You can use it to gather data on major trends in news reporting and visualize them in seconds.
-            Try searching issues that interest you to see how the volume of coverage changes over time and how it compares to other topics.<br/>
+            <!--What topics do American News Media cover, and how do they change over time?-->
+            This tool shows you the frequency that given keywords appear in American News Media.
+            You can use it to look at trends in news reporting and visualize them in seconds.
+            Try searching issues that interest you to see how the volume of coverage changes over time and how it compares to other topics. 
+        </p>
+        <p>
+            Hover over the <strong class>?</strong> icons for help.
+        </p>
+        
+        <p class="inspirationText" style="display:none">
+            Possible topics include: Political candidates, social movements, actors/actresses, artists, countries, epidemics, weather patterns, sports.<br/>
+            Possible questions to research include: <br/>
+            Which presidential hopefuls get the most media attention? How did volume of coverage evolve over the wars in Iraq and Afghanistan?
+            What major countries appear less in the news than Justin Bieber?
+            What TV shows or movies generate the largest amount of media attention? Does this relate to critical response?
         </p>
     </div>
     <div id="NewsFreqInputWrapper">
@@ -23,7 +37,7 @@
             <tr>
                 <td>
                     <span>
-                        Enter search term or terms. Boolean operators are supported
+                        <span class="formHeaderSmall">Enter keyword(s) to query.</span> You may use boolean operators AND and OR with parentheses to specify multiple terms.
                     </span><br/>
                     <input type="text" id="SearchTerms" placeholder="Keywords"/>
                     <span>&nbsp; in &nbsp;</span>
@@ -42,7 +56,7 @@
                 
                 <td>
                     <div id="NewsFreqInputSourceWrapper">
-                        <span>Search by: </span>
+                        <span class="formHeaderSmall">Search in:</span>
                          <span class="question" data-tooltiptext= "You can filter your search by news organization. Entering 'Fox News' or 'The Boston Globe' will search only articles from sources matching that name"><strong>?</strong></span><br/>
                         <div id="SourceTypeRadioGroup" class="NewsFreqRadioGroup" style="display:none">
                             <input type="radio" name="sourceType" id="SourceRadio" checked/><label for="SourceRadio"> Source publication </label><br/>
@@ -62,7 +76,7 @@
             </tr>
             <tr>
                 <td>
-                    <span> Enter date range: </span><br/>
+                    <span class="formHeaderSmall">Enter date range:</span><br/>
                     <input type="text" id="DateFrom" class = "DatePicker" placeholder = "Start date"/>
                     <span>&nbsp; to &nbsp;</span>  
                     <input type="text" id="DateTo" class = "DatePicker" placeholder = "End date"/>
@@ -85,11 +99,11 @@
             <tr>
                 <td>
                     <div id="SearchIncrementRadioGroup" class="NewsFreqRadioGroup">
-                        <span>Search increment: </span>
+                        <span class="formHeaderSmall">Search increment:</span>
                         <span class="question" data-tooltiptext= "Monthly searches retrieve one data point for each month in the date range. Annual searches retrieve one point per year. <strong>Single data points cannot be graphed.</strong>">
                             <strong>?</strong>
                         </span><br/>
-                        <input type="radio" name="searchIncrement" id="Monthly" checked/><label for="Monthly"> Monthly</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="radio" name="searchIncrement" id="Monthly" checked/><label for="Monthly"> Monthly</label><br/>
                         <input type="radio" name="searchIncrement" id="Annual"/><label for="Annual"> Annual</label> <br/>
                     </div>
                 </td>
@@ -97,12 +111,12 @@
             <tr>
                 <td>   
                     <div id="SearchWeightRadioGroup" class="NewsFreqRadioGroup">
-                        <span>Search type: </span>
-                        <span class="question" data-tooltiptext= "An unweighted search returns the <strong>total number</strong> of articles that include your keyword. A weighted search shows the <strong>percentage</strong> of all articles in which that keyword appears">
+                        <span class="formHeaderSmall">Results display:</span>
+                        <span class="question" data-tooltiptext= "A total search returns the <strong>total number</strong> of articles that include your keyword. A proportion search shows the <strong>percentage</strong> of all articles in which that keyword appears">
                             <strong>?</strong>
                         </span><br/>
-                        <input type="radio" name="searchWeight" id="Unweighted" checked/><label for="Unweighted"> Unweighted</label>&nbsp;
-                        <input type="radio" name="searchWeight" id="Weighted"/> <label for="Weighted"> Weighted</label><br/>
+                        <input type="radio" name="searchWeight" id="Unweighted" checked/><label for="Unweighted"> Total articles</label>&nbsp;<br/>
+                        <input type="radio" name="searchWeight" id="Weighted"/> <label for="Weighted"> Proportion of articles</label><br/>
                     </div>
                 </td>
             </tr>

@@ -2,7 +2,7 @@
 ----------------------------------------------------------*/
 
 .block-content-wrapper {
-    width: 405px;
+    width: 420px;
     float: left;
     position: relative;
     display: block;
@@ -20,6 +20,10 @@
     
 }
 
+.formHeaderSmall {
+    font-weight: bold;
+}
+
 .descriptionText {
     font-size: 1em;
     position: relative;
@@ -34,8 +38,8 @@
 /* Radio group */
 #NewsFormRadioGroupWrapper {
     position: absolute; 
-    top: 183px; 
-    left: 210px;
+    top: 189px; 
+    left: 249px;
     font-size: 0.90em;
 }
 

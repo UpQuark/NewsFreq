@@ -330,6 +330,7 @@ NewsFreq.prototype.Form.prototype.search = function () {
             keywordCounts.addVariable($.parseJSON(data));
         }
     });
+    ajaxRequests.add(keywordCountRequest);
 
     if (searchWeighted){
         var totalCountRequest = $.ajax({
@@ -355,7 +356,7 @@ NewsFreq.prototype.Form.prototype.search = function () {
                 });
             }
         });
-
+        ajaxRequests.add(totalCountRequest);
         $.when(keywordCountRequest && totalCountRequest).then(function() {
             table.Draw();
             graph.Draw();
@@ -366,6 +367,8 @@ NewsFreq.prototype.Form.prototype.search = function () {
             graph.Draw();
         });
     }
+    
+    
 };
 
 // Clear all entered parameters, reset all fields

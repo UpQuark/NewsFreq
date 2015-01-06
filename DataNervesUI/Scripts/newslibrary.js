@@ -330,7 +330,7 @@ NewsFreq.prototype.Form.prototype.search = function () {
             keywordCounts.addVariable($.parseJSON(data));
         }
     });
-    ajaxRequests.add(keywordCountRequest);
+    ajaxRequests.push(keywordCountRequest);
 
     if (searchWeighted){
         var totalCountRequest = $.ajax({
@@ -356,7 +356,7 @@ NewsFreq.prototype.Form.prototype.search = function () {
                 });
             }
         });
-        ajaxRequests.add(totalCountRequest);
+        ajaxRequests.push(totalCountRequest);
         $.when(keywordCountRequest && totalCountRequest).then(function() {
             table.Draw();
             graph.Draw();

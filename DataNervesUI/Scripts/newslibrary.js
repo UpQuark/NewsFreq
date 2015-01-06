@@ -110,9 +110,16 @@ NewsFreq.prototype.Form = function (newsFreq, searchData, table, graph) {
     this.graph = graph;
     this.status = "enabled";
 
+    $(document).keypress(function (e) {
+        if (e.which === 13) {
+            // enter pressed
+            newsFreq.form.search();
+        }
+    });
+
     // Assign UI event handlers
     $('#SearchButton').click(function () {
-        newsFreq.form.search(false);
+        newsFreq.form.search();
     });
     $('#ClearButton').click(function () {
         newsFreq.clear();

@@ -233,6 +233,8 @@
     <Content Include="Global.asax" />
     <Content Include="Scripts\Chart.js" />
     <Content Include="Scripts\Chart.min.js" />
+    <Content Include="Scripts\Deprecated\Chart.js" />
+    <Content Include="Scripts\Deprecated\Chart.min.js" />
     <Content Include="Scripts\jquery-2.1.1.js" />
     <Content Include="Scripts\jquery-ui-1.10.4.js" />
     <Content Include="Scripts\newslibrary.js" />

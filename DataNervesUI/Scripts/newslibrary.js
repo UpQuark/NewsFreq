@@ -490,15 +490,17 @@ NewsFreq.prototype.Graph.prototype.Draw = function () {
 
         //Check if keyword already exists in searchKeywordColors and is already associated with a color, else make a new one
         var index = findElemByKeywordSource(searchKeywordColors, searchString, searchSource);
-        if (index != -1) {
-            var color = searchKeywordColors[index].color;
+        var color = "#000"; //Default color to black
+        if (index !== -1) {
+            color = searchKeywordColors[index].color;
         } else {
-            var color = getColor(searchString, searchSource);
+            color = getColor(searchString, searchSource);
         }
 
         // Add point data to data set
         chartQuantData.push(
             {
+                //label: searchString,
                 fillColor: "rgba(220,220,220,0.0)",
                 strokeColor: color,
                 pointColor: color,
@@ -509,7 +511,7 @@ NewsFreq.prototype.Graph.prototype.Draw = function () {
     });
 
     // Trim chartLabels to goalLength if length exceeds it
-    var goalLength = 48;
+    var goalLength = 36;
     chartLabels = trimArray(chartLabels, goalLength);
 
     var lineChartData = {
@@ -521,27 +523,34 @@ NewsFreq.prototype.Graph.prototype.Draw = function () {
 
 
     //TODO: condense these into single block with amendment
-    if (searchData.searchSettings.searchWeighted == false) {
+    if (searchData.searchSettings.searchWeighted === false) {
         lineChartOptions = {
             bezierCurve: true,
-            pointDot: false,
+            pointDot: true,
             scaleFontSize: 10,
+            pointDotRadius: 3,
+            legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].lineColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>"
         };
     } else {
         lineChartOptions = {
             bezierCurve: true,
-            pointDot: false,
+            pointDot: true,
+            pointDotRadius: 3,
             scaleFontSize: 10,
             scaleLabel: "<%=value+'%'%>",
+            legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].lineColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>"
         };
     }
 
 
     // Create chart on canvas
-    new Chart(document.getElementById("NewsFreqGraph").getContext("2d")).Line(lineChartData, lineChartOptions);
+    var ctx = $("#NewsFreqGraph").get(0).getContext("2d");
+    var lineChart = new Chart(ctx).Line(lineChartData, lineChartOptions);
+    
     
     // Draw legend
     drawLegend(this.keywordCounts, searchData.totalCounts, searchData.weightedKeywordCounts);
+    //$("#NewsFreqGraphLegend").html(lineChart.generateLegend());
     
     $('#NewsFreqGraph').show(); //Chart starts hidden when unpopulated
     

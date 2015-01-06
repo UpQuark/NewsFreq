@@ -1,3 +1,11 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
 	<s:String x:Key="/Default/CodeInspection/Highlighting/AnalysisEnabled/@EntryValue">SOLUTION</s:String>
-	<s:Boolean x:Key="/Default/Environment/SearchAndNavigation/MergeOccurences/@EntryValue">False</s:Boolean></wpf:ResourceDictionary>
+	<s:Boolean x:Key="/Default/Environment/SearchAndNavigation/MergeOccurences/@EntryValue">False</s:Boolean>
+	<s:Boolean x:Key="/Default/Housekeeping/UnitTestingMru/UnitTestSessionPersistentData/=245EE738E4E943178C57BFEA59EB0025/@KeyIndexDefined">True</s:Boolean>
+	<s:Int64 x:Key="/Default/Housekeeping/UnitTestingMru/UnitTestSessionPersistentData/=245EE738E4E943178C57BFEA59EB0025/GroupingIndex/@EntryValue">4</s:Int64>
+	<s:String x:Key="/Default/Housekeeping/UnitTestingMru/UnitTestSessionPersistentData/=245EE738E4E943178C57BFEA59EB0025/Name/@EntryValue">ApiTests</s:String>
+	<s:String x:Key="/Default/Housekeeping/UnitTestingMru/UnitTestSessionPersistentData/=245EE738E4E943178C57BFEA59EB0025/XmlSerializedElements/@EntryValue">&lt;Session&gt;&lt;e Id="DataNervesAPI.Test.ApiTests.TestMethod1" Project="B77209D8-A7C9-4A0A-A4A4-A95D6EB97B89" Provider="MSTest" /&gt;&lt;e Id="DataNervesAPI.Test.ApiTests" Project="B77209D8-A7C9-4A0A-A4A4-A95D6EB97B89" Provider="MSTest" /&gt;&lt;/Session&gt;</s:String>
+	
+	
+	
+	</wpf:ResourceDictionary>

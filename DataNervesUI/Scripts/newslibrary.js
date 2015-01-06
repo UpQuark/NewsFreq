@@ -319,7 +319,7 @@ NewsFreq.prototype.Form.prototype.search = function () {
 
     // Send query to API
     var keywordCountRequest = $.ajax({
-        url: 'api/NewsLibrary',
+        url: '../DataNervesApi/api/NewsLibrary',
         type: "POST",
         dataType: "json",
         data: {
@@ -334,7 +334,7 @@ NewsFreq.prototype.Form.prototype.search = function () {
 
     if (searchWeighted){
         var totalCountRequest = $.ajax({
-            url: 'api/NewsLibrary',
+            url: '../DataNervesApi/api/NewsLibrary',
             type: "POST",
             dataType: "json",
             data: {

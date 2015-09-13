@@ -7,17 +7,17 @@
 // Constructor
 function NewsFreq() {
     this.newsFreqSearchData = {
-        // Array of keywords frequency counts by time
-        keywordCounts: new this.Results(), 
-        // Array of total article counts by time
-        totalCounts: new this.Results(),   
-        // Array of keywords counts as a proportion of total counts by time
-        weightedKeywordCounts: new this.Results(), 
+
+        keywordCounts: new this.Results(),   // Array of articles-including-keyword count by date range
+        totalCounts: new this.Results(),   // Array of total article counts by date
+        weightedKeywordCounts: new this.Results(), // Array of articles-including-keyword counts as a proportion of total article counts by date range
         
+        queryString: null,
+
         // Settings storage for search time increment and weighted flag
         searchSettings: {
             searchIncrement: 'None',
-            searchWeighted: false
+            searchWeighted: false,
         },
         
         // Stores pairs of keywords and graph colors for consistency across searches
@@ -33,11 +33,21 @@ function NewsFreq() {
             "C00000", "00C000", "0000C0", "C0C000", "C000C0", "00C0C0", "C0C0C0"
         ],
     };
-    
+
     // Data structures encapsulating behavior of three main page elements
     this.table = new this.Table(this, this.newsFreqSearchData);
     this.graph = new this.Graph(this, this.newsFreqSearchData, this.table);
     this.form = new this.Form(this, this.newsFreqSearchData, this.table, this.graph);
+
+    var newsFreq = this;
+    //If URL contains a query string, store flag as true
+    $(document).ready(function () {
+       // var qString =   
+        if (window.location.search.substr(1) !== "") {
+            newsFreq.newsFreqSearchData.queryString = $.deparam(window.location.search.substr(1));
+            newsFreq.form.search();
+        }
+    });
 }
 
 // Resets all visual elements to default state, empties all dependent data structures
@@ -199,20 +209,22 @@ NewsFreq.prototype.Form.prototype.disable = function () {
 
 /* Getters */
 // Get parameters from form field entries
-NewsFreq.prototype.Form.prototype.getParams = function (weighted, queryStringExists) {
-    if (queryStringExists) {
-        return getQueryString();
-    } else {
-        var searchString = weighted ? "" : $('#SearchTerms').val();
-        return {
-            DateFrom: $('#DateFrom').val(),
-            DateTo: $('#DateTo').val(),
-            DateString: $('#DateFrom').val() + ' to ' + $('#DateTo').val(),
-            SearchString: searchString,
-            SearchTarget: $('#SearchTargets').val(),
-            SearchSource: $('#SearchSource').val()
-        };
+NewsFreq.prototype.Form.prototype.getParams = function (weighted, queryString) {
+    if (queryString !== null) {
+        //newsFreq.newsFreqSearchData.searchIncrement = queryString["searchIncrement"];
+        return queryString;
     }
+
+    // Set searchString to null on requests that are for total articles for time period
+    var searchString = weighted ? "" : $('#SearchTerms').val();
+    return [{
+        DateFrom: $('#DateFrom').val(),
+        DateTo: $('#DateTo').val(),
+        DateString: $('#DateFrom').val() + ' to ' + $('#DateTo').val(),
+        SearchString: searchString,
+        SearchTarget: $('#SearchTargets').val(),
+        SearchSource: $('#SearchSource').val()
+    }];
 };
 
 // Get search settings from form field entries
@@ -223,6 +235,12 @@ NewsFreq.prototype.Form.prototype.getSearchSettings = function () {
     };
     
     // Check search time increment
+    if (!$.isEmptyObject($.QueryString)) {
+        searchSettings.searchIncrement = $.QueryString["searchIncrement"];
+        searchSettings.searchWeighted = $.QueryString["searchWeighted"] == "true" ? true : false;
+        return searchSettings
+    }
+
     if ($('#Monthly').is(':checked')) {
         searchSettings.searchIncrement = "Monthly";
     }
@@ -276,38 +294,19 @@ NewsFreq.prototype.Form.prototype.validateUserInput = function () {
     return false;
 };
 
-NewsFreq.prototype.Form.prototype.getQueryString = function () {
-    if ($.QueryString) {
-        return {
-            weight: Boolean($.QueryString['weight']),
-            searchIncrement: $.QueryString['searchIncrement'],
-            params: {
-                DateFrom: $.QueryString['dateFrom'],
-                DateTo: $.QueryString['dateTo'],
-                DateString: $.QueryString['dateFrom'] + ' to ' + $.QueryString['dateTo'],
-                SearchString: $.QueryString['searchString'],
-                SearchTarget: $.QueryString['searchTarget'],
-                SearchSource: $.QueryString['searchSource']
-            }
-        };
-    }
-    return null;
-};
-
 // Fire search
 NewsFreq.prototype.Form.prototype.search = function () {
     // Kill function if form validation fails and there is no queryString
-    if (!this.getQueryString() && !this.validateUserInput()) {
+    if (this.searchData.queryString == null && !this.validateUserInput()) {
         return;
     }
-
-    var qstring = this.getQueryString();
     // Disable UI for in progress search
     this.disable();
 
     this.searchData.searchSettings = this.getSearchSettings();
     var searchWeighted = this.searchData.searchSettings.searchWeighted;
     var searchIncrement = this.searchData.searchSettings.searchIncrement;
+    var queryString = this.searchData.queryString;
     var keywordCounts = this.searchData.keywordCounts;
     var totalCounts = this.searchData.totalCounts;
     var weightedKeywordCounts = this.searchData.weightedKeywordCounts;
@@ -317,39 +316,35 @@ NewsFreq.prototype.Form.prototype.search = function () {
 
     // TODO: Do these need != null part?
     // Create request params
-    var params = this.getQueryString() != null ? this.getParams(false, true) : this.getParams(false, false);
-
-    // Create weighted request params
-    if (searchWeighted) {
-        var weightParams = this.getQueryString() != null ? this.getParams(true, true) : this.getParams(true, false);
-    }
+    var params = this.getParams(searchWeighted, queryString);
 
     // Send query to API
     var keywordCountRequest = $.ajax({
-        url: '../DataNervesApi/api/NewsLibrary',
-        type: "POST",
+        url: '/DataNervesApi/api/NewsFreq',
+        type: "GET",
         dataType: "json",
         data: {
-            query: params,
-            searchType: searchIncrement
+            Queries: params,
+            SearchType: searchIncrement
         },
         success: function (data) {
-            keywordCounts.addVariable($.parseJSON(data));
+            //var responseArray = $.parseJSON(data);
+            $.merge(keywordCounts.data, $.parseJSON(data));
         }
     });
     ajaxRequests.push(keywordCountRequest);
 
     if (searchWeighted){
         var totalCountRequest = $.ajax({
-            url: '../DataNervesApi/api/NewsLibrary',
-            type: "POST",
+            url: '/DataNervesApi/api/NewsFreq',
+            type: "GET",
             dataType: "json",
             data: {
-                query: weightParams,
-                searchType: searchIncrement
+                Queries: weightParams.Queries,
+                SearchType: searchIncrement
             },
             success: function (data) {
-                totalCounts.addVariable($.parseJSON(data));
+                $.merge(totalCounts.data, $.parseJSON(data));
                 $.each(keywordCounts.data, function (i, item) {
                     weightedKeywordCounts.data[i] = [];
                     $.each(item, function (k, element) {
@@ -536,7 +531,7 @@ NewsFreq.prototype.Graph.prototype.Draw = function () {
             pointDot: true,
             scaleFontSize: 10,
             pointDotRadius: 3,
-            legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].lineColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>"
+            //legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].lineColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>"
         };
     } else {
         lineChartOptions = {
@@ -545,7 +540,7 @@ NewsFreq.prototype.Graph.prototype.Draw = function () {
             pointDotRadius: 3,
             scaleFontSize: 10,
             scaleLabel: "<%=value+'%'%>",
-            legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].lineColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>"
+            //legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].lineColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>"
         };
     }
 
@@ -682,18 +677,37 @@ function findWithAttr(array, attr, value) {
 };
 
 // QueryString jquery plugin
-(function ($) {
+
+
+(function($) {
     $.QueryString = (function(a) {
-        if (a == "") return null;
+        if (a == "") return {};
         var b = {};
-        for (var i = 0; i < a.length; ++i) {
-            var p = a[i].split('=');
+        for (var i = 0; i < a.length; ++i)
+        {
+            var p=a[i].split('=');
+            if (p.length != 2) continue;
+            b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
+        }
+        return b;
+    })(window.location.search.substr(1).split('&'))
+})(jQuery);
+
+/*
+(function ($) {
+    $.QueryString = (function(queryStringRaw) {
+        if (queryStringRaw == "") return null;
+        var b = {};
+        for (var i = 0; i < queryStringRaw.length; ++i) {
+            var queryStringDecoded = decodeURIComponent(queryStringRaw[i])
+            var p = queryStringDecoded.split('=');
+            var k = JSON.parse(p[0])
             if (p.length != 2) continue;
             b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
         }
         return b;
     })(window.location.search.substr(1).split('&'));
-})(jQuery);
+})(jQuery);*/
 
 // Replaces elements of array with empty string at regular intervals until # of nonempty cells == goalLength
 trimArray = function (array, goalLength) {

@@ -236,6 +236,7 @@
     <Content Include="Scripts\Deprecated\Chart.js" />
     <Content Include="Scripts\Deprecated\Chart.min.js" />
     <Content Include="Scripts\jquery-2.1.1.js" />
+    <Content Include="Scripts\jquery-deparam.js" />
     <Content Include="Scripts\jquery-ui-1.10.4.js" />
     <Content Include="Scripts\newslibrary.js" />
     <Content Include="Web.config" />
@@ -271,6 +272,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\PublishProfiles\DataNerves.pubxml" />
+    <None Include="Properties\PublishProfiles\NewsFreq.pubxml" />
+    <None Include="Properties\PublishProfiles\NewsFreqFTP.pubxml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -290,7 +293,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>52034</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost/DataNervesUI</IISUrl>
+          <IISUrl>http://localhost:9999</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

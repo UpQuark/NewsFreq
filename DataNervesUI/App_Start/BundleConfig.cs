@@ -21,7 +21,8 @@ namespace DataNervesUI
             bundles.Add(new ScriptBundle("~/bundles/newslib").Include(
                     "~/Scripts/jquery-{version}.js",
                     "~/Scripts/newslibrary.js",
-                    "~/Scripts/chart.js"));
+                    "~/Scripts/chart.js",
+                    "~/Scripts/jquery-deparam.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                 "~/Content/site.css",

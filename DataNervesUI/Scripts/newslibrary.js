@@ -40,9 +40,9 @@ function NewsFreq() {
     this.form = new this.Form(this, this.newsFreqSearchData, this.table, this.graph);
 
     var newsFreq = this;
+
     //If URL contains a query string, store flag as true
-    $(document).ready(function () {
-       // var qString =   
+    $(document).ready(function () { 
         if (window.location.search.substr(1) !== "") {
             newsFreq.newsFreqSearchData.queryString = $.deparam(window.location.search.substr(1));
             newsFreq.form.search();
@@ -50,7 +50,7 @@ function NewsFreq() {
     });
 }
 
-// Resets all visual elements to default state, empties all dependent data structures
+// Resets all visual elements to default state, empties all data structures
 NewsFreq.prototype.clear = function () {
     // Empty all data structures
     this.newsFreqSearchData.keywordCounts.clear();
@@ -320,8 +320,8 @@ NewsFreq.prototype.Form.prototype.search = function () {
 
     // Send query to API
     var keywordCountRequest = $.ajax({
-        url: '/DataNervesApi/api/NewsFreq',
-        type: "GET",
+        url: '/DataNervesApi/api/NewsFreqTest',
+        type: "POST",
         dataType: "json",
         data: {
             Queries: params,
@@ -336,11 +336,11 @@ NewsFreq.prototype.Form.prototype.search = function () {
 
     if (searchWeighted){
         var totalCountRequest = $.ajax({
-            url: '/DataNervesApi/api/NewsFreq',
-            type: "GET",
+            url: '/DataNervesApi/api/NewsFreqTest',
+            type: "POST",
             dataType: "json",
             data: {
-                Queries: weightParams.Queries,
+                Queries: params.Queries,
                 SearchType: searchIncrement
             },
             success: function (data) {
@@ -449,10 +449,13 @@ NewsFreq.prototype.Graph = function (newsFreq, searchData, table) {
     this.searchData = searchData;
     this.table = table;
     this.newsFreq = newsFreq;
+    var ctx = $("#NewsFreqGraph").get(0).getContext("2d");
+    this.chart = new Chart(ctx);
 };
 
 NewsFreq.prototype.Graph.prototype.Draw = function () {
     var keywordCounts = this.keywordCounts;
+
     if (keywordCounts.data.length == 0) {
         this.newsFreq.clear();
         return;
@@ -546,9 +549,10 @@ NewsFreq.prototype.Graph.prototype.Draw = function () {
 
 
     // Create chart on canvas
-    var ctx = $("#NewsFreqGraph").get(0).getContext("2d");
-    var lineChart = new Chart(ctx).Line(lineChartData, lineChartOptions);
     
+    var lineChart = this.chart;
+    //var lineChart = new Chart(ctx).Line(lineChartData, lineChartOptions);
+    lineChart.Line(lineChartData, lineChartOptions);
     
     // Draw legend
     drawLegend(this.keywordCounts, searchData.totalCounts, searchData.weightedKeywordCounts);
@@ -677,8 +681,6 @@ function findWithAttr(array, attr, value) {
 };
 
 // QueryString jquery plugin
-
-
 (function($) {
     $.QueryString = (function(a) {
         if (a == "") return {};
@@ -693,23 +695,6 @@ function findWithAttr(array, attr, value) {
     })(window.location.search.substr(1).split('&'))
 })(jQuery);
 
-/*
-(function ($) {
-    $.QueryString = (function(queryStringRaw) {
-        if (queryStringRaw == "") return null;
-        var b = {};
-        for (var i = 0; i < queryStringRaw.length; ++i) {
-            var queryStringDecoded = decodeURIComponent(queryStringRaw[i])
-            var p = queryStringDecoded.split('=');
-            var k = JSON.parse(p[0])
-            if (p.length != 2) continue;
-            b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
-        }
-        return b;
-    })(window.location.search.substr(1).split('&'));
-})(jQuery);*/
-
-// Replaces elements of array with empty string at regular intervals until # of nonempty cells == goalLength
 trimArray = function (array, goalLength) {
     if (array.length > goalLength) {
         var b = new Array();

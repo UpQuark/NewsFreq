@@ -316,7 +316,8 @@ NewsFreq.prototype.Form.prototype.search = function () {
 
     // TODO: Do these need != null part?
     // Create request params
-    var params = this.getParams(searchWeighted, queryString);
+    var params = this.getParams(false, queryString);
+    var weightParams = this.getParams(true, queryString);
 
     // Send query to API
     var keywordCountRequest = $.ajax({
@@ -340,7 +341,7 @@ NewsFreq.prototype.Form.prototype.search = function () {
             type: "POST",
             dataType: "json",
             data: {
-                Queries: params.Queries,
+                Queries: weightParams,
                 SearchType: searchIncrement
             },
             success: function (data) {

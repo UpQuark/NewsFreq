@@ -30,7 +30,7 @@ namespace DataNervesAPI.Controllers
                     string responseString = responseContent.ReadAsStringAsync().Result;
 
                     //var serializer = new JavaScriptSerializer();
-                    return responseString;.Replace(@"\", " ");
+                    return responseString;//.Replace(@"\", " ");
                 }
             }
             return null;

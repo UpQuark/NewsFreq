@@ -212,7 +212,7 @@ NewsFreq.prototype.Form.prototype.disable = function () {
 NewsFreq.prototype.Form.prototype.getParams = function (weighted, queryString) {
     if (queryString !== null) {
         //newsFreq.newsFreqSearchData.searchIncrement = queryString["searchIncrement"];
-        return queryString;
+        return queryString.Queries;
     }
 
     // Set searchString to null on requests that are for total articles for time period
@@ -228,16 +228,16 @@ NewsFreq.prototype.Form.prototype.getParams = function (weighted, queryString) {
 };
 
 // Get search settings from form field entries
-NewsFreq.prototype.Form.prototype.getSearchSettings = function () {
+NewsFreq.prototype.Form.prototype.getSearchSettings = function (queryString) {
     var searchSettings = {
         searchIncrement: '',
         searchWeighted: ''
     };
     
     // Check search time increment
-    if (!$.isEmptyObject($.QueryString)) {
-        searchSettings.searchIncrement = $.QueryString["searchIncrement"];
-        searchSettings.searchWeighted = $.QueryString["searchWeighted"] == "true" ? true : false;
+    if (queryString) {
+        searchSettings.searchIncrement = queryString.SearchType;
+        searchSettings.searchWeighted = queryString.Queries["searchWeighted"] == "true" ? true : false;
         return searchSettings
     }
 
@@ -303,16 +303,20 @@ NewsFreq.prototype.Form.prototype.search = function () {
     // Disable UI for in progress search
     this.disable();
 
-    this.searchData.searchSettings = this.getSearchSettings();
-    var searchWeighted = this.searchData.searchSettings.searchWeighted;
-    var searchIncrement = this.searchData.searchSettings.searchIncrement;
     var queryString = this.searchData.queryString;
+    
+    var searchWeighted = this.searchData.searchSettings.searchWeighted;
+    this.searchData.searchSettings = this.getSearchSettings(queryString);
+    var searchIncrement = this.searchData.searchSettings.searchIncrement;
+    
     var keywordCounts = this.searchData.keywordCounts;
     var totalCounts = this.searchData.totalCounts;
     var weightedKeywordCounts = this.searchData.weightedKeywordCounts;
     var table = this.table;
     var graph = this.graph;
     var ajaxRequests = this.searchData.ajaxRequests;
+
+    
 
     // TODO: Do these need != null part?
     // Create request params

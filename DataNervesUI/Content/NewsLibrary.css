@@ -11,9 +11,10 @@
 
 /* Search form elements
 ----------------------------------------------------------*/
-#NewsSearchFormWrapper {
+#NewsFreqFormWrapper {
     position: relative;
     min-height: 360px;
+    height: 400px;
 }
 
 #SearchIncrementRadioGroup {
@@ -43,7 +44,7 @@
 /* Radio group */
 #NewsFormRadioGroupWrapper {
     position: absolute; 
-    top: 189px; 
+    top: 214px; 
     left: 249px;
     font-size: 0.90em;
 }

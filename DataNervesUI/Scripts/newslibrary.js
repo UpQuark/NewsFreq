@@ -79,6 +79,10 @@ NewsFreq.prototype.clear = function () {
     
 };
 
+NewsFreq.prototype.ClearQueryString = function () {
+    this.newsFreqSearchData.queryString = null;
+}
+
 ////////////// Results class //////////////
 
 NewsFreq.prototype.Results = function() {
@@ -111,6 +115,7 @@ NewsFreq.prototype.Form = function (newsFreq, searchData, table, graph) {
     this.table = table;
     this.graph = graph;
     this.status = "enabled";
+    this.newsFreq = newsFreq;
 
     $(document).keypress(function (e) {
         if (e.which === 13) {
@@ -204,6 +209,7 @@ NewsFreq.prototype.Form.prototype.disable = function () {
 NewsFreq.prototype.Form.prototype.getParams = function (weighted, queryString) {
     var params = [];
     var searchHistory = this.searchData.searchHistory;
+    var newsFreq = this.newsFreq;
 
     if (queryString !== null) {
         var queriesLength = queryString.Queries.length;
@@ -215,8 +221,11 @@ NewsFreq.prototype.Form.prototype.getParams = function (weighted, queryString) {
         $('#SearchTargets').val(queryString.Queries[queriesLength - 1].SearchTargets);
         $('#SearchSource').val(queryString.Queries[queriesLength - 1].SearchSource);
 
-        params.push(queryString.Queries);
+
+
+        $.merge(params, queryString.Queries);
         $.merge(searchHistory, params);
+        newsFreq.ClearQueryString();
         return queryString.Queries;
     }
     

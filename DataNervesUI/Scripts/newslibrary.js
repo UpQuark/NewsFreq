@@ -1,8 +1,4 @@
-﻿/*
- *-------------------------------------------------------------
- * NewsFreq class
- *-------------------------------------------------------------
- */
+﻿////////////// NewsFreq class //////////////
 
 // Constructor
 function NewsFreq() {
@@ -25,6 +21,8 @@ function NewsFreq() {
         
         // Stores references to running ajax requests for cancelling
         ajaxRequests: [],
+
+        searchHistory: [],
         
         // Color list from which keywords are matched
         colorValues: [               
@@ -81,8 +79,8 @@ NewsFreq.prototype.clear = function () {
     
 };
 
-/* Results class */
-/*-------------------------------------------------------------*/
+////////////// Results class //////////////
+
 NewsFreq.prototype.Results = function() {
      this.data = [];
 };
@@ -97,8 +95,7 @@ NewsFreq.prototype.Results.prototype.clear = function() {
      this.data = [];
 };
 
-// Is empty
-// TODO: potentially not the right logic
+// Is empty TODO: potentially not the right logic
 NewsFreq.prototype.Results.prototype.isEmpty = function () {
     if (this.data.length == 1 && this.data[0].length == 0) {
         return true;
@@ -107,12 +104,7 @@ NewsFreq.prototype.Results.prototype.isEmpty = function () {
 };
 
 
-/*
- *-------------------------------------------------------------
- * Form class
- *-------------------------------------------------------------
- */
-
+////////////// Form class //////////////
 // Constructor
 NewsFreq.prototype.Form = function (newsFreq, searchData, table, graph) {
     this.searchData = searchData;
@@ -210,21 +202,50 @@ NewsFreq.prototype.Form.prototype.disable = function () {
 /* Getters */
 // Get parameters from form field entries
 NewsFreq.prototype.Form.prototype.getParams = function (weighted, queryString) {
+    var params = [];
+    var searchHistory = this.searchData.searchHistory;
+
     if (queryString !== null) {
-        //newsFreq.newsFreqSearchData.searchIncrement = queryString["searchIncrement"];
+        var queriesLength = queryString.Queries.length;
+
+        //Set UI to contain values from QueryString
+        $('#DateFrom').val(queryString.Queries[queriesLength - 1].DateFrom);
+        $('#DateTo').val(queryString.Queries[queriesLength - 1].DateTo);
+        $('#SearchTerms').val(queryString.Queries[queriesLength - 1].SearchString);
+        $('#SearchTargets').val(queryString.Queries[queriesLength - 1].SearchTargets);
+        $('#SearchSource').val(queryString.Queries[queriesLength - 1].SearchSource);
+
+        params.push(queryString.Queries);
+        $.merge(searchHistory, params);
         return queryString.Queries;
     }
+    
+    //if (searchHistory.length > 0) {
+    //    $.each(searchHistory, function (key, keyword) {
+    //        params.push({
+    //            DateFrom: keyword.DateFrom,
+    //            DateTo: keyword.DateTo,
+    //            DateString: keyword.DateString,
+    //            SearchString: keyword.SearchString,
+    //            SearchTarget: keyword.SearchTarget,
+    //            SearchSource: keyword.SearchSource
+    //        });
+    //    });
+    //}
 
     // Set searchString to null on requests that are for total articles for time period
     var searchString = weighted ? "" : $('#SearchTerms').val();
-    return [{
+    params.push({
         DateFrom: $('#DateFrom').val(),
         DateTo: $('#DateTo').val(),
         DateString: $('#DateFrom').val() + ' to ' + $('#DateTo').val(),
         SearchString: searchString,
         SearchTarget: $('#SearchTargets').val(),
         SearchSource: $('#SearchSource').val()
-    }];
+    });
+
+    $.merge(searchHistory, params);
+    return params;
 };
 
 // Get search settings from form field entries
@@ -309,6 +330,7 @@ NewsFreq.prototype.Form.prototype.search = function () {
     this.searchData.searchSettings = this.getSearchSettings(queryString);
     var searchIncrement = this.searchData.searchSettings.searchIncrement;
     
+    var searchHistory = this.searchData.searchHistory;
     var keywordCounts = this.searchData.keywordCounts;
     var totalCounts = this.searchData.totalCounts;
     var weightedKeywordCounts = this.searchData.weightedKeywordCounts;
@@ -316,12 +338,15 @@ NewsFreq.prototype.Form.prototype.search = function () {
     var graph = this.graph;
     var ajaxRequests = this.searchData.ajaxRequests;
 
-    
-
     // TODO: Do these need != null part?
     // Create request params
     var params = this.getParams(false, queryString);
-    var weightParams = this.getParams(true, queryString);
+
+    if (searchWeighted)
+        var weightParams = this.getParams(true, queryString);
+
+    var stateString = '?' + $.param({ "Queries": searchHistory, "SearchType": searchIncrement });
+    window.history.replaceState(null, '', stateString);
 
     // Send query to API
     var keywordCountRequest = $.ajax({
@@ -389,15 +414,12 @@ NewsFreq.prototype.Form.prototype.clear = function() {
     $('input[name=sourceType]').removeAttr('disabled');
     $('.DatePicker').removeAttr('disabled').removeClass('disabled');
     $('#ClearButton').prop('disabled', 'disabled').addClass('disabledButton');
+
+    window.history.replaceState(null, '', '/');
 };
 
 
-
-/*
- *-------------------------------------------------------------
- * Table class
- *-------------------------------------------------------------
- */
+////////////// Table class //////////////
 NewsFreq.prototype.Table = function (newsFreq, searchData) {
     this.keywordCounts = searchData.keywordCounts;
     this.totalCounts = searchData.totalCounts;
@@ -441,12 +463,7 @@ NewsFreq.prototype.Table.prototype.clear = function() {
 };
 
 
-
-/*
- *-------------------------------------------------------------
- * Graph class
- *-------------------------------------------------------------
- */
+////////////// Graph class //////////////
 NewsFreq.prototype.Graph = function (newsFreq, searchData, table) {
     this.keywordCounts = searchData.keywordCounts;
     this.totalCounts = searchData.totalCounts;
@@ -665,12 +682,7 @@ NewsFreq.prototype.Graph.prototype.clear = function () {
 };
 
 
-
-/*
- *-------------------------------------------------------------
- * Helpers
- *-------------------------------------------------------------
- */
+////////////// Helpers //////////////
 function getDateString(jsonDate) {
     var date = new Date(parseInt(jsonDate.substr(6)));
     return (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear();
